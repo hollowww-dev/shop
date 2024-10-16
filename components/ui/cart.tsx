@@ -38,7 +38,7 @@ const Cart = () => {
             <SheetContent>
                 <SheetTitle>Cart {cartCount && `(${cartCount})`}</SheetTitle>
                 <ScrollArea className="py-3">
-                    {cartDetails && Object.values(cartDetails).map((entry: CartEntry) => <CartItem entry={entry} />)}
+                    {cartDetails && Object.values(cartDetails).map((entry: CartEntry) => <CartItem entry={entry} key={entry.id} />)}
                 </ScrollArea>
             </SheetContent>
         </Sheet>
