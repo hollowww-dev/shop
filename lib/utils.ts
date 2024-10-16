@@ -11,7 +11,7 @@ export function cn(...inputs: ClassValue[]) {
 export function parseCartItem(product: PRODUCTSResult[number]): Product {
 	return {
 		id: product.id,
-		name: product.title,
+		name: product.name,
 		image: urlFor(product.image).width(400).height(400).url(),
 		currency: 'EUR',
 		price: product.price,
