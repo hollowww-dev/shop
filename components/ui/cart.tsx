@@ -1,9 +1,9 @@
 "use client"
 
-import { formatCurrencyString, useShoppingCart } from "use-shopping-cart"
+import { useShoppingCart } from "use-shopping-cart"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./sheet"
 import { Button } from "./button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card"
+import { Card, CardContent, CardTitle } from "./card"
 import Image from "next/image"
 import { type CartEntry } from "use-shopping-cart/core"
 import { ScrollArea } from "./scroll-area"

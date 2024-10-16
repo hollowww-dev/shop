@@ -5,7 +5,7 @@ import Header from "@/components/ui/header";
 import Product from "@/components/ui/product";
 
 export default async function Home() {
-  const products = await client.fetch<Promise<PRODUCTSResult>>(PRODUCTS, {}, {cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",})
+  const products = await client.fetch<Promise<PRODUCTSResult>>(PRODUCTS, {}, {cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache"})
   return (
   <>
     <Header />
