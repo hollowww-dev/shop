@@ -1,4 +1,3 @@
-import Header from "@/components/header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import { PRODUCTResult } from "@/sanity.types";
@@ -16,7 +15,7 @@ export default async function Page({params: {id}}: {params: {id: string}}) {
             <>
                 <main className="container mx-auto">
                     <h2>Something went wrong.</h2>
-                    <p>We couldn't find a product you are looking for.</p>
+                    <p>We couldn&apos;t find a product you are looking for.</p>
                 </main>
             </>
         )

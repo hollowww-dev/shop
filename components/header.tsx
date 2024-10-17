@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import config from "@/lib/config";
 import Cart from "@/components/cart";
-import { Separator } from "./ui/separator";
 
 const Header = () => {
     return (
