@@ -1,6 +1,10 @@
+if(!process.env.NEXT_PUBLIC_SITE_URL) {
+    throw new Error('SITE_URL VARIABLE NOT PROVIDED.')
+}
+
 const config = {
     siteName: "Vincent Van Gogh's Store",
-    siteUrl: "http://localhost:3000",
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
     currency: 'EUR'
 }
 

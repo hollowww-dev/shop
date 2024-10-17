@@ -14,7 +14,7 @@ const Product = ({product}: {product: PRODUCTSResult[number]}) => {
   const router = useRouter()
 
     return (
-        <Card key={product.id} className="relative active:shadow-none transition-shadow cursor-pointer" onClick={() => router.push(`${process.env.NEXT_PUBLIC_SITE_URL}/product/${product.id}`)}>
+        <Card key={product.id} className="relative active:shadow-none transition-shadow cursor-pointer" onClick={() => router.push(`${config.siteUrl}/product/${product.id}`)}>
         <CardHeader>
           <AspectRatio ratio={1} className="relative">
             <Image src={urlFor(product.image).width(300).height(300).url()} alt={product.name} className="aspect-square object-cover rounded-md" fill/>
