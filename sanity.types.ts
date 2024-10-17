@@ -188,11 +188,44 @@ export type PRODUCTSResult = Array<{
   price: number;
   available: boolean;
 }>;
+// Variable: PRODUCT
+// Query: *[_id == $id][0]{    'id':_id,    name,    description,    image,    gallery,    'price': price * 100,    available}
+export type PRODUCTResult = {
+  id: string;
+  name: string;
+  description: string;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  gallery: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }> | null;
+  price: number;
+  available: boolean;
+};
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"product\"]{\n    'id':_id,\n    name,\n    image,\n    'price': price * 100,\n    available\n}": PRODUCTSResult;
+    "*[_id == $id][0]{\n    'id':_id,\n    name,\n    description,\n    image,\n    gallery,\n    'price': price * 100,\n    available\n}": PRODUCTResult;
   }
 }

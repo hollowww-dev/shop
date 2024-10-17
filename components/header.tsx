@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Button } from "./button";
+import { Button } from "@/components/ui/button";
 import config from "@/lib/config";
-import Cart from "./cart";
+import Cart from "@/components/cart";
+import { Separator } from "./ui/separator";
 
 const Header = () => {
     return (
@@ -14,7 +15,7 @@ const Header = () => {
             </div>
             <Cart />
           </nav>
-          <header className="container mx-auto py-12 text-center">
+          <header className="container mx-auto py-12 lg:py-24 text-center">
             <h1><Link href={config.siteUrl}>{config.siteName}</Link></h1>
           </header>
         </>

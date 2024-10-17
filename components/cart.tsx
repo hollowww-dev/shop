@@ -1,12 +1,12 @@
 "use client"
 
 import { useShoppingCart } from "use-shopping-cart"
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./sheet"
-import { Button } from "./button"
-import { Card, CardContent, CardTitle } from "./card"
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
 import { type CartEntry } from "use-shopping-cart/core"
-import { ScrollArea } from "./scroll-area"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 const CartItem = ({entry}: {entry: CartEntry}) => {
     return (

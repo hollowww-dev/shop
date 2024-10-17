@@ -3,15 +3,18 @@
 import { PRODUCTSResult } from "@/sanity.types"
 import { urlFor } from "@/sanity/lib/image"
 import { formatCurrencyString } from "use-shopping-cart/core"
-import { Badge } from "./badge"
-import { Card, CardHeader, CardContent } from "./card"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import Image from "next/image"
-import { AspectRatio } from "./aspect-ratio"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
 import config from "@/lib/config"
+import { useRouter } from "next/navigation"
 
 const Product = ({product}: {product: PRODUCTSResult[number]}) => {
+  const router = useRouter()
+
     return (
-        <Card key={product.id} className="relative">
+        <Card key={product.id} className="relative active:shadow-none transition-shadow cursor-pointer" onClick={() => router.push(`${process.env.NEXT_PUBLIC_SITE_URL}/product/${product.id}`)}>
         <CardHeader>
           <AspectRatio ratio={1} className="relative">
             <Image src={urlFor(product.image).width(300).height(300).url()} alt={product.name} className="aspect-square object-cover rounded-md" fill/>
