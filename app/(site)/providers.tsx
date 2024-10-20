@@ -1,5 +1,6 @@
 "use client";
 
+import { Toaster } from "@/components/ui/toaster";
 import config from "@/lib/config";
 import { ReactNode } from "react";
 import { CartProvider } from "use-shopping-cart";
@@ -16,6 +17,7 @@ export default function Providers({ children }: { children: ReactNode }) {
 			currency={config.currency}
 			shouldPersist={true}>
 			{children}
+			<Toaster />
 		</CartProvider>
 	);
 }
