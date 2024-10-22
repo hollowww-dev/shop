@@ -20,7 +20,7 @@ export default async function Page({ params: { id } }: { params: { id: string } 
 			<>
 				<main className='container mx-auto'>
 					<h2>Something went wrong.</h2>
-					<p>We couldn&apos;t find a product you are looking for .</p>
+					<p>We couldn&apos;t find a product you are looking for.</p>
 				</main>
 			</>
 		);
@@ -49,9 +49,9 @@ export default async function Page({ params: { id } }: { params: { id: string } 
 					</Table>
 				</div>
 			)}
-			<div className='flex flex-col gap-2'>
-				<h3>Featured products</h3>
-				{product.featured.length > 4 ?
+			{product.featured && (
+				<div className='flex flex-col gap-2'>
+					<h3>Featured products</h3>
 					<Carousel className="className='w-full h-full'">
 						<CarouselContent className='m-0 grid grid-cols-4'>
 							{product.featured.map((product) => (
@@ -59,13 +59,8 @@ export default async function Page({ params: { id } }: { params: { id: string } 
 							))}
 						</CarouselContent>
 					</Carousel>
-				:	<div className='grid grid-cols-4'>
-						{product.featured.map((product) => (
-							<Product product={product} key={product.id} />
-						))}
-					</div>
-				}
-			</div>
+				</div>
+			)}
 		</main>
 	);
 }

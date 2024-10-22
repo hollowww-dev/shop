@@ -12,7 +12,6 @@ import { formatCurrencyString } from "use-shopping-cart/core";
 import { useShoppingCart } from "use-shopping-cart";
 import { parseCartItem } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
-import { IoLogoFacebook, IoLogoInstagram, IoLogoPinterest } from "react-icons/io5";
 
 const ProductDetails = ({ product }: { product: PRODUCTResult }) => {
 	const { addItem } = useShoppingCart();
@@ -53,21 +52,14 @@ const ProductDetails = ({ product }: { product: PRODUCTResult }) => {
 				<CarouselPrevious />
 				<CarouselNext />
 			</Carousel>
-			<div className='flex flex-col flex-1 justify-center gap-12'>
-				<div className='flex justify-center gap-2'>
-					<IoLogoFacebook className='text-2xl text-foreground/80 hover:text-foreground cursor-pointer' />
-					<IoLogoInstagram className='text-2xl text-foreground/80 hover:text-foreground cursor-pointer' />
-					<IoLogoPinterest className='text-2xl text-foreground/80 hover:text-foreground cursor-pointer' />
-				</div>
-				<div className='flex flex-col items-center'>
-					<span className='text-4xl'>
-						{formatCurrencyString({
-							value: product.price,
-							currency: config.currency,
-						})}
-					</span>
-				</div>
-				<div className='flex flex-col gap-2'>
+			<div className='flex flex-col flex-1 self-center items-center gap-12'>
+				<span className='text-4xl pb-2 border-b'>
+					{formatCurrencyString({
+						value: product.price,
+						currency: config.currency,
+					})}
+				</span>
+				<div className='flex gap-2'>
 					<Button size={"lg"} variant={"outline"} onClick={() => handleAddItem()}>
 						Add to cart
 					</Button>

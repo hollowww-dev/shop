@@ -46,7 +46,7 @@ const Cart = () => {
 			</SheetTrigger>
 			<SheetContent>
 				<SheetTitle>Cart {cartCount && `(${cartCount})`}</SheetTitle>
-				<ScrollArea className='py-3'>
+				<ScrollArea className='h-full py-3'>
 					{cartDetails &&
 						Object.values(cartDetails).map((entry: CartEntry) => <CartItem entry={entry} key={entry.id} />)}
 				</ScrollArea>
