@@ -54,14 +54,14 @@ const ProductDetails = ({ product }: { product: PRODUCTResult }) => {
 					<CarouselPrevious />
 					<CarouselNext />
 				</Carousel>
-				<div className='flex flex-col flex-1 self-center items-center gap-12'>
+				<div className='flex flex-col flex-1 self-center items-center gap-6 lg:gap-12'>
 					<span className='text-4xl'>
 						{formatCurrencyString({
 							value: product.price,
 							currency: config.currency,
 						})}
 					</span>
-					<div className='flex gap-2'>
+					<div className='flex flex-col lg:flex-row gap-2'>
 						<Button size={"lg"} variant={"outline"} onClick={() => handleAddItem()}>
 							Add to cart
 						</Button>
