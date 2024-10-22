@@ -9,7 +9,6 @@ import { type CartEntry } from "use-shopping-cart/core";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { IoCloseOutline } from "react-icons/io5";
 import { AiOutlineShopping } from "react-icons/ai";
-import { Badge } from "./ui/badge";
 
 const CartItem = ({ entry }: { entry: CartEntry }) => {
 	const { decrementItem } = useShoppingCart();
