@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
 		if (!isValidSignature || !body) {
 			return new Response("Invalid Signature", { status: 401 });
 		}
+		console.log(body);
 		switch (body._type) {
 			case "product":
 				revalidatePath("/");
