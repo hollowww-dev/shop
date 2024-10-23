@@ -10,21 +10,15 @@ const secret = process.env.NEXT_PUBLIC_SANITY_REVALIDATE_SECRET;
 
 export async function POST(req: NextRequest) {
 	try {
-		const { body, isValidSignature } = await parseBody(req, secret);
-		if (!isValidSignature || !body) {
+		const { isValidSignature } = await parseBody(req, secret);
+		if (!isValidSignature) {
 			return new Response("Invalid Signature", { status: 401 });
 		}
-		console.log(body);
-		switch (body._type) {
-			case "product":
-				revalidatePath("/");
-			case "settings":
-				fetch("https://api.vercel.com/v1/integrations/deploy/prj_Lt4Np3lTqmyGijjGyWFn79dZcqrU/Mu0HfEpsvZ", {
-					method: "POST",
-				});
-			default:
-				break;
-		}
+		revalidatePath("/");
+		fetch("https://api.vercel.com/v1/integrations/deploy/prj_Lt4Np3lTqmyGijjGyWFn79dZcqrU/Mu0HfEpsvZ", {
+			method: "POST",
+		});
+
 		revalidatePath("/");
 		return NextResponse.json({
 			status: 200,
