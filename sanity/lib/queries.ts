@@ -2,7 +2,8 @@ import { groq } from "next-sanity";
 
 export const SETTINGS = groq`*[_type == "settings"][0]{
 title,
-currency
+currency,
+description
 }`;
 
 export const PRODUCTS = groq`*[_type == "product"]{
