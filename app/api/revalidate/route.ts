@@ -14,10 +14,7 @@ export async function POST(req: NextRequest) {
 		if (!isValidSignature) {
 			return new Response("Invalid Signature", { status: 401 });
 		}
-		revalidatePath("/");
-		fetch("https://api.vercel.com/v1/integrations/deploy/prj_Lt4Np3lTqmyGijjGyWFn79dZcqrU/Mu0HfEpsvZ", {
-			method: "POST",
-		});
+		await fetch("https://api.vercel.com/v1/integrations/deploy/prj_Lt4Np3lTqmyGijjGyWFn79dZcqrU/Mu0HfEpsvZ");
 
 		revalidatePath("/");
 		return NextResponse.json({
