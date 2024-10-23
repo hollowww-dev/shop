@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import config from "@/lib/config";
+import config from "@/lib/config.preval";
 import Cart from "@/components/cart";
 import Hamburger from "./hamburger";
 
@@ -24,7 +24,7 @@ const Header = () => {
 			</nav>
 			<header className='container mx-auto py-12 lg:py-24 text-center'>
 				<h1>
-					<Link href={config.siteUrl}>{config.siteName}</Link>
+					<Link href={config.siteUrl || "#"}>{config.title}</Link>
 				</h1>
 			</header>
 		</>

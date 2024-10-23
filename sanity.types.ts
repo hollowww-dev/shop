@@ -74,6 +74,16 @@ export type Slug = {
 	source?: string;
 };
 
+export type Settings = {
+	_id: string;
+	_type: "settings";
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title?: string;
+	currency?: string;
+};
+
 export type Product = {
 	_id: string;
 	_type: "product";
@@ -185,6 +195,7 @@ export type AllSanitySchemaTypes =
 	| SanityFileAsset
 	| Geopoint
 	| Slug
+	| Settings
 	| Product
 	| SanityImageCrop
 	| SanityImageHotspot
@@ -193,6 +204,12 @@ export type AllSanitySchemaTypes =
 	| SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
+// Variable: SETTINGS
+// Query: *[_type == "settings"][0]{title,currency}
+export type SETTINGSResult = {
+	title: string | null;
+	currency: string | null;
+} | null;
 // Variable: PRODUCTS
 // Query: *[_type == "product"]{    'id':_id,    name,    image,    'price': price * 100,    available}
 export type PRODUCTSResult = Array<{
@@ -213,7 +230,7 @@ export type PRODUCTSResult = Array<{
 	available: boolean;
 }>;
 // Variable: PRODUCT
-// Query: *[_id == $id][0]{    'id':_id,    name,    description,    details,    image,    gallery,    'price': price * 100,    available,    defined(featured) => {        featured    },    !defined(featured) => {        'featured': *[_type == "product" && _id != ^._id][0..4]{        'id':_id,        name,        image,        'price': price * 100,        available        }    }}
+// Query: *[_id == $id][0]{    'id':_id,    name,    description,    details,    image,    gallery,    'price': price * 100,    available,    defined(featured) => {        featured    },    !defined(featured) => {        'featured': *[_type == "product" && _id != ^._id && available == true][0..4]{        'id':_id,        name,        image,        'price': price * 100,        available        }    }}
 export type PRODUCTResult = {
 	id: string;
 	name: string;
@@ -271,7 +288,8 @@ export type PRODUCTResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
 	interface SanityQueries {
+		'*[_type == "settings"][0]{\ntitle,\ncurrency\n}': SETTINGSResult;
 		"*[_type == \"product\"]{\n    'id':_id,\n    name,\n    image,\n    'price': price * 100,\n    available\n}": PRODUCTSResult;
-		"*[_id == $id][0]{\n    'id':_id,\n    name,\n    description,\n    details,\n    image,\n    gallery,\n    'price': price * 100,\n    available,\n    defined(featured) => {\n        featured\n    },\n    !defined(featured) => {\n        'featured': *[_type == \"product\" && _id != ^._id][0..4]{\n        'id':_id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    }\n}": PRODUCTResult;
+		"*[_id == $id][0]{\n    'id':_id,\n    name,\n    description,\n    details,\n    image,\n    gallery,\n    'price': price * 100,\n    available,\n    defined(featured) => {\n        featured\n    },\n    !defined(featured) => {\n        'featured': *[_type == \"product\" && _id != ^._id && available == true][0..4]{\n        'id':_id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    }\n}": PRODUCTResult;
 	}
 }

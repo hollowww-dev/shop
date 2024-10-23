@@ -1,7 +1,7 @@
 "use client";
 
 import { Toaster } from "@/components/ui/toaster";
-import config from "@/lib/config";
+import config from "@/lib/config.preval";
 import { ReactNode } from "react";
 import { CartProvider } from "use-shopping-cart";
 

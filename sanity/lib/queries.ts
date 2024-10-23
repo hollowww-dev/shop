@@ -1,5 +1,10 @@
 import { groq } from "next-sanity";
 
+export const SETTINGS = groq`*[_type == "settings"][0]{
+title,
+currency
+}`;
+
 export const PRODUCTS = groq`*[_type == "product"]{
     'id':_id,
     name,

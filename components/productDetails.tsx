@@ -7,7 +7,7 @@ import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "./ui/carousel";
 import Image from "next/image";
-import config from "@/lib/config";
+import config from "@/lib/config.preval";
 import { formatCurrencyString } from "use-shopping-cart/core";
 import { useShoppingCart } from "use-shopping-cart";
 import { parseCartItem } from "@/lib/utils";

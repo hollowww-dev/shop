@@ -1,5 +1,5 @@
 import { IoLogoFacebook, IoLogoInstagram, IoLogoPinterest } from "react-icons/io5";
-import config from "@/lib/config";
+import config from "@/lib/config.preval";
 
 const Footer = () => {
 	return (
@@ -10,7 +10,7 @@ const Footer = () => {
 				<IoLogoPinterest className='text-2xl text-foreground/80 hover:text-foreground cursor-pointer' />
 			</div>
 			<p className='muted'>
-				© {config.siteName} {new Date().getFullYear()}
+				© {config.title} {new Date().getFullYear()}
 			</p>
 		</footer>
 	);

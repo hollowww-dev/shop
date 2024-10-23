@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import config from "@/lib/config";
+import config from "@/lib/config.preval";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -16,7 +16,6 @@ const Product = ({ product }: { product: PRODUCTSResult[number] }) => {
 	useEffect(() => {
 		router.prefetch(`${config.siteUrl}/product/${product.id}`);
 	}, [router, product.id]);
-
 	return (
 		<Card
 			key={product.id}
