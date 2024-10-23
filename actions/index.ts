@@ -5,7 +5,7 @@ import { type CartDetails } from "use-shopping-cart/core";
 import { validateCartItems } from "use-shopping-cart/utilities";
 import { client } from "@/sanity/lib/client";
 import { PRODUCTS } from "@/sanity/lib/queries";
-import { PRODUCTSResult } from "@/sanity.types";
+import { Product } from "@/sanity.types";
 import { parseCartItem } from "@/lib/utils";
 
 export async function createCheckoutSession(cartDetails: CartDetails): Promise<{ sessionId: string }> {
@@ -13,7 +13,7 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
 		throw new Error("NEXT_PUBLIC_SITE_URL is not defined.");
 	}
 	try {
-		const products: PRODUCTSResult = await client.fetch(PRODUCTS);
+		const products: Product[] = await client.fetch(PRODUCTS);
 		const line_items = validateCartItems(
 			products.map((item) => parseCartItem(item)),
 			cartDetails
