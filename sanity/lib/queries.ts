@@ -24,10 +24,17 @@ export const PRODUCT = groq`*[_id == $id][0]{
     'price': price * 100,
     available,
     defined(featured) => {
-        featured
+        featured[]->{
+        _id,
+        name,
+        image,
+        'price': price * 100,
+        available
+        }
     },
     !defined(featured) => {
         'featured': *[_type == "product" && _id != ^._id && available == true][0..4]{
+        _id,
         name,
         image,
         'price': price * 100,
