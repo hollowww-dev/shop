@@ -43,7 +43,7 @@ const Cart = () => {
 	return (
 		<Sheet onOpenChange={handleCartClick} open={shouldDisplayCart}>
 			<SheetTrigger asChild>
-				<Button variant='ghost' className='p-0 lg:p-2 text-2xl relative'>
+				<Button variant='ghost' className='p-2 text-2xl relative'>
 					<AiOutlineShopping />
 					{cartCount ?
 						<div className='flex justify-center items-center absolute bottom-[2px] right-[2px] w-[17px] h-[17px] right-0 rounded-full text-[10px] bg-background border'>

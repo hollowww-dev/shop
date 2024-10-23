@@ -1,5 +1,6 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
 	images: {
 		remotePatterns: [
 			{
@@ -7,6 +8,9 @@ const nextConfig = {
 				hostname: "cdn.sanity.io",
 			},
 		],
+	},
+	experimental: {
+		reactCompiler: true,
 	},
 };
 

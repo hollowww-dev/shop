@@ -6,7 +6,7 @@ const Hamburger = () => {
 	return (
 		<Sheet>
 			<SheetTrigger className='lg:hidden' asChild>
-				<Button variant='ghost' className='p-0 text-2xl'>
+				<Button variant='ghost' className='p-2 text-2xl'>
 					<AiOutlineMenu />
 				</Button>
 			</SheetTrigger>

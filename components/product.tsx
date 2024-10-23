@@ -9,9 +9,13 @@ import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import config from "@/lib/config";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Product = ({ product }: { product: PRODUCTSResult[number] }) => {
 	const router = useRouter();
+	useEffect(() => {
+		router.prefetch(`${config.siteUrl}/product/${product.id}`);
+	}, [router, product.id]);
 
 	return (
 		<Card
