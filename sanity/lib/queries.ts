@@ -7,7 +7,7 @@ description
 }`;
 
 export const PRODUCTS = groq`*[_type == "product"]{
-    'id':_id,
+    _id,
     name,
     image,
     'price': price * 100,
@@ -15,7 +15,7 @@ export const PRODUCTS = groq`*[_type == "product"]{
 }`;
 
 export const PRODUCT = groq`*[_id == $id][0]{
-    'id':_id,
+    _id,
     name,
     description,
     details,
@@ -28,7 +28,6 @@ export const PRODUCT = groq`*[_id == $id][0]{
     },
     !defined(featured) => {
         'featured': *[_type == "product" && _id != ^._id && available == true][0..4]{
-        'id':_id,
         name,
         image,
         'price': price * 100,

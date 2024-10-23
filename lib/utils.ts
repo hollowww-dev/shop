@@ -1,5 +1,5 @@
-import { Product as ProductSanity } from "@/sanity.types";
 import { urlFor } from "@/sanity/lib/image";
+import { ProductType } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Product } from "use-shopping-cart/core";
@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
-export function parseCartItem(product: ProductSanity): Product {
+export function parseCartItem(product: ProductType): Product {
 	return {
 		id: product._id,
 		name: product.name,

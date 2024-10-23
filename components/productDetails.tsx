@@ -1,6 +1,5 @@
 "use client";
 
-import { Product } from "@/sanity.types";
 import { urlFor } from "@/sanity/lib/image";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import { Button } from "./ui/button";
@@ -12,8 +11,9 @@ import { formatCurrencyString } from "use-shopping-cart/core";
 import { useShoppingCart } from "use-shopping-cart";
 import { parseCartItem } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { ProductType } from "@/types";
 
-const ProductDetails = ({ product }: { product: Product }) => {
+const ProductDetails = ({ product }: { product: ProductType }) => {
 	const { addItem } = useShoppingCart();
 	const { toast } = useToast();
 

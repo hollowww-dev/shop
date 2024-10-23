@@ -1,6 +1,5 @@
 "use client";
 
-import { PRODUCTSResult } from "@/sanity.types";
 import { urlFor } from "@/sanity/lib/image";
 import { formatCurrencyString } from "use-shopping-cart/core";
 import { Badge } from "@/components/ui/badge";
@@ -10,17 +9,19 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import config from "@/lib/config.preval";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { ProductType } from "@/types";
+import { Product as ProductSanity } from "@/sanity.types";
 
-const Product = ({ product }: { product: PRODUCTSResult[number] }) => {
+const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 	const router = useRouter();
 	useEffect(() => {
-		router.prefetch(`${config.siteUrl}/product/${product.id}`);
-	}, [router, product.id]);
+		router.prefetch(`${config.siteUrl}/product/${product._id}`);
+	}, [router, product._id]);
 	return (
 		<Card
-			key={product.id}
+			key={product._id}
 			className='relative active:shadow-none transition-shadow cursor-pointer'
-			onClick={() => router.push(`${config.siteUrl}/product/${product.id}`)}
+			onClick={() => router.push(`${config.siteUrl}/product/${product._id}`)}
 		>
 			<CardHeader>
 				<AspectRatio ratio={1} className='relative'>
