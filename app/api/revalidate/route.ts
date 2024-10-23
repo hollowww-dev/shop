@@ -11,10 +11,10 @@ const secret = process.env.NEXT_PUBLIC_SANITY_REVALIDATE_SECRET;
 export async function POST(req: NextRequest) {
 	try {
 		const { isValidSignature } = await parseBody(req, secret);
+
 		if (!isValidSignature) {
 			return new Response("Invalid Signature", { status: 401 });
 		}
-		await fetch("https://api.vercel.com/v1/integrations/deploy/prj_Lt4Np3lTqmyGijjGyWFn79dZcqrU/Mu0HfEpsvZ");
 
 		revalidatePath("/");
 		return NextResponse.json({
