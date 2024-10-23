@@ -1,4 +1,3 @@
-import { PRODUCTSResult } from "@/sanity.types";
 import { client } from "@/sanity/lib/client";
 import { PRODUCTS } from "@/sanity/lib/queries";
 import Product from "@/components/product";
