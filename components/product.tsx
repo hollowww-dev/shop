@@ -40,7 +40,7 @@ const Product = ({ product }: { product: PRODUCTSResult[number] }) => {
 				</Badge>
 			</CardContent>
 			<Badge variant={product.available ? "secondary" : "default"} className='absolute top-5 right-5'>
-				{product.available ? "Available" : "Sold out"}
+				{product.available ? "Available" : "Sold"}
 			</Badge>
 		</Card>
 	);

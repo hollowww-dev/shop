@@ -9,6 +9,9 @@ import { type CartEntry } from "use-shopping-cart/core";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { IoCloseOutline } from "react-icons/io5";
 import { AiOutlineShopping } from "react-icons/ai";
+import { createCheckoutSession } from "@/actions";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const CartItem = ({ entry }: { entry: CartEntry }) => {
 	const { decrementItem } = useShoppingCart();
@@ -39,10 +42,27 @@ const CartItem = ({ entry }: { entry: CartEntry }) => {
 };
 
 const Cart = () => {
-	const { cartCount, cartDetails, handleCartClick, shouldDisplayCart } = useShoppingCart();
+	const [loading, setLoading] = useState(false);
+	const { cartCount, cartDetails, handleCartClick, shouldDisplayCart, redirectToCheckout } = useShoppingCart();
+	const { toast, dismiss } = useToast();
+	const handleCheckout = async () => {
+		setLoading(true);
+		try {
+			if (!cartDetails) {
+				throw new Error("Cart is empty.");
+			}
+			const { sessionId } = await createCheckoutSession(cartDetails);
+			await redirectToCheckout(sessionId);
+		} catch (error) {
+			setLoading(false);
+			if (error instanceof Error) {
+				toast({ title: "Something went wrong.", description: error.message });
+			}
+		}
+	};
 	return (
 		<Sheet onOpenChange={handleCartClick} open={shouldDisplayCart}>
-			<SheetTrigger asChild>
+			<SheetTrigger onClick={() => dismiss()} asChild>
 				<Button variant='ghost' className='p-2 text-2xl relative'>
 					<AiOutlineShopping />
 					{cartCount ?
@@ -52,12 +72,15 @@ const Cart = () => {
 					:	null}
 				</Button>
 			</SheetTrigger>
-			<SheetContent>
+			<SheetContent className='flex flex-col'>
 				<SheetTitle>Cart {cartCount && `(${cartCount})`}</SheetTitle>
-				<ScrollArea className='h-full py-3'>
+				<ScrollArea className='flex-1 py-3'>
 					{cartDetails &&
 						Object.values(cartDetails).map((entry: CartEntry) => <CartItem entry={entry} key={entry.id} />)}
 				</ScrollArea>
+				<Button disabled={loading || !cartCount} onClick={handleCheckout}>
+					{!loading ? "Checkout" : "Redirecting..."}
+				</Button>
 			</SheetContent>
 		</Sheet>
 	);

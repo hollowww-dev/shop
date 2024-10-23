@@ -12,10 +12,11 @@ export default function Providers({ children }: { children: ReactNode }) {
 
 	return (
 		<CartProvider
-			cartMode="checkout-session"
+			cartMode='checkout-session'
 			stripe={process.env.NEXT_PUBLIC_STRIPE_TEST_PUBLISHABLE}
 			currency={config.currency}
-			shouldPersist={true}>
+			shouldPersist={true}
+		>
 			{children}
 			<Toaster />
 		</CartProvider>
