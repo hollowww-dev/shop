@@ -43,7 +43,8 @@ const CartItem = ({ entry }: { entry: CartEntry }) => {
 
 const Cart = () => {
 	const [loading, setLoading] = useState(false);
-	const { cartCount, cartDetails, handleCartClick, shouldDisplayCart, redirectToCheckout } = useShoppingCart();
+	const { cartCount, cartDetails, formattedTotalPrice, handleCartClick, shouldDisplayCart, redirectToCheckout } =
+		useShoppingCart();
 	const { toast, dismiss } = useToast();
 	const handleCheckout = async () => {
 		setLoading(true);
@@ -56,7 +57,7 @@ const Cart = () => {
 		} catch (error) {
 			setLoading(false);
 			if (error instanceof Error) {
-				toast({ title: "Something went wrong.", description: error.message });
+				toast({ title: "Something went wrong.", description: error.message, variant: "destructive" });
 			}
 		}
 	};
@@ -78,9 +79,15 @@ const Cart = () => {
 					{cartDetails &&
 						Object.values(cartDetails).map((entry: CartEntry) => <CartItem entry={entry} key={entry.id} />)}
 				</ScrollArea>
-				<Button disabled={loading || !cartCount} onClick={handleCheckout}>
-					{!loading ? "Checkout" : "Redirecting..."}
-				</Button>
+				<div className='flex flex-col gap-2'>
+					<div className='flex justify-between items-center'>
+						<span className='small'>Total:</span>
+						<span>{formattedTotalPrice}</span>
+					</div>
+					<Button disabled={loading || !cartCount} onClick={handleCheckout}>
+						{!loading ? "Checkout" : "Redirecting..."}
+					</Button>
+				</div>
 			</SheetContent>
 		</Sheet>
 	);

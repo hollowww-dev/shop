@@ -6,6 +6,14 @@ currency,
 description
 }`;
 
+export const SOCIALMEDIA = groq`*[_type == "socialMedia"][0]{
+instagram,
+facebook,
+pinterest,
+tiktok,
+youtube
+}`;
+
 export const PRODUCTS = groq`*[_type == "product"]{
     _id,
     name,
@@ -33,7 +41,7 @@ export const PRODUCT = groq`*[_id == $id][0]{
         }
     },
     !defined(featured) => {
-        'featured': *[_type == "product" && _id != ^._id && available == true][0..4]{
+        'featured': *[_type == "product" && _id != ^._id && available == true][0..3]{
         _id,
         name,
         image,

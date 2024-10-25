@@ -74,6 +74,19 @@ export type Slug = {
   source?: string;
 };
 
+export type SocialMedia = {
+  _id: string;
+  _type: "socialMedia";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  instagram?: string;
+  facebook?: string;
+  pinterest?: string;
+  tiktok?: string;
+  youtube?: string;
+};
+
 export type Settings = {
   _id: string;
   _type: "settings";
@@ -189,7 +202,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Settings | Product | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | SocialMedia | Settings | Product | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: SETTINGS
@@ -199,10 +212,19 @@ export type SETTINGSResult = {
   currency: string;
   description: string;
 } | null;
+// Variable: SOCIALMEDIA
+// Query: *[_type == "socialMedia"][]{instagram,facebook,pinterest,tiktok,youtube}
+export type SOCIALMEDIAResult = Array<{
+  instagram: string | null;
+  facebook: string | null;
+  pinterest: string | null;
+  tiktok: string | null;
+  youtube: string | null;
+}>;
 // Variable: PRODUCTS
-// Query: *[_type == "product"]{    'id':_id,    name,    image,    'price': price * 100,    available}
+// Query: *[_type == "product"]{    _id,    name,    image,    'price': price * 100,    available}
 export type PRODUCTSResult = Array<{
-  id: string;
+  _id: string;
   name: string;
   image: {
     asset?: {
@@ -219,9 +241,9 @@ export type PRODUCTSResult = Array<{
   available: boolean;
 }>;
 // Variable: PRODUCT
-// Query: *[_id == $id][0]{    'id':_id,    name,    description,    details,    image,    gallery,    'price': price * 100,    available,    defined(featured) => {        featured    },    !defined(featured) => {        'featured': *[_type == "product" && _id != ^._id && available == true][0..4]{        'id':_id,        name,        image,        'price': price * 100,        available        }    }}
+// Query: *[_id == $id][0]{    _id,    name,    description,    details,    image,    gallery,    'price': price * 100,    available,    defined(featured) => {        featured[]->{        _id,        name,        image,        'price': price * 100,        available        }    },    !defined(featured) => {        'featured': *[_type == "product" && _id != ^._id && available == true][0..3]{        _id,        name,        image,        'price': price * 100,        available        }    }}
 export type PRODUCTResult = {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   details: Array<{
@@ -255,7 +277,7 @@ export type PRODUCTResult = {
   price: number;
   available: boolean;
   featured: Array<{
-    id: string;
+    _id: string;
     name: string;
     image: {
       asset?: {
@@ -272,7 +294,7 @@ export type PRODUCTResult = {
     available: boolean;
   }>;
 } | {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   details: Array<{
@@ -306,14 +328,24 @@ export type PRODUCTResult = {
   price: number;
   available: boolean;
   featured: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "product";
+    _id: string;
+    name: string;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    price: number;
+    available: boolean;
   }> | null;
 } | {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   details: Array<{
@@ -347,7 +379,52 @@ export type PRODUCTResult = {
   price: number;
   available: boolean;
 } | {
-  id: string;
+  _id: string;
+  name: null;
+  description: null;
+  details: null;
+  image: null;
+  gallery: null;
+  price: null;
+  available: null;
+  featured: Array<{
+    _id: string;
+    name: string;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    price: number;
+    available: boolean;
+  }>;
+} | {
+  _id: string;
+  name: null;
+  description: null;
+  details: null;
+  image: null;
+  gallery: null;
+  price: null;
+  available: null;
+  featured: null;
+} | {
+  _id: string;
+  name: null;
+  description: null;
+  details: null;
+  image: null;
+  gallery: null;
+  price: null;
+  available: null;
+} | {
+  _id: string;
   name: null;
   description: string;
   details: null;
@@ -356,7 +433,7 @@ export type PRODUCTResult = {
   price: null;
   available: null;
   featured: Array<{
-    id: string;
+    _id: string;
     name: string;
     image: {
       asset?: {
@@ -373,7 +450,7 @@ export type PRODUCTResult = {
     available: boolean;
   }>;
 } | {
-  id: string;
+  _id: string;
   name: null;
   description: string;
   details: null;
@@ -383,7 +460,7 @@ export type PRODUCTResult = {
   available: null;
   featured: null;
 } | {
-  id: string;
+  _id: string;
   name: null;
   description: string;
   details: null;
@@ -392,7 +469,7 @@ export type PRODUCTResult = {
   price: null;
   available: null;
 } | {
-  id: string;
+  _id: string;
   name: null;
   description: string | null;
   details: null;
@@ -401,7 +478,7 @@ export type PRODUCTResult = {
   price: null;
   available: null;
   featured: Array<{
-    id: string;
+    _id: string;
     name: string;
     image: {
       asset?: {
@@ -418,7 +495,7 @@ export type PRODUCTResult = {
     available: boolean;
   }>;
 } | {
-  id: string;
+  _id: string;
   name: null;
   description: string | null;
   details: null;
@@ -428,7 +505,7 @@ export type PRODUCTResult = {
   available: null;
   featured: null;
 } | {
-  id: string;
+  _id: string;
   name: null;
   description: string | null;
   details: null;
@@ -443,7 +520,8 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"settings\"][0]{\ntitle,\ncurrency,\ndescription\n}": SETTINGSResult;
-    "*[_type == \"product\"]{\n    'id':_id,\n    name,\n    image,\n    'price': price * 100,\n    available\n}": PRODUCTSResult;
-    "*[_id == $id][0]{\n    'id':_id,\n    name,\n    description,\n    details,\n    image,\n    gallery,\n    'price': price * 100,\n    available,\n    defined(featured) => {\n        featured\n    },\n    !defined(featured) => {\n        'featured': *[_type == \"product\" && _id != ^._id && available == true][0..4]{\n        'id':_id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    }\n}": PRODUCTResult;
+    "*[_type == \"socialMedia\"][]{\ninstagram,\nfacebook,\npinterest,\ntiktok,\nyoutube\n}": SOCIALMEDIAResult;
+    "*[_type == \"product\"]{\n    _id,\n    name,\n    image,\n    'price': price * 100,\n    available\n}": PRODUCTSResult;
+    "*[_id == $id][0]{\n    _id,\n    name,\n    description,\n    details,\n    image,\n    gallery,\n    'price': price * 100,\n    available,\n    defined(featured) => {\n        featured[]->{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    },\n    !defined(featured) => {\n        'featured': *[_type == \"product\" && _id != ^._id && available == true][0..3]{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    }\n}": PRODUCTResult;
   }
 }

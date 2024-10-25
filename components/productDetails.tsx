@@ -27,7 +27,7 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
 	};
 
 	return (
-		<section className='flex flex-col gap-3'>
+		<section className='flex flex-col gap-2'>
 			<h2>{product.name}</h2>
 			<div className='flex flex-col lg:flex-row gap-6 lg:gap-12'>
 				<Carousel className='w-full h-full'>
