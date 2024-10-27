@@ -11,7 +11,7 @@ export default async function Home() {
 	);
 	return (
 		<>
-			<main className='container mx-auto'>
+			<main className='container mx-auto' key='home'>
 				<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 py-3'>
 					{products.map((product) => (
 						<Product key={product._id} product={product} />

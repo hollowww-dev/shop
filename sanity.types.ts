@@ -74,6 +74,20 @@ export type Slug = {
   source?: string;
 };
 
+export type Faq = {
+  _id: string;
+  _type: "faq";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  entries?: Array<{
+    question: string;
+    answer: string;
+    _type: "entry";
+    _key: string;
+  }>;
+};
+
 export type SocialMedia = {
   _id: string;
   _type: "socialMedia";
@@ -202,7 +216,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | SocialMedia | Settings | Product | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Faq | SocialMedia | Settings | Product | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: SETTINGS
@@ -213,14 +227,22 @@ export type SETTINGSResult = {
   description: string;
 } | null;
 // Variable: SOCIALMEDIA
-// Query: *[_type == "socialMedia"][]{instagram,facebook,pinterest,tiktok,youtube}
-export type SOCIALMEDIAResult = Array<{
+// Query: *[_type == "socialMedia"][0]{instagram,facebook,pinterest,tiktok,youtube}
+export type SOCIALMEDIAResult = {
   instagram: string | null;
   facebook: string | null;
   pinterest: string | null;
   tiktok: string | null;
   youtube: string | null;
-}>;
+} | null;
+// Variable: FAQ
+// Query: *[_type == "faq"][0]{entries[] {    answer,    question}}
+export type FAQResult = {
+  entries: Array<{
+    answer: string;
+    question: string;
+  }> | null;
+} | null;
 // Variable: PRODUCTS
 // Query: *[_type == "product"]{    _id,    name,    image,    'price': price * 100,    available}
 export type PRODUCTSResult = Array<{
@@ -520,7 +542,8 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"settings\"][0]{\ntitle,\ncurrency,\ndescription\n}": SETTINGSResult;
-    "*[_type == \"socialMedia\"][]{\ninstagram,\nfacebook,\npinterest,\ntiktok,\nyoutube\n}": SOCIALMEDIAResult;
+    "*[_type == \"socialMedia\"][0]{\ninstagram,\nfacebook,\npinterest,\ntiktok,\nyoutube\n}": SOCIALMEDIAResult;
+    "*[_type == \"faq\"][0]{\nentries[] {\n    answer,\n    question\n}\n}": FAQResult;
     "*[_type == \"product\"]{\n    _id,\n    name,\n    image,\n    'price': price * 100,\n    available\n}": PRODUCTSResult;
     "*[_id == $id][0]{\n    _id,\n    name,\n    description,\n    details,\n    image,\n    gallery,\n    'price': price * 100,\n    available,\n    defined(featured) => {\n        featured[]->{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    },\n    !defined(featured) => {\n        'featured': *[_type == \"product\" && _id != ^._id && available == true][0..3]{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    }\n}": PRODUCTResult;
   }

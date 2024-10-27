@@ -86,6 +86,9 @@
 	p {
 		@apply leading-7;
 	}
+	a {
+		@apply underline hover:no-underline;
+	}
 	.lead {
 		@apply text-xl text-muted-foreground;
 	}

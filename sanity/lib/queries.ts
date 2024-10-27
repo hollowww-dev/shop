@@ -14,6 +14,13 @@ tiktok,
 youtube
 }`;
 
+export const FAQ = groq`*[_type == "faq"][0]{
+entries[] {
+    answer,
+    question
+}
+}`;
+
 export const PRODUCTS = groq`*[_type == "product"]{
     _id,
     name,
