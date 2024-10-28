@@ -22,7 +22,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 	if (!product) {
 		return (
 			<>
-				<main className='container mx-auto' key='product'>
+				<main className='container mx-auto'>
 					<h2>Something went wrong.</h2>
 					<p>We couldn&apos;t find a product you are looking for.</p>
 				</main>
@@ -31,7 +31,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 	}
 
 	return (
-		<main className='container mx-auto flex flex-col gap-6 lg:gap-12' key={product._id}>
+		<main className='container mx-auto flex flex-col gap-6 lg:gap-12'>
 			<ProductDetails product={product} />
 			<section className='flex flex-col gap-2'>
 				<h3>Description</h3>

@@ -33,7 +33,7 @@ const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 					/>
 				</AspectRatio>
 			</CardHeader>
-			<CardContent className='flex justify-between items-center gap-3'>
+			<CardContent className='flex justify-between items-center gap-1 lg:gap-2'>
 				<h4>{product.name}</h4>
 				<Badge variant='outline'>
 					{formatCurrencyString({ value: product.price, currency: config.currency })}

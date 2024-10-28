@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default async function Page() {
 	return (
-		<main className='container mx-auto flex flex-col gap-6 lg:gap-12' key='faq'>
+		<main className='container mx-auto flex flex-col gap-6 lg:gap-12'>
 			<div className='flex flex-col gap-2'>
 				<h2>Frequently Asked Questions</h2>
 			</div>
@@ -19,7 +19,7 @@ export default async function Page() {
 					))}
 				</Accordion>
 			:	<p>No entries.</p>}
-			<span className='lead small self-center'>
+			<span className='small self-center'>
 				Didn&apos;t find your answer? <Link href='/aboutme'>Contact me</Link>
 			</span>
 		</main>

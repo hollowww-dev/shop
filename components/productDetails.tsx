@@ -22,7 +22,7 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
 		addItem(parsedCartItem);
 		toast({
 			title: `"${product.name}" has been added to your cart.`,
-			description: "Thank you for supporting us!",
+			description: "Thank you for supporting me!",
 		});
 	};
 

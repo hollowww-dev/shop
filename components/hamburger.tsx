@@ -1,6 +1,7 @@
 import { AiOutlineMenu } from "react-icons/ai";
 import { Button } from "./ui/button";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetClose } from "./ui/sheet";
+import Link from "next/link";
 
 const Hamburger = () => {
 	return (
@@ -12,6 +13,29 @@ const Hamburger = () => {
 			</SheetTrigger>
 			<SheetContent side='left'>
 				<SheetTitle>Menu</SheetTitle>
+				<ul className='pl-3 pt-3 flex flex-col gap-3'>
+					<li>
+						<SheetClose asChild>
+							<Link href='/' className='text-xl no-underline'>
+								Products
+							</Link>
+						</SheetClose>
+					</li>
+					<li>
+						<SheetClose asChild>
+							<Link href='/aboutme' className='text-xl no-underline'>
+								About me
+							</Link>
+						</SheetClose>
+					</li>
+					<li>
+						<SheetClose asChild>
+							<Link href='/faq' className='text-xl no-underline'>
+								FAQ
+							</Link>
+						</SheetClose>
+					</li>
+				</ul>
 			</SheetContent>
 		</Sheet>
 	);
