@@ -2,7 +2,7 @@ import { Rule } from "sanity";
 
 const aboutMe = {
 	name: "aboutMe",
-	title: "About Me",
+	title: "About me",
 	type: "document",
 	fields: [
 		{ name: "headline", title: "Headline", type: "string", validation: (rule: Rule) => rule.required().max(120) },

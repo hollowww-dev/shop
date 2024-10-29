@@ -1,6 +1,6 @@
 const SocialMedia = {
 	name: "socialMedia",
-	title: "Social Media",
+	title: "Social media",
 	type: "document",
 	fields: [
 		{

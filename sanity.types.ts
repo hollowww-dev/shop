@@ -122,6 +122,22 @@ export type SocialMedia = {
   youtube?: string;
 };
 
+export type Shipping = {
+  _id: string;
+  _type: "shipping";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  shippings: Array<{
+    name: string;
+    time: number;
+    price: number;
+    _type: "entry";
+    _key: string;
+  }>;
+  worldwideShipping?: boolean;
+};
+
 export type Settings = {
   _id: string;
   _type: "settings";
@@ -237,7 +253,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Faq | AboutMe | SocialMedia | Settings | Product | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Faq | AboutMe | SocialMedia | Shipping | Settings | Product | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: SETTINGS
@@ -246,6 +262,18 @@ export type SETTINGSResult = {
   title: string;
   currency: string;
   description: string;
+} | null;
+// Variable: SHIPPINGS
+// Query: *[_type == "shipping"][0]{shippings,shippingArea}
+export type SHIPPINGSResult = {
+  shippings: Array<{
+    name: string;
+    time: number;
+    price: number;
+    _type: "entry";
+    _key: string;
+  }>;
+  shippingArea: null;
 } | null;
 // Variable: SOCIALMEDIA
 // Query: *[_type == "socialMedia"][0]{instagram,facebook,pinterest,tiktok,youtube}
@@ -580,6 +608,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"settings\"][0]{\ntitle,\ncurrency,\ndescription\n}": SETTINGSResult;
+    "*[_type == \"shipping\"][0]{\nshippings,\nshippingArea\n}\n": SHIPPINGSResult;
     "*[_type == \"socialMedia\"][0]{\ninstagram,\nfacebook,\npinterest,\ntiktok,\nyoutube\n}": SOCIALMEDIAResult;
     "*[_type == \"faq\"][0]{\nentries[] {\n    answer,\n    question\n}\n}": FAQResult;
     "*[_type == \"aboutMe\"][0]{\nheadline,\ndescription,\navatar\n}": ABOUTMEResult;

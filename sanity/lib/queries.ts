@@ -6,6 +6,16 @@ currency,
 description
 }`;
 
+export const SHIPPINGS = groq`*[_type == "shipping"][0]{
+shippings[] {
+name,
+time,
+'price': price * 100
+},
+worldwideShipping
+}
+`;
+
 export const SOCIALMEDIA = groq`*[_type == "socialMedia"][0]{
 instagram,
 facebook,
