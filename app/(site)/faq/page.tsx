@@ -5,10 +5,7 @@ import Link from "next/link";
 export default async function Page() {
 	return (
 		<main className='container mx-auto flex flex-col gap-6 lg:gap-12'>
-			<div className='flex flex-col gap-2'>
-				<h2>Frequently Asked Questions</h2>
-			</div>
-
+			<h2>Frequently Asked Questions</h2>
 			{FAQ ?
 				<Accordion type='single' className='w-full' collapsible>
 					{FAQ.map((entry) => (

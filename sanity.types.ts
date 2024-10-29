@@ -88,6 +88,27 @@ export type Faq = {
   }>;
 };
 
+export type AboutMe = {
+  _id: string;
+  _type: "aboutMe";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  headline: string;
+  description: string;
+  avatar: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
 export type SocialMedia = {
   _id: string;
   _type: "socialMedia";
@@ -216,7 +237,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Faq | SocialMedia | Settings | Product | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Faq | AboutMe | SocialMedia | Settings | Product | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: SETTINGS
@@ -242,6 +263,23 @@ export type FAQResult = {
     answer: string;
     question: string;
   }> | null;
+} | null;
+// Variable: ABOUTME
+// Query: *[_type == "aboutMe"][0]{headline,description,avatar}
+export type ABOUTMEResult = {
+  headline: string;
+  description: string;
+  avatar: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
 } | null;
 // Variable: PRODUCTS
 // Query: *[_type == "product"]{    _id,    name,    image,    'price': price * 100,    available}
@@ -544,6 +582,7 @@ declare module "@sanity/client" {
     "*[_type == \"settings\"][0]{\ntitle,\ncurrency,\ndescription\n}": SETTINGSResult;
     "*[_type == \"socialMedia\"][0]{\ninstagram,\nfacebook,\npinterest,\ntiktok,\nyoutube\n}": SOCIALMEDIAResult;
     "*[_type == \"faq\"][0]{\nentries[] {\n    answer,\n    question\n}\n}": FAQResult;
+    "*[_type == \"aboutMe\"][0]{\nheadline,\ndescription,\navatar\n}": ABOUTMEResult;
     "*[_type == \"product\"]{\n    _id,\n    name,\n    image,\n    'price': price * 100,\n    available\n}": PRODUCTSResult;
     "*[_id == $id][0]{\n    _id,\n    name,\n    description,\n    details,\n    image,\n    gallery,\n    'price': price * 100,\n    available,\n    defined(featured) => {\n        featured[]->{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    },\n    !defined(featured) => {\n        'featured': *[_type == \"product\" && _id != ^._id && available == true][0..3]{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    }\n}": PRODUCTResult;
   }

@@ -21,6 +21,12 @@ entries[] {
 }
 }`;
 
+export const ABOUTME = groq`*[_type == "aboutMe"][0]{
+headline,
+description,
+avatar
+}`;
+
 export const PRODUCTS = groq`*[_type == "product"]{
     _id,
     name,
