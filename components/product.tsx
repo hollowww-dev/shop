@@ -8,15 +8,12 @@ import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import config from "@/lib/config.preval";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { ProductType } from "@/types";
 import { Product as ProductSanity } from "@/sanity.types";
 
 const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 	const router = useRouter();
-	useEffect(() => {
-		router.prefetch(`${config.siteUrl}/product/${product._id}`);
-	}, [router, product._id]);
+
 	return (
 		<Card
 			key={product._id}

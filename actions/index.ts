@@ -9,6 +9,7 @@ import { parseCartItem } from "@/lib/utils";
 import { ProductType } from "@/types";
 import shippingsPreval from "@/lib/shippings.preval";
 import configPreval from "@/lib/config.preval";
+import { type Stripe } from "stripe";
 
 export async function createCheckoutSession(cartDetails: CartDetails): Promise<{ sessionId: string }> {
 	if (!process.env.NEXT_PUBLIC_SITE_URL) {
