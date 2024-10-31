@@ -2,9 +2,12 @@ import Product from "@/components/product";
 import ProductDetails from "@/components/productDetails";
 import { Carousel, CarouselContent } from "@/components/ui/carousel";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import configPreval from "@/lib/config.preval";
 import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import { PRODUCT } from "@/sanity/lib/queries";
 import { ProductType } from "@/types";
+import type { Metadata, ResolvingMetadata } from "next";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
 	const params = await props.params;
@@ -66,4 +69,24 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 			)}
 		</main>
 	);
+}
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+	const { id } = params;
+
+	const product: ProductType = await client.fetch(
+		PRODUCT,
+		{ id },
+		{
+			cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
+		}
+	);
+
+	return {
+		title: `${product.name} | ${configPreval.siteUrl}`,
+		openGraph: {
+			images: [urlFor(product.image).width(1200).height(630).url()],
+			title: `${product.name} | ${configPreval.siteUrl}`,
+		},
+	};
 }

@@ -17,11 +17,6 @@ const geistMono = localFont({
 	weight: "100 900",
 });
 
-export const metadata: Metadata = {
-	title: config.title,
-	description: config.description,
-};
-
 export default async function RootLayout({
 	children,
 }: Readonly<{
@@ -38,4 +33,11 @@ export default async function RootLayout({
 			</body>
 		</html>
 	);
+}
+
+export function generateMetadata(): Metadata {
+	return {
+		title: `${config.title}`,
+		description: `${config.description}`,
+	};
 }
