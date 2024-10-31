@@ -39,12 +39,7 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
 			<div className='flex flex-row gap-6 items-center'>
 				<h2>{product.name}</h2>
 				<div className='flex flex-row gap-2'>
-					<FacebookShareButton
-						url={`${config.siteUrl}/product/${product._id}`}
-						openShareDialogOnClick
-						windowHeight={600}
-						windowWidth={800}
-					>
+					<FacebookShareButton url={`${config.siteUrl}/product/${product._id}`}>
 						<IoLogoFacebook className='text-2xl text-facebook' />
 					</FacebookShareButton>
 					<PinterestShareButton

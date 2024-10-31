@@ -57,7 +57,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 				<section className='flex flex-col gap-2'>
 					<h3>Featured products</h3>
 					<Carousel className="className='w-full h-full'">
-						<CarouselContent className='m-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+						<CarouselContent className='m-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2'>
 							{product.featured.map((product) => (
 								<Product product={product} key={product._id} />
 							))}
