@@ -7,7 +7,7 @@ export default async function Page() {
 		<main className='container mx-auto flex flex-col gap-6 lg:gap-12'>
 			<h2>Frequently Asked Questions</h2>
 			{FAQ ?
-				<Accordion type='single' className='w-full' collapsible>
+				<Accordion type='multiple' className='w-full'>
 					{FAQ.map((entry, index) => (
 						<AccordionItem value={entry.question} key={index}>
 							<AccordionTrigger className='text-lg text-semibold'>{entry.question}</AccordionTrigger>
