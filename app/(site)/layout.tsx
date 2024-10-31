@@ -5,6 +5,11 @@ import Providers from "./providers";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import config from "@/lib/config.preval";
+import { client } from "@/sanity/lib/client";
+import { PRODUCT } from "@/sanity/lib/queries";
+import { ProductType } from "@/types";
+import { groq } from "next-sanity";
+import { urlFor } from "@/sanity/lib/image";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -35,9 +40,22 @@ export default async function RootLayout({
 	);
 }
 
-export function generateMetadata(): Metadata {
+export async function generateMetadata(): Promise<Metadata> {
+	const product: { image: ProductType["image"] } = await client.fetch(
+		groq`*[_type == "product"][0]{image}`,
+		{},
+		{
+			cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
+		}
+	);
+
 	return {
 		title: `${config.title}`,
 		description: `${config.description}`,
+		openGraph: {
+			images: [urlFor(product.image).width(1200).height(630).url()],
+			url: `${config.siteUrl}`,
+			type: "website",
+		},
 	};
 }
