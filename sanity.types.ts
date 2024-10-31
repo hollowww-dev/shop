@@ -107,6 +107,19 @@ export type AboutMe = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  information?: Array<{
+    key?: string;
+    value?: Array<string>;
+    _type: "entry";
+    _key: string;
+  }>;
+  contact?: Array<{
+    key?: string;
+    value?: string;
+    hidden?: boolean;
+    _type: "entry";
+    _key: string;
+  }>;
 };
 
 export type SocialMedia = {
@@ -264,16 +277,14 @@ export type SETTINGSResult = {
   description: string;
 } | null;
 // Variable: SHIPPINGS
-// Query: *[_type == "shipping"][0]{shippings,shippingArea}
+// Query: *[_type == "shipping"][0]{shippings[] {name,time,'price': price * 100},worldwideShipping}
 export type SHIPPINGSResult = {
   shippings: Array<{
     name: string;
     time: number;
     price: number;
-    _type: "entry";
-    _key: string;
   }>;
-  shippingArea: null;
+  worldwideShipping: boolean | null;
 } | null;
 // Variable: SOCIALMEDIA
 // Query: *[_type == "socialMedia"][0]{instagram,facebook,pinterest,tiktok,youtube}
@@ -293,7 +304,7 @@ export type FAQResult = {
   }> | null;
 } | null;
 // Variable: ABOUTME
-// Query: *[_type == "aboutMe"][0]{headline,description,avatar}
+// Query: *[_type == "aboutMe"][0]{headline,description,avatar,information,contact}
 export type ABOUTMEResult = {
   headline: string;
   description: string;
@@ -308,6 +319,19 @@ export type ABOUTMEResult = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  information: Array<{
+    key?: string;
+    value?: Array<string>;
+    _type: "entry";
+    _key: string;
+  }> | null;
+  contact: Array<{
+    key?: string;
+    value?: string;
+    hidden?: boolean;
+    _type: "entry";
+    _key: string;
+  }> | null;
 } | null;
 // Variable: PRODUCTS
 // Query: *[_type == "product"]{    _id,    name,    image,    'price': price * 100,    available}
@@ -608,10 +632,10 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"settings\"][0]{\ntitle,\ncurrency,\ndescription\n}": SETTINGSResult;
-    "*[_type == \"shipping\"][0]{\nshippings,\nshippingArea\n}\n": SHIPPINGSResult;
+    "*[_type == \"shipping\"][0]{\nshippings[] {\nname,\ntime,\n'price': price * 100\n},\nworldwideShipping\n}\n": SHIPPINGSResult;
     "*[_type == \"socialMedia\"][0]{\ninstagram,\nfacebook,\npinterest,\ntiktok,\nyoutube\n}": SOCIALMEDIAResult;
     "*[_type == \"faq\"][0]{\nentries[] {\n    answer,\n    question\n}\n}": FAQResult;
-    "*[_type == \"aboutMe\"][0]{\nheadline,\ndescription,\navatar\n}": ABOUTMEResult;
+    "*[_type == \"aboutMe\"][0]{\nheadline,\ndescription,\navatar,\ninformation,\ncontact\n}": ABOUTMEResult;
     "*[_type == \"product\"]{\n    _id,\n    name,\n    image,\n    'price': price * 100,\n    available\n}": PRODUCTSResult;
     "*[_id == $id][0]{\n    _id,\n    name,\n    description,\n    details,\n    image,\n    gallery,\n    'price': price * 100,\n    available,\n    defined(featured) => {\n        featured[]->{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    },\n    !defined(featured) => {\n        'featured': *[_type == \"product\" && _id != ^._id && available == true][0..3]{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    }\n}": PRODUCTResult;
   }

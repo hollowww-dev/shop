@@ -9,7 +9,7 @@ import { parseCartItem } from "@/lib/utils";
 import { ProductType } from "@/types";
 import shippingsPreval from "@/lib/shippings.preval";
 import configPreval from "@/lib/config.preval";
-import { type Stripe } from "stripe";
+import { headers } from "next/headers";
 
 export async function createCheckoutSession(cartDetails: CartDetails): Promise<{ sessionId: string }> {
 	if (!process.env.NEXT_PUBLIC_SITE_URL) {
@@ -25,7 +25,7 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
 			payment_method_types: ["card"],
 			mode: "payment",
 			success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/success/{CHECKOUT_SESSION_ID}`,
-			cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}`,
+			cancel_url: `${(await headers()).get("referer")}`,
 			line_items,
 			shipping_options: shippingsPreval.shippings.map((shipping) => {
 				return {

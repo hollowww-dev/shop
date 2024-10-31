@@ -44,8 +44,8 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 						<TableBody>
 							{product.details.map((detail) => (
 								<TableRow key={detail._key}>
-									<TableCell className='font-medium'>{detail.detail}</TableCell>
-									<TableCell>{detail.answer}</TableCell>
+									<TableCell className='font-medium w-1/3'>{detail.detail}</TableCell>
+									<TableCell className='w-2/3'>{detail.answer}</TableCell>
 								</TableRow>
 							))}
 						</TableBody>

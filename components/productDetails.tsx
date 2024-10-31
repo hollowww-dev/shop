@@ -12,9 +12,12 @@ import { useShoppingCart } from "use-shopping-cart";
 import { parseCartItem } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { ProductType } from "@/types";
+import { useState } from "react";
+import { createCheckoutSession } from "@/actions";
 
 const ProductDetails = ({ product }: { product: ProductType }) => {
-	const { addItem } = useShoppingCart();
+	const [isLoading, setLoading] = useState(false);
+	const { addItem, cartDetails, decrementItem, redirectToCheckout } = useShoppingCart();
 	const { toast } = useToast();
 
 	const handleAddItem = () => {
@@ -24,6 +27,26 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
 			title: `"${product.name}" has been added to your cart.`,
 			description: "Thank you for supporting me!",
 		});
+	};
+
+	const handleBuyNow = async () => {
+		try {
+			const parsedCartItem = parseCartItem(product);
+			addItem(parsedCartItem);
+			setLoading(true);
+			if (!cartDetails) {
+				throw new Error("Cart is empty.");
+			}
+			const { sessionId } = await createCheckoutSession(cartDetails);
+			redirectToCheckout(sessionId);
+		} catch (error) {
+			setLoading(false);
+			decrementItem(product._id);
+			if (error instanceof Error) {
+				console.log(error);
+				toast({ title: "Something went wrong.", description: error.message, variant: "destructive" });
+			}
+		}
 	};
 
 	return (
@@ -42,6 +65,7 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
 													<Image
 														src={urlFor(item).width(800).height(800).url()}
 														alt={product.name}
+														loading='lazy'
 														fill
 													/>
 												</AspectRatio>
@@ -65,7 +89,9 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
 						<Button size={"lg"} variant={"outline"} onClick={() => handleAddItem()}>
 							Add to cart
 						</Button>
-						<Button size={"lg"}>Buy now</Button>
+						<Button size={"lg"} onClick={async () => await handleBuyNow()} disabled={isLoading}>
+							{isLoading ? "Buying..." : "Buy now"}
+						</Button>
 					</div>
 				</div>
 			</div>

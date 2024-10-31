@@ -34,7 +34,9 @@ entries[] {
 export const ABOUTME = groq`*[_type == "aboutMe"][0]{
 headline,
 description,
-avatar
+avatar,
+information,
+contact
 }`;
 
 export const PRODUCTS = groq`*[_type == "product"]{

@@ -4,7 +4,7 @@ import preval from "next-plugin-preval";
 import { ABOUTME } from "../sanity/lib/queries";
 
 async function getAboutMe() {
-	const { headline, description, avatar }: AboutMe = await client.fetch(
+	const { headline, description, avatar, contact, information }: AboutMe = await client.fetch(
 		ABOUTME,
 		{},
 		{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
@@ -13,6 +13,8 @@ async function getAboutMe() {
 		headline,
 		description,
 		avatar,
+		contact,
+		information,
 	};
 }
 export default preval(getAboutMe());

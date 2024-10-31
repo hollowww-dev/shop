@@ -8,8 +8,8 @@ export default async function Page() {
 			<h2>Frequently Asked Questions</h2>
 			{FAQ ?
 				<Accordion type='single' className='w-full' collapsible>
-					{FAQ.map((entry) => (
-						<AccordionItem value={entry.question} key={entry._key}>
+					{FAQ.map((entry, index) => (
+						<AccordionItem value={entry.question} key={index}>
 							<AccordionTrigger className='text-lg text-semibold'>{entry.question}</AccordionTrigger>
 							<AccordionContent>{entry.answer}</AccordionContent>
 						</AccordionItem>

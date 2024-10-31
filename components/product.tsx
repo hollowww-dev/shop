@@ -10,9 +10,13 @@ import config from "@/lib/config.preval";
 import { useRouter } from "next/navigation";
 import { ProductType } from "@/types";
 import { Product as ProductSanity } from "@/sanity.types";
+import { useEffect } from "react";
 
 const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 	const router = useRouter();
+	useEffect(() => {
+		router.prefetch(`${config.siteUrl}/product/${product._id}`);
+	}, [product._id, router]);
 
 	return (
 		<Card
@@ -26,13 +30,14 @@ const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 						src={urlFor(product.image).width(300).height(300).url()}
 						alt={product.name}
 						className='aspect-square object-cover rounded-md'
+						loading='lazy'
 						fill
 					/>
 				</AspectRatio>
 			</CardHeader>
-			<CardContent className='flex justify-between items-center gap-1 lg:gap-2'>
+			<CardContent className='flex flex-col md:flex-row justify-between md:items-center gap-1 lg:gap-2'>
 				<h4>{product.name}</h4>
-				<Badge variant='outline'>
+				<Badge variant='outline' className='self-center'>
 					{formatCurrencyString({ value: product.price, currency: config.currency })}
 				</Badge>
 			</CardContent>
