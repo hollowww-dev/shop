@@ -12,14 +12,10 @@ import { useShoppingCart } from "use-shopping-cart";
 import { parseCartItem } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { ProductType } from "@/types";
-import { useState } from "react";
-import { createCheckoutSession } from "@/actions";
 
 const ProductDetails = ({ product }: { product: ProductType }) => {
-	const [isLoading, setLoading] = useState(false);
-	const { addItem, cartDetails, decrementItem, redirectToCheckout } = useShoppingCart();
+	const { addItem, handleCartClick } = useShoppingCart();
 	const { toast } = useToast();
-
 	const handleAddItem = () => {
 		const parsedCartItem = parseCartItem(product);
 		addItem(parsedCartItem);
@@ -29,24 +25,10 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
 		});
 	};
 
-	const handleBuyNow = async () => {
-		try {
-			const parsedCartItem = parseCartItem(product);
-			addItem(parsedCartItem);
-			setLoading(true);
-			if (!cartDetails) {
-				throw new Error("Cart is empty.");
-			}
-			const { sessionId } = await createCheckoutSession(cartDetails);
-			redirectToCheckout(sessionId);
-		} catch (error) {
-			setLoading(false);
-			decrementItem(product._id);
-			if (error instanceof Error) {
-				console.log(error);
-				toast({ title: "Something went wrong.", description: error.message, variant: "destructive" });
-			}
-		}
+	const handleBuyNow = () => {
+		const parsedCartItem = parseCartItem(product);
+		addItem(parsedCartItem);
+		handleCartClick();
 	};
 
 	return (
@@ -89,8 +71,8 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
 						<Button size={"lg"} variant={"outline"} onClick={() => handleAddItem()}>
 							Add to cart
 						</Button>
-						<Button size={"lg"} onClick={async () => await handleBuyNow()} disabled={isLoading}>
-							{isLoading ? "Buying..." : "Buy now"}
+						<Button size={"lg"} onClick={async () => await handleBuyNow()}>
+							Buy now
 						</Button>
 					</div>
 				</div>
