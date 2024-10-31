@@ -10,9 +10,7 @@ import { ProductType } from "@/types";
 import type { Metadata } from "next";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
-	const params = await props.params;
-
-	const { id } = params;
+	const { id } = await props.params;
 
 	const product: ProductType = await client.fetch(
 		PRODUCT,
@@ -71,8 +69,8 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 	);
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-	const { id } = params;
+export async function generateMetadata(props: { params: Promise<{ id: string }> }): Promise<Metadata> {
+	const { id } = await props.params;
 
 	const product: ProductType = await client.fetch(
 		PRODUCT,
@@ -83,7 +81,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 	);
 
 	return {
-		title: `${product.name} | ${configPreval.siteUrl}`,
+		title: `${product.name} | ${configPreval.title}`,
 		openGraph: {
 			images: [urlFor(product.image).width(1200).height(630).url()],
 			title: `${product.name} | ${configPreval.siteUrl}`,
