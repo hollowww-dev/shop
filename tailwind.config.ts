@@ -11,6 +11,7 @@ const config: Config = {
 		colors: {
 			facebook: "#3b5999",
 			pinterest: "#bd081c",
+			black: "#000000",
 		},
 		screens: {
 			sm: "600px",
