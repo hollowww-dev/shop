@@ -84,7 +84,7 @@ export async function generateMetadata(props: { params: Promise<{ id: string }> 
 		title: `${product.name} | ${configPreval.title}`,
 		openGraph: {
 			images: [urlFor(product.image).width(1200).height(630).url()],
-			title: `${product.name} | ${configPreval.siteUrl}`,
+			title: `${product.name} | ${configPreval.title}`,
 			description: product.description,
 			url: `${configPreval.siteUrl}/product/${product._id}`,
 			type: "website",
