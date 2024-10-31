@@ -12,6 +12,9 @@ import { useShoppingCart } from "use-shopping-cart";
 import { parseCartItem } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { ProductType } from "@/types";
+import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from "react-share";
+import { IoLogoFacebook, IoLogoPinterest } from "react-icons/io5";
+import { FaSquareXTwitter } from "react-icons/fa6";
 
 const ProductDetails = ({ product }: { product: ProductType }) => {
 	const { addItem, handleCartClick } = useShoppingCart();
@@ -33,7 +36,29 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
 
 	return (
 		<section className='flex flex-col gap-2'>
-			<h2>{product.name}</h2>
+			<div className='flex flex-row gap-6 items-center'>
+				<h2>{product.name}</h2>
+				<div className='flex flex-row gap-2'>
+					<FacebookShareButton
+						url={`${config.siteUrl}/product/${product._id}`}
+						openShareDialogOnClick
+						windowHeight={600}
+						windowWidth={800}
+					>
+						<IoLogoFacebook className='text-2xl text-facebook' />
+					</FacebookShareButton>
+					<PinterestShareButton
+						url={`${config.siteUrl}/product/${product._id}`}
+						media={urlFor(product.image).url()}
+						openShareDialogOnClick
+					>
+						<IoLogoPinterest className='text-2xl text-pinterest' />
+					</PinterestShareButton>
+					<TwitterShareButton url={`${config.siteUrl}/product/${product._id}`} openShareDialogOnClick>
+						<FaSquareXTwitter className='text-2xl text-black' />
+					</TwitterShareButton>
+				</div>
+			</div>
 			<div className='flex flex-col lg:flex-row gap-6 lg:gap-12'>
 				<Carousel className='w-full h-full'>
 					<Card className='overflow-hidden'>

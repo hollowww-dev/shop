@@ -8,6 +8,10 @@ const config: Config = {
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
+		colors: {
+			facebook: "#3b5999",
+			pinterest: "#bd081c",
+		},
 		screens: {
 			sm: "600px",
 			md: "728px",
