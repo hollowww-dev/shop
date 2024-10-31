@@ -6,7 +6,6 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import config from "@/lib/config.preval";
 import { client } from "@/sanity/lib/client";
-import { PRODUCT } from "@/sanity/lib/queries";
 import { ProductType } from "@/types";
 import { groq } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
