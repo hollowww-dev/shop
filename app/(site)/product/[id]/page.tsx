@@ -7,7 +7,7 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { PRODUCT } from "@/sanity/lib/queries";
 import { ProductType } from "@/types";
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
 	const params = await props.params;
