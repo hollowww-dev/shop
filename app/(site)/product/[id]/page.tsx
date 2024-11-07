@@ -10,7 +10,7 @@ import { ProductType } from "@/types";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
-export async function ProductLoader(props: { params: Promise<{ id: string }> }) {
+async function ProductLoader(props: { params: Promise<{ id: string }> }) {
 	const { id } = await props.params;
 
 	const product: ProductType = await client.fetch(
