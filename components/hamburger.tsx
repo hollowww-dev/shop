@@ -16,13 +16,6 @@ const Hamburger = () => {
 				<ul className='pl-3 pt-3 flex flex-col gap-3'>
 					<li>
 						<SheetClose asChild>
-							<Link href='/' className='text-xl no-underline'>
-								Products
-							</Link>
-						</SheetClose>
-					</li>
-					<li>
-						<SheetClose asChild>
 							<Link href='/aboutme' className='text-xl no-underline'>
 								About me
 							</Link>

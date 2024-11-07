@@ -11,6 +11,22 @@ import { useRouter } from "next/navigation";
 import { ProductType } from "@/types";
 import { Product as ProductSanity } from "@/sanity.types";
 import { useEffect } from "react";
+import { Skeleton } from "./ui/skeleton";
+
+export const ProductSkeleton = () => {
+	return (
+		<Card>
+			<CardHeader>
+				<AspectRatio ratio={1} className='relative'>
+					<Skeleton className='w-full h-full' />
+				</AspectRatio>
+			</CardHeader>
+			<CardContent className='flex flex-col md:flex-row justify-between md:items-center gap-1 lg:gap-2'>
+				<Skeleton className='w-full h-[1.75rem]' />
+			</CardContent>
+		</Card>
+	);
+};
 
 const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 	const router = useRouter();

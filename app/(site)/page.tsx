@@ -1,22 +1,26 @@
 import { client } from "@/sanity/lib/client";
 import { PRODUCTS } from "@/sanity/lib/queries";
-import Product from "@/components/product";
 import { ProductType } from "@/types";
+import { Suspense } from "react";
+import ProductDisplay, { ProductDisplaySkeleton } from "@/components/productsDisplay";
 
-export default async function Home() {
+async function ProductDisplayLoader() {
 	const products = await client.fetch<Promise<ProductType[]>>(
 		PRODUCTS,
 		{},
 		{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
 	);
+
+	return <ProductDisplay products={products} />;
+}
+
+export default async function Home() {
 	return (
 		<>
 			<main className='container mx-auto'>
-				<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 py-3'>
-					{products.map((product) => (
-						<Product key={product._id} product={product} />
-					))}
-				</div>
+				<Suspense fallback={<ProductDisplaySkeleton />}>
+					<ProductDisplayLoader />
+				</Suspense>
 			</main>
 		</>
 	);

@@ -1,3 +1,4 @@
+import DetailInput from "@/components/detailInput";
 import { type Rule } from "sanity";
 
 const Product = {
@@ -39,6 +40,9 @@ const Product = {
 							name: "detail",
 							title: "Details",
 							type: "string",
+							components: {
+								input: DetailInput,
+							},
 							validation: (rule: Rule) => rule.required(),
 						},
 						{
