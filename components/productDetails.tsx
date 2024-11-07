@@ -15,6 +15,31 @@ import { ProductType } from "@/types";
 import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from "react-share";
 import { IoLogoFacebook, IoLogoPinterest } from "react-icons/io5";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import { Skeleton } from "./ui/skeleton";
+
+export const ProductDetailsSkeleton = () => {
+	return (
+		<section className='flex flex-col gap-2'>
+			<Skeleton className='w-1/3 h-[2.25rem]' />
+			<div className='flex flex-col lg:flex-row gap-6 lg:gap-12'>
+				<Skeleton className='w-full aspect-square' />
+				<div className='flex flex-col lg:self-center gap-6 lg:gap-12'>
+					<span className='text-4xl self-center'>
+						<Skeleton className='w-24 h-[2.5rem]' />
+					</span>
+					<div className='flex flex-1 flex-col lg:flex-row gap-2'>
+						<Button size={"lg"} variant={"outline"} disabled>
+							Add to cart
+						</Button>
+						<Button size={"lg"} disabled>
+							Buy now
+						</Button>
+					</div>
+				</div>
+			</div>
+		</section>
+	);
+};
 
 const ProductDetails = ({ product }: { product: ProductType }) => {
 	const { addItem, handleCartClick } = useShoppingCart();

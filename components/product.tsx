@@ -10,7 +10,6 @@ import config from "@/lib/config.preval";
 import { useRouter } from "next/navigation";
 import { ProductType } from "@/types";
 import { Product as ProductSanity } from "@/sanity.types";
-import { useEffect } from "react";
 import { Skeleton } from "./ui/skeleton";
 
 export const ProductSkeleton = () => {
@@ -30,9 +29,6 @@ export const ProductSkeleton = () => {
 
 const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 	const router = useRouter();
-	useEffect(() => {
-		router.prefetch(`${config.siteUrl}/product/${product._id}`);
-	}, [product._id, router]);
 
 	return (
 		<Card

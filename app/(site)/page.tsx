@@ -16,12 +16,10 @@ async function ProductDisplayLoader() {
 
 export default async function Home() {
 	return (
-		<>
-			<main className='container mx-auto'>
-				<Suspense fallback={<ProductDisplaySkeleton />}>
-					<ProductDisplayLoader />
-				</Suspense>
-			</main>
-		</>
+		<main className='container mx-auto'>
+			<Suspense fallback={<ProductDisplaySkeleton />}>
+				<ProductDisplayLoader />
+			</Suspense>
+		</main>
 	);
 }

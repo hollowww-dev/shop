@@ -1,5 +1,5 @@
 import Product from "@/components/product";
-import ProductDetails from "@/components/productDetails";
+import ProductDetails, { ProductDetailsSkeleton } from "@/components/productDetails";
 import { Carousel, CarouselContent } from "@/components/ui/carousel";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import configPreval from "@/lib/config.preval";
@@ -8,8 +8,9 @@ import { urlFor } from "@/sanity/lib/image";
 import { PRODUCT } from "@/sanity/lib/queries";
 import { ProductType } from "@/types";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
-export default async function Page(props: { params: Promise<{ id: string }> }) {
+export async function ProductLoader(props: { params: Promise<{ id: string }> }) {
 	const { id } = await props.params;
 
 	const product: ProductType = await client.fetch(
@@ -66,6 +67,14 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 				</section>
 			)}
 		</main>
+	);
+}
+
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+	return (
+		<Suspense fallback={<ProductDetailsSkeleton />}>
+			<ProductLoader params={props.params} />
+		</Suspense>
 	);
 }
 
