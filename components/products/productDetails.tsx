@@ -2,9 +2,9 @@
 
 import { urlFor } from "@/sanity/lib/image";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
-import { Button } from "./ui/button";
-import { Card, CardContent } from "./ui/card";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "./ui/carousel";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import Image from "next/image";
 import config from "@/lib/config.preval";
 import { formatCurrencyString } from "use-shopping-cart/core";
@@ -15,7 +15,7 @@ import { ProductType } from "@/types";
 import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from "react-share";
 import { IoLogoFacebook, IoLogoPinterest } from "react-icons/io5";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const ProductDetailsSkeleton = () => {
 	return (
@@ -93,6 +93,8 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
 														src={urlFor(item).width(800).height(800).url()}
 														alt={product.name}
 														loading='lazy'
+														placeholder='blur'
+														blurDataURL={urlFor(item).width(24).height(24).blur(10).url()}
 														fill
 													/>
 												</AspectRatio>

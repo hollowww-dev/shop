@@ -1,5 +1,5 @@
-import Product from "@/components/product";
-import ProductDetails, { ProductDetailsSkeleton } from "@/components/productDetails";
+import Product from "@/components/products/product";
+import ProductDetails, { ProductDetailsSkeleton } from "@/components/products/productDetails";
 import { Carousel, CarouselContent } from "@/components/ui/carousel";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import configPreval from "@/lib/config.preval";
@@ -20,6 +20,9 @@ async function ProductLoader(props: { params: Promise<{ id: string }> }) {
 			cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
 		}
 	);
+	if (process.env.NODE_ENV === "development") {
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+	}
 
 	if (!product) {
 		return (
@@ -33,7 +36,7 @@ async function ProductLoader(props: { params: Promise<{ id: string }> }) {
 	}
 
 	return (
-		<main className='container mx-auto flex flex-col gap-6 lg:gap-12'>
+		<>
 			<ProductDetails product={product} />
 			<section className='flex flex-col gap-2'>
 				<h3>Description</h3>
@@ -66,15 +69,17 @@ async function ProductLoader(props: { params: Promise<{ id: string }> }) {
 					</Carousel>
 				</section>
 			)}
-		</main>
+		</>
 	);
 }
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
 	return (
-		<Suspense fallback={<ProductDetailsSkeleton />}>
-			<ProductLoader params={props.params} />
-		</Suspense>
+		<main className='container mx-auto flex flex-col gap-6 lg:gap-12'>
+			<Suspense fallback={<ProductDetailsSkeleton />}>
+				<ProductLoader params={props.params} />
+			</Suspense>
+		</main>
 	);
 }
 

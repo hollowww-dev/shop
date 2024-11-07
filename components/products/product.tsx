@@ -10,22 +10,7 @@ import config from "@/lib/config.preval";
 import { useRouter } from "next/navigation";
 import { ProductType } from "@/types";
 import { Product as ProductSanity } from "@/sanity.types";
-import { Skeleton } from "./ui/skeleton";
-
-export const ProductSkeleton = () => {
-	return (
-		<Card>
-			<CardHeader>
-				<AspectRatio ratio={1} className='relative'>
-					<Skeleton className='w-full h-full' />
-				</AspectRatio>
-			</CardHeader>
-			<CardContent className='flex flex-col md:flex-row justify-between md:items-center gap-1 lg:gap-2'>
-				<Skeleton className='w-full h-[1.75rem]' />
-			</CardContent>
-		</Card>
-	);
-};
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 	const router = useRouter();
@@ -40,6 +25,8 @@ const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 				<AspectRatio ratio={1} className='relative'>
 					<Image
 						src={urlFor(product.image).width(300).height(300).url()}
+						placeholder='blur'
+						blurDataURL={urlFor(product.image).width(24).height(24).blur(10).url()}
 						alt={product.name}
 						className='aspect-square object-cover rounded-md'
 						loading='lazy'
@@ -56,6 +43,21 @@ const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 			<Badge variant={product.available ? "secondary" : "default"} className='absolute top-5 right-5'>
 				{product.available ? "Available" : "Sold"}
 			</Badge>
+		</Card>
+	);
+};
+
+export const ProductSkeleton = () => {
+	return (
+		<Card>
+			<CardHeader>
+				<AspectRatio ratio={1} className='relative'>
+					<Skeleton className='w-full h-full' />
+				</AspectRatio>
+			</CardHeader>
+			<CardContent className='flex flex-col md:flex-row justify-between md:items-center gap-1 lg:gap-2'>
+				<Skeleton className='w-full h-[1.875rem]' />
+			</CardContent>
 		</Card>
 	);
 };
