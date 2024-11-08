@@ -2,7 +2,7 @@
 
 import { Button } from "../ui/button";
 import { VscSettings, VscListFilter } from "react-icons/vsc";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { client } from "@/sanity/lib/client";
 import { PRODUCTS } from "@/sanity/lib/queries";
 import { ProductType } from "@/types";
@@ -21,7 +21,19 @@ const ProductsSkeleton = () => {
 	);
 };
 
-const Products = ({ orderBy, order }: { orderBy: "date" | "price"; order: "ascending" | "descending" }) => {
+const Products = ({ orderBy, order }: { orderBy: "price"; order: "ascending" | "descending" }) => {
+	const orderProducts = (products: ProductType[]) => {
+		switch (orderBy) {
+			case "price":
+				switch (order) {
+					case "ascending":
+						return products.sort((a, b) => a.price - b.price);
+					case "descending":
+						return products.sort((a, b) => b.price - a.price);
+				}
+		}
+	};
+
 	const { data: products } = useSuspenseQuery({
 		queryKey: ["products"],
 		queryFn: () =>
@@ -32,28 +44,11 @@ const Products = ({ orderBy, order }: { orderBy: "date" | "price"; order: "ascen
 			),
 	});
 
-	const orderProducts = (products: ProductType[]) => {
-		switch (orderBy) {
-			case "price":
-				switch (order) {
-					case "ascending":
-						return products.sort((a, b) => a.price - b.price);
-					case "descending":
-						return products.sort((a, b) => b.price - a.price);
-				}
-			case "date":
-				switch (order) {
-					case "ascending":
-						return products.sort((a, b) => (new Date(a._createdAt) < new Date(b._createdAt) ? 1 : -1));
-					case "descending":
-						return products.sort((a, b) => (new Date(a._createdAt) > new Date(b._createdAt) ? 1 : -1));
-				}
-		}
-	};
+	const orderedProducts = orderProducts(products);
 
 	return (
 		<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 py-3'>
-			{orderProducts(products).map((product) => (
+			{orderedProducts.map((product) => (
 				<Product key={product._id} product={product} />
 			))}
 		</div>
@@ -61,7 +56,7 @@ const Products = ({ orderBy, order }: { orderBy: "date" | "price"; order: "ascen
 };
 
 const ProductsDisplay = () => {
-	const [orderBy, setOrderBy] = useState<"price" | "date">("date");
+	const [orderBy, setOrderBy] = useState<"price">("price");
 	const [order, setOrder] = useState<"ascending" | "descending">("descending");
 	return (
 		<section className='flex flex-col gap-2'>
@@ -81,12 +76,11 @@ const ProductsDisplay = () => {
 						</Button>
 					</PopoverTrigger>
 					<PopoverContent align='end' className='flex flex-col gap-3'>
-						<Select value={orderBy} onValueChange={(value: "price" | "date") => setOrderBy(value)}>
+						<Select value={orderBy} onValueChange={(value: "price") => setOrderBy(value)}>
 							<SelectTrigger className='w-full'>
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value='date'>Date</SelectItem>
 								<SelectItem value='price'>Price</SelectItem>
 							</SelectContent>
 						</Select>
