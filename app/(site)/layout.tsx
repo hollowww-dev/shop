@@ -31,7 +31,7 @@ export default async function RootLayout({
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 				<Providers>
 					<Header />
-					{children}
+					<main className='container mx-auto flex flex-col gap-6 lg:gap-12'>{children}</main>
 					<Footer />
 				</Providers>
 			</body>

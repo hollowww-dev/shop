@@ -1,9 +1,5 @@
-import { ProductsDisplay } from "@/components/products/productsDisplay";
+import ProductsDisplay from "@/components/products/productsDisplay";
 
-export default function Page() {
-	return (
-		<main className='container mx-auto'>
-			<ProductsDisplay />
-		</main>
-	);
+export default async function Page() {
+	return <ProductsDisplay />;
 }
