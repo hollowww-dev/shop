@@ -20,7 +20,7 @@ import { Table, TableBody, TableRow, TableCell } from "../ui/table";
 import Product from "./product";
 import { client } from "@/sanity/lib/client";
 import { PRODUCT } from "@/sanity/lib/queries";
-import useSWR from "swr";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 export const ProductDetailsSkeleton = () => {
 	return (
@@ -47,20 +47,15 @@ export const ProductDetailsSkeleton = () => {
 };
 
 const ProductDetails = ({ id }: { id: string }) => {
-	const { data: product } = useSWR(
-		[PRODUCT, id],
-		([query]) =>
+	const { data: product } = useSuspenseQuery({
+		queryKey: ["product", id],
+		queryFn: () =>
 			client.fetch<ProductType>(
-				query,
+				PRODUCT,
 				{ id },
-				{
-					cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
-				}
+				{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
 			),
-		{
-			suspense: true,
-		}
-	);
+	});
 	const { addItem, handleCartClick } = useShoppingCart();
 	const { toast } = useToast();
 

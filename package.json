@@ -29,6 +29,7 @@
 		"@sanity/vision": "^3.60.0",
 		"@sanity/webhook": "^4.0.4",
 		"@stripe/stripe-js": "^4.8.0",
+		"@tanstack/react-query": "^5.59.20",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
 		"embla-carousel-react": "^8.3.0",
@@ -44,7 +45,6 @@
 		"sanity-plugin-singleton-tools": "^1.1.0",
 		"stripe": "^17.2.0",
 		"styled-components": "^6.1.13",
-		"swr": "^2.2.5",
 		"tailwind-merge": "^2.5.3",
 		"tailwindcss-animate": "^1.0.7",
 		"use-shopping-cart": "^3.2.0"

@@ -8,8 +8,8 @@ import { PRODUCTS } from "@/sanity/lib/queries";
 import { ProductType } from "@/types";
 import Product, { ProductSkeleton } from "./product";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import useSWR from "swr";
 import { Select, SelectContent, SelectItem, SelectValue, SelectTrigger } from "../ui/select";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 const ProductsSkeleton = () => {
 	return (
@@ -22,18 +22,16 @@ const ProductsSkeleton = () => {
 };
 
 const Products = ({ orderBy, order }: { orderBy: "date" | "price"; order: "ascending" | "descending" }) => {
-	const { data: products } = useSWR(
-		PRODUCTS,
-		(query) =>
+	const { data: products } = useSuspenseQuery({
+		queryKey: ["products"],
+		queryFn: () =>
 			client.fetch<ProductType[]>(
-				query,
+				PRODUCTS,
 				{},
 				{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
 			),
-		{
-			suspense: true,
-		}
-	);
+	});
+
 	const orderProducts = (products: ProductType[]) => {
 		switch (orderBy) {
 			case "price":
@@ -50,8 +48,6 @@ const Products = ({ orderBy, order }: { orderBy: "date" | "price"; order: "ascen
 					case "descending":
 						return products.sort((a, b) => (new Date(a._createdAt) > new Date(b._createdAt) ? 1 : -1));
 				}
-			default:
-				return products;
 		}
 	};
 
