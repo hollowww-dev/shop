@@ -45,8 +45,7 @@ export const ProductDetailsSkeleton = () => {
 				</div>
 			</section>
 			<section className='flex flex-col gap-2'>
-				<Skeleton className='w-full lg:w-1/3 h-[2rem]' />
-				<Skeleton className='w-full h-[1.75rem]' />
+				<Skeleton className='w-full h-[4.25rem]' />
 			</section>
 		</>
 	);
