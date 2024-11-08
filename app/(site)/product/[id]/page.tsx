@@ -7,27 +7,12 @@ import { ProductType } from "@/types";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
-async function getProduct(id: string) {
-	const product = await client.fetch<ProductType>(
-		PRODUCT,
-		{ id },
-		{
-			cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
-		}
-	);
-	if (process.env.NODE_ENV === "development") {
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-	}
-	return product;
-}
-
 export default async function Page(props: { params: Promise<{ id: string }> }) {
 	const { id } = await props.params;
-	const productPromise = getProduct(id);
 
 	return (
 		<Suspense fallback={<ProductDetailsSkeleton />}>
-			<ProductDetails productPromise={productPromise} />
+			<ProductDetails id={id} />
 		</Suspense>
 	);
 }

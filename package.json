@@ -19,6 +19,7 @@
 		"@radix-ui/react-popover": "^1.1.2",
 		"@radix-ui/react-progress": "^1.1.0",
 		"@radix-ui/react-scroll-area": "^1.2.0",
+		"@radix-ui/react-select": "^2.1.2",
 		"@radix-ui/react-separator": "^1.1.0",
 		"@radix-ui/react-slot": "^1.1.0",
 		"@radix-ui/react-tabs": "^1.1.1",
@@ -43,6 +44,7 @@
 		"sanity-plugin-singleton-tools": "^1.1.0",
 		"stripe": "^17.2.0",
 		"styled-components": "^6.1.13",
+		"swr": "^2.2.5",
 		"tailwind-merge": "^2.5.3",
 		"tailwindcss-animate": "^1.0.7",
 		"use-shopping-cart": "^3.2.0"

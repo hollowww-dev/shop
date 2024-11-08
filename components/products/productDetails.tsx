@@ -18,7 +18,9 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableRow, TableCell } from "../ui/table";
 import Product from "./product";
-import { use } from "react";
+import { client } from "@/sanity/lib/client";
+import { PRODUCT } from "@/sanity/lib/queries";
+import useSWR from "swr";
 
 export const ProductDetailsSkeleton = () => {
 	return (
@@ -44,16 +46,23 @@ export const ProductDetailsSkeleton = () => {
 	);
 };
 
-const ProductDetails = ({ productPromise }: { productPromise: Promise<ProductType> }) => {
-	const product = use(productPromise);
+const ProductDetails = ({ id }: { id: string }) => {
+	const { data: product } = useSWR(
+		[PRODUCT, id],
+		([query]) =>
+			client.fetch<ProductType>(
+				query,
+				{ id },
+				{
+					cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
+				}
+			),
+		{
+			suspense: true,
+		}
+	);
 	const { addItem, handleCartClick } = useShoppingCart();
 	const { toast } = useToast();
-
-	if (!product) {
-		if (!product) {
-			throw new Error("That product doesn't exist!");
-		}
-	}
 
 	const handleAddItem = () => {
 		const parsedCartItem = parseCartItem(product);
