@@ -55,6 +55,9 @@ const ProductDetails = ({ id }: { id: string }) => {
 				{ id },
 				{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
 			),
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+		refetchOnReconnect: false,
 	});
 	const { addItem, handleCartClick } = useShoppingCart();
 	const { toast } = useToast();

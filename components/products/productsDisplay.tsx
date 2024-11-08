@@ -2,7 +2,7 @@
 
 import { Button } from "../ui/button";
 import { VscSettings, VscListFilter } from "react-icons/vsc";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { client } from "@/sanity/lib/client";
 import { PRODUCTS } from "@/sanity/lib/queries";
 import { ProductType } from "@/types";
@@ -42,6 +42,9 @@ const Products = ({ orderBy, order }: { orderBy: "price"; order: "ascending" | "
 				{},
 				{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
 			),
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+		refetchOnReconnect: false,
 	});
 
 	const orderedProducts = orderProducts(products);

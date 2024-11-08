@@ -6,14 +6,29 @@ import { PRODUCT } from "@/sanity/lib/queries";
 import { ProductType } from "@/types";
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
+import { getQueryClient } from "@/lib/queryClient";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
 	const { id } = await props.params;
 
+	const queryClient = getQueryClient();
+	queryClient.prefetchQuery({
+		queryKey: ["product", id],
+		queryFn: () =>
+			client.fetch<ProductType[]>(
+				PRODUCT,
+				{ id },
+				{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
+			),
+	});
+
 	return (
-		<Suspense fallback={<ProductDetailsSkeleton />}>
-			<ProductDetails id={id} />
-		</Suspense>
+		<HydrationBoundary state={dehydrate(queryClient)}>
+			<Suspense fallback={<ProductDetailsSkeleton />}>
+				<ProductDetails id={id} />
+			</Suspense>
+		</HydrationBoundary>
 	);
 }
 
