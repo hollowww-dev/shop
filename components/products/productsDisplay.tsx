@@ -6,20 +6,11 @@ import { Suspense, useState } from "react";
 import { client } from "@/sanity/lib/client";
 import { PRODUCTS } from "@/sanity/lib/queries";
 import { ProductType } from "@/types";
-import Product, { ProductSkeleton } from "./product";
+import Product from "./product";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Select, SelectContent, SelectItem, SelectValue, SelectTrigger } from "../ui/select";
 import { useSuspenseQuery } from "@tanstack/react-query";
-
-const ProductsSkeleton = () => {
-	return (
-		<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 py-3'>
-			{Array.from({ length: 3 }).map((_, i) => (
-				<ProductSkeleton key={i} />
-			))}
-		</div>
-	);
-};
+import { ProductsSkeleton } from "../skeletons";
 
 const Products = ({ orderBy, order }: { orderBy: "price"; order: "ascending" | "descending" }) => {
 	const orderProducts = (products: ProductType[]) => {

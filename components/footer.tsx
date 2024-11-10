@@ -3,7 +3,7 @@ import config from "@/lib/config.preval";
 import Link from "next/link";
 import socialMediaPreval from "@/lib/socialMedia.preval";
 
-const Footer = () => {
+const Footer = async () => {
 	return (
 		<footer className='container mx-auto pt-12 lg:pt-24 pb-2 flex flex-col gap-12 lg:gap-24 text-center'>
 			<div className='flex justify-center gap-12'>
@@ -34,7 +34,7 @@ const Footer = () => {
 				)}
 			</div>
 			<p className='muted'>
-				© {config.title} {new Date().getFullYear()}
+				© {config.title} {new Date().getFullYear().toString()}
 			</p>
 		</footer>
 	);
