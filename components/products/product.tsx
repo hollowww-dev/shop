@@ -1,5 +1,3 @@
-"use client";
-
 import { urlFor } from "@/sanity/lib/image";
 import { formatCurrencyString } from "use-shopping-cart/core";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +11,7 @@ import Link from "next/link";
 
 const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 	return (
-		<Link href={`${config.siteUrl}/product/${product._id}`} prefetch={true}>
+		<Link href={`${config.siteUrl}/product/${product._id}`} prefetch={true} className='no-underline'>
 			<Card key={product._id} className='relative active:shadow-none transition-shadow cursor-pointer'>
 				<CardHeader>
 					<AspectRatio ratio={1} className='relative'>
@@ -30,7 +28,7 @@ const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 				</CardHeader>
 				<CardContent className='flex flex-col md:flex-row justify-between md:items-center gap-1 lg:gap-2'>
 					<h4>{product.name}</h4>
-					<Badge variant='outline' className='self-center'>
+					<Badge variant='outline'>
 						{formatCurrencyString({ value: product.price, currency: config.currency })}
 					</Badge>
 				</CardContent>
