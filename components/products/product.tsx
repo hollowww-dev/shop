@@ -28,7 +28,7 @@ const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 				</CardHeader>
 				<CardContent className='flex flex-col md:flex-row justify-between md:items-center gap-1 lg:gap-2'>
 					<h4>{product.name}</h4>
-					<Badge variant='outline'>
+					<Badge variant='outline' className='self-center lg:self-start'>
 						{formatCurrencyString({ value: product.price, currency: config.currency })}
 					</Badge>
 				</CardContent>
