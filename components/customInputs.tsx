@@ -5,7 +5,7 @@ import { groq } from "next-sanity";
 import { useEffect, useState } from "react";
 import { set, StringInputProps, unset, useClient } from "sanity";
 
-const DetailInput = (props: StringInputProps) => {
+export const DetailInput = (props: StringInputProps) => {
 	const [listItems, setListItems] = useState<Array<string>>([]);
 	const client = useClient();
 
@@ -17,8 +17,6 @@ const DetailInput = (props: StringInputProps) => {
 		getDetails();
 	}, [client]);
 
-	const [value, setValue] = useState<string | undefined>();
-
 	const [newValue, setnewValue] = useState<string | undefined>();
 
 	const values = [newValue, ...listItems].filter((value): value is string => typeof value === "string");
@@ -27,8 +25,7 @@ const DetailInput = (props: StringInputProps) => {
 		<Autocomplete
 			id='detail-input'
 			options={values.map((value) => ({ value }))}
-			value={value}
-			onSelect={(value) => setValue(value)}
+			value={props.value}
 			onChange={(value) => (value ? props.onChange(set(value)) : props.onChange(unset()))}
 			onQueryChange={(query) => {
 				if (query === "" || query === null) {
@@ -45,4 +42,39 @@ const DetailInput = (props: StringInputProps) => {
 	);
 };
 
-export default DetailInput;
+export const CategoryInput = (props: StringInputProps) => {
+	const [listItems, setListItems] = useState<Array<string>>([]);
+	const client = useClient();
+
+	useEffect(() => {
+		const getDetails = async () => {
+			const result: string[] = await client.fetch(groq`array::unique(*[_type == "product"].category)`);
+			setListItems(result);
+		};
+		getDetails();
+	}, [client]);
+
+	const [newValue, setnewValue] = useState<string | undefined>();
+
+	const values = [newValue, ...listItems].filter((value): value is string => typeof value === "string");
+
+	return (
+		<Autocomplete
+			id='detail-input'
+			options={values.map((value) => ({ value }))}
+			value={props.value}
+			onChange={(value) => (value ? props.onChange(set(value)) : props.onChange(unset()))}
+			onQueryChange={(query) => {
+				if (query === "" || query === null) {
+					setnewValue(undefined);
+					return;
+				}
+				if (listItems.includes(query)) {
+					setnewValue(undefined);
+					return;
+				}
+				setnewValue(query);
+			}}
+		/>
+	);
+};

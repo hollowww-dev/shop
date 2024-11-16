@@ -108,15 +108,15 @@ export type AboutMe = {
     _type: "image";
   };
   information?: Array<{
-    key?: string;
-    value?: Array<string>;
+    key: string;
+    value: Array<string>;
     _type: "entry";
     _key: string;
   }>;
   contact?: Array<{
-    key?: string;
-    value?: string;
-    hidden?: boolean;
+    key: string;
+    value: string;
+    hidden: boolean;
     _type: "entry";
     _key: string;
   }>;
@@ -170,6 +170,7 @@ export type Product = {
   _rev: string;
   name: string;
   description: string;
+  category: string;
   details?: Array<{
     detail: string;
     answer: string;
@@ -320,15 +321,15 @@ export type ABOUTMEResult = {
     _type: "image";
   };
   information: Array<{
-    key?: string;
-    value?: Array<string>;
+    key: string;
+    value: Array<string>;
     _type: "entry";
     _key: string;
   }> | null;
   contact: Array<{
-    key?: string;
-    value?: string;
-    hidden?: boolean;
+    key: string;
+    value: string;
+    hidden: boolean;
     _type: "entry";
     _key: string;
   }> | null;
@@ -519,25 +520,6 @@ export type PRODUCTResult = {
 } | {
   _id: string;
   name: null;
-  description: null;
-  details: null;
-  image: null;
-  gallery: null;
-  price: null;
-  available: null;
-  featured: null;
-} | {
-  _id: string;
-  name: null;
-  description: null;
-  details: null;
-  image: null;
-  gallery: null;
-  price: null;
-  available: null;
-} | {
-  _id: string;
-  name: null;
   description: string;
   details: null;
   image: null;
@@ -564,25 +546,6 @@ export type PRODUCTResult = {
 } | {
   _id: string;
   name: null;
-  description: string;
-  details: null;
-  image: null;
-  gallery: null;
-  price: null;
-  available: null;
-  featured: null;
-} | {
-  _id: string;
-  name: null;
-  description: string;
-  details: null;
-  image: null;
-  gallery: null;
-  price: null;
-  available: null;
-} | {
-  _id: string;
-  name: null;
   description: string | null;
   details: null;
   image: null;
@@ -606,25 +569,6 @@ export type PRODUCTResult = {
     price: number;
     available: boolean;
   }>;
-} | {
-  _id: string;
-  name: null;
-  description: string | null;
-  details: null;
-  image: null;
-  gallery: null;
-  price: null;
-  available: null;
-  featured: null;
-} | {
-  _id: string;
-  name: null;
-  description: string | null;
-  details: null;
-  image: null;
-  gallery: null;
-  price: null;
-  available: null;
 } | null;
 
 // Query TypeMap

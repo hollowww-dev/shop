@@ -9,9 +9,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function parseCartItem(product: ProductType): Product {
-	if (!product.available) {
-		throw new Error("Some of your products is not available.");
-	}
 	return {
 		id: product._id,
 		name: product.name,

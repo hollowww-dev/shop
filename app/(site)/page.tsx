@@ -4,6 +4,7 @@ import { client } from "@/sanity/lib/client";
 import { PRODUCTS } from "@/sanity/lib/queries";
 import { ProductType } from "@/types";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
+import { groq } from "next-sanity";
 
 export default async function Page() {
 	const queryClient = getQueryClient();
@@ -16,6 +17,10 @@ export default async function Page() {
 				{},
 				{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
 			),
+	});
+	queryClient.prefetchQuery({
+		queryKey: ["categories"],
+		queryFn: () => client.fetch(groq`array::unique(*[_type == "product"].category)`),
 	});
 
 	return (

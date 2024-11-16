@@ -2,17 +2,27 @@
 
 import { Button } from "../ui/button";
 import { VscSettings, VscListFilter } from "react-icons/vsc";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState, useTransition } from "react";
 import { client } from "@/sanity/lib/client";
-import { PRODUCTS } from "@/sanity/lib/queries";
+import { PRODUCTS, PRODUCTS_CATEGORY } from "@/sanity/lib/queries";
 import { ProductType } from "@/types";
 import Product from "./product";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Select, SelectContent, SelectItem, SelectValue, SelectTrigger } from "../ui/select";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ProductsSkeleton } from "../skeletons";
+import { groq } from "next-sanity";
 
-const Products = ({ orderBy, order }: { orderBy: "price"; order: "ascending" | "descending" }) => {
+const Products = ({
+	orderBy,
+	order,
+	category,
+}: {
+	orderBy: "price";
+	order: "ascending" | "descending";
+	category: string;
+}) => {
+	const [_isPending, startTransition] = useTransition();
 	const orderProducts = (products: ProductType[]) => {
 		switch (orderBy) {
 			case "price":
@@ -25,18 +35,23 @@ const Products = ({ orderBy, order }: { orderBy: "price"; order: "ascending" | "
 		}
 	};
 
-	const { data: products } = useSuspenseQuery({
+	const { data: products, refetch } = useSuspenseQuery({
 		queryKey: ["products"],
 		queryFn: () =>
 			client.fetch<ProductType[]>(
-				PRODUCTS,
-				{},
+				category === "all" ? PRODUCTS : PRODUCTS_CATEGORY,
+				{ category },
 				{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
 			),
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,
 		refetchOnReconnect: false,
 	});
+	useEffect(() => {
+		startTransition(() => {
+			refetch();
+		});
+	}, [category]);
 
 	const orderedProducts = orderProducts(products);
 
@@ -52,6 +67,11 @@ const Products = ({ orderBy, order }: { orderBy: "price"; order: "ascending" | "
 const ProductsDisplay = () => {
 	const [orderBy, setOrderBy] = useState<"price">("price");
 	const [order, setOrder] = useState<"ascending" | "descending">("descending");
+	const [categoryFilter, setCategoryFilter] = useState<string>("all");
+	const { data: categories } = useSuspenseQuery({
+		queryKey: ["categories"],
+		queryFn: () => client.fetch(groq`array::unique(*[_type == "product"].category)`),
+	});
 	return (
 		<section className='flex flex-col gap-2'>
 			<div className='flex gap-2 self-end'>
@@ -61,7 +81,22 @@ const ProductsDisplay = () => {
 							<VscSettings />
 						</Button>
 					</PopoverTrigger>
-					<PopoverContent align='end'></PopoverContent>
+					<PopoverContent align='end'>
+						<Select value={categoryFilter} onValueChange={(value: string) => setCategoryFilter(value)}>
+							<SelectTrigger className='w-full'>
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value={"all"}>All</SelectItem>
+								{categories &&
+									categories.map((category: string, i: number) => (
+										<SelectItem value={category} key={i}>
+											{category}
+										</SelectItem>
+									))}
+							</SelectContent>
+						</Select>
+					</PopoverContent>
 				</Popover>
 				<Popover>
 					<PopoverTrigger asChild>
@@ -91,7 +126,7 @@ const ProductsDisplay = () => {
 				</Popover>
 			</div>
 			<Suspense fallback={<ProductsSkeleton />}>
-				<Products order={order} orderBy={orderBy} />
+				<Products order={order} orderBy={orderBy} category={categoryFilter} />
 			</Suspense>
 		</section>
 	);

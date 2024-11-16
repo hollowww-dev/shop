@@ -1,4 +1,4 @@
-import DetailInput from "@/components/detailInput";
+import { CategoryInput, DetailInput } from "@/components/customInputs";
 import { type Rule } from "sanity";
 
 const Product = {
@@ -27,6 +27,15 @@ const Product = {
 					.error("Description is required.")
 					.max(10000)
 					.warning("For the best SEO results, description should be less than 1000 characters."),
+		},
+		{
+			name: "category",
+			title: "Category",
+			type: "string",
+			components: {
+				input: CategoryInput,
+			},
+			validation: (rule: Rule) => rule.required(),
 		},
 		{
 			name: "details",

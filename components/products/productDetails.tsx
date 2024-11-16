@@ -138,6 +138,10 @@ const ProductDetails = ({ id }: { id: string }) => {
 					<h3>Details</h3>
 					<Table>
 						<TableBody>
+							<TableRow>
+								<TableCell className='font-medium w-1/3'>Category</TableCell>
+								<TableCell className='w-2/3'>{product.category}</TableCell>
+							</TableRow>
 							{product.details.map((detail) => (
 								<TableRow key={detail._key}>
 									<TableCell className='font-medium w-1/3'>{detail.detail}</TableCell>

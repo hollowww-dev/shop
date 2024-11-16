@@ -43,14 +43,27 @@ export const PRODUCTS = groq`*[_type == "product"]{
     _id,
     name,
     image,
+    category,
     'price': price * 100,
     available
 }`;
+
+export const PRODUCTS_CATEGORY = groq`
+*[_type == "product" && category == $category]{
+    _id,
+    name,
+    image,
+    category,
+    'price': price * 100,
+    available
+}
+`;
 
 export const PRODUCT = groq`*[_id == $id][0]{
     _id,
     name,
     description,
+    category,
     details,
     image,
     gallery,
