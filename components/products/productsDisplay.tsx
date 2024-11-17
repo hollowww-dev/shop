@@ -58,7 +58,7 @@ const Products = ({
 	return (
 		<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 py-3'>
 			{orderedProducts.map((product) => (
-				<Product key={product._id} product={product} />
+				<Product key={product._id} product={product} forSale />
 			))}
 		</div>
 	);
@@ -118,8 +118,8 @@ const ProductsDisplay = () => {
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value='descending'>Descending</SelectItem>
-								<SelectItem value='ascending'>Ascending</SelectItem>
+								<SelectItem value='descending'>Highest to lowest</SelectItem>
+								<SelectItem value='ascending'>Lowest to highest</SelectItem>
 							</SelectContent>
 						</Select>
 					</PopoverContent>

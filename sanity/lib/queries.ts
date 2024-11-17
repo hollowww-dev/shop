@@ -39,25 +39,31 @@ information,
 contact
 }`;
 
-export const PRODUCTS = groq`*[_type == "product"]{
+export const PRODUCTS = groq`*[_type == "product" && available == true]{
     _id,
     name,
     image,
     category,
     'price': price * 100,
-    available
 }`;
 
 export const PRODUCTS_CATEGORY = groq`
-*[_type == "product" && category == $category]{
+*[_type == "product" && category == $category && available == true]{
     _id,
     name,
     image,
     category,
     'price': price * 100,
-    available
 }
 `;
+
+export const PORTFOLIO = groq`*[_type == "product" && available == false]{
+    _id,
+    name,
+    image,
+    category,
+}
+`
 
 export const PRODUCT = groq`*[_id == $id][0]{
     _id,

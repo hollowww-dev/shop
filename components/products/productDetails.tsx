@@ -105,8 +105,7 @@ const ProductDetails = ({ id }: { id: string }) => {
 						<CarouselPrevious />
 						<CarouselNext />
 					</Carousel>
-					<div className='flex flex-col items-center lg:self-center gap-6 lg:gap-12'>
-						{!product.available && <span className='muted'>This product has been sold already.</span>}
+					<div className='flex flex-1 flex-col lg:items-center lg:self-center gap-6 lg:gap-12'>
 						<span className='text-4xl self-center'>
 							{formatCurrencyString({
 								value: product.price,
@@ -118,11 +117,10 @@ const ProductDetails = ({ id }: { id: string }) => {
 								size={"lg"}
 								variant={"outline"}
 								onClick={() => handleAddItem()}
-								disabled={!product.available}
 							>
 								Add to cart
 							</Button>
-							<Button size={"lg"} onClick={async () => handleBuyNow()} disabled={!product.available}>
+							<Button size={"lg"} onClick={async () => handleBuyNow()}>
 								Buy now
 							</Button>
 						</div>
@@ -158,7 +156,7 @@ const ProductDetails = ({ id }: { id: string }) => {
 					<Carousel className="className='w-full h-full'">
 						<CarouselContent className='m-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2'>
 							{product.featured.map((product) => (
-								<Product product={product} key={product._id} />
+								<Product product={product} key={product._id} forSale />
 							))}
 						</CarouselContent>
 					</Carousel>
