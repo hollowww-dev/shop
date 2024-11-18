@@ -39,7 +39,7 @@ information,
 contact
 }`;
 
-export const PRODUCTS = groq`*[_type == "product" && available == true]{
+export const PRODUCTS = groq`*[_type == "product" && stock > 0]{
     _id,
     name,
     image,
@@ -48,7 +48,7 @@ export const PRODUCTS = groq`*[_type == "product" && available == true]{
 }`;
 
 export const PRODUCTS_CATEGORY = groq`
-*[_type == "product" && category == $category && available == true]{
+*[_type == "product" && category == $category && stock > 0]{
     _id,
     name,
     image,
@@ -57,7 +57,7 @@ export const PRODUCTS_CATEGORY = groq`
 }
 `;
 
-export const PORTFOLIO = groq`*[_type == "product" && available == false]{
+export const PORTFOLIO = groq`*[_type == "product" && stock == 0]{
     _id,
     name,
     image,
@@ -74,7 +74,6 @@ export const PRODUCT = groq`*[_id == $id][0]{
     image,
     gallery,
     'price': price * 100,
-    available,
     defined(featured) => {
         featured[]->{
         _id,

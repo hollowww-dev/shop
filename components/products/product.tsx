@@ -9,7 +9,7 @@ import { ProductType } from "@/types";
 import { Product as ProductSanity } from "@/sanity.types";
 import Link from "next/link";
 
-const Product = ({ product, forSale }: { product: ProductType | ProductSanity, forSale: boolean }) => {
+const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 	return (
 		<Link href={`${config.siteUrl}/product/${product._id}`} prefetch={true} className='no-underline'>
 			<Card key={product._id} className='relative active:shadow-none transition-shadow cursor-pointer'>
@@ -28,9 +28,9 @@ const Product = ({ product, forSale }: { product: ProductType | ProductSanity, f
 				</CardHeader>
 				<CardContent className='flex flex-col md:flex-row justify-between md:items-center gap-1 lg:gap-2'>
 					<h4>{product.name}</h4>
-					{forSale && <Badge variant='outline' className='self-center lg:self-start'>
+					<Badge variant='outline' className='self-center lg:self-start'>
 						{formatCurrencyString({ value: product.price, currency: config.currency })}
-					</Badge>}
+					</Badge>
 				</CardContent>
 			</Card>
 		</Link>

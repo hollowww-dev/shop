@@ -1110,10 +1110,10 @@
         },
         "optional": true
       },
-      "available": {
+      "stock": {
         "type": "objectAttribute",
         "value": {
-          "type": "boolean"
+          "type": "number"
         },
         "optional": false
       },

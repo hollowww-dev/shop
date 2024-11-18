@@ -58,7 +58,7 @@ const Products = ({
 	return (
 		<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 py-3'>
 			{orderedProducts.map((product) => (
-				<Product key={product._id} product={product} forSale />
+				<Product key={product._id} product={product} />
 			))}
 		</div>
 	);

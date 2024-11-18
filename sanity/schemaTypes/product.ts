@@ -87,15 +87,10 @@ const Product = {
 			description: "Additional images of the product.",
 		},
 		{
-			name: "available",
-			title: "Available",
-			type: "boolean",
-			validation: (rule: Rule) => rule.required(),
-			initialValue: true,
-			options: {
-				layout: "switch",
-				list: [false, true],
-			},
+			name: "stock",
+			title: "Stock",
+			type: "number",
+			validation: (rule: Rule) => rule.required()
 		},
 		{
 			name: "featured",

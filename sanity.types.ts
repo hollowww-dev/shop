@@ -200,7 +200,7 @@ export type Product = {
     _type: "image";
     _key: string;
   }>;
-  available: boolean;
+  stock: number;
   featured?: Array<{
     _ref: string;
     _type: "reference";
@@ -267,7 +267,24 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Faq | AboutMe | SocialMedia | Shipping | Settings | Product | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes =
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityFileAsset
+  | Geopoint
+  | Slug
+  | Faq
+  | AboutMe
+  | SocialMedia
+  | Shipping
+  | Settings
+  | Product
+  | SanityImageCrop
+  | SanityImageHotspot
+  | SanityImageAsset
+  | SanityAssetSourceData
+  | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: SETTINGS
@@ -335,252 +352,193 @@ export type ABOUTMEResult = {
   }> | null;
 } | null;
 // Variable: PRODUCTS
-// Query: *[_type == "product"]{    _id,    name,    image,    'price': price * 100,    available}
-export type PRODUCTSResult = Array<{
-  _id: string;
-  name: string;
-  image: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  price: number;
-  available: boolean;
-}>;
+// Query: *[_type == "product" && available == true]{    _id,    name,    image,    category,    'price': price * 100,}
+export type PRODUCTSResult = Array<never>;
+// Variable: PRODUCTS_CATEGORY
+// Query: *[_type == "product" && category == $category && available == true]{    _id,    name,    image,    category,    'price': price * 100,}
+export type PRODUCTS_CATEGORYResult = Array<never>;
+// Variable: PORTFOLIO
+// Query: *[_type == "product" && available == false]{    _id,    name,    image,    category,}
+export type PORTFOLIOResult = Array<never>;
 // Variable: PRODUCT
-// Query: *[_id == $id][0]{    _id,    name,    description,    details,    image,    gallery,    'price': price * 100,    available,    defined(featured) => {        featured[]->{        _id,        name,        image,        'price': price * 100,        available        }    },    !defined(featured) => {        'featured': *[_type == "product" && _id != ^._id && available == true][0..3]{        _id,        name,        image,        'price': price * 100,        available        }    }}
-export type PRODUCTResult = {
-  _id: string;
-  name: string;
-  description: string;
-  details: Array<{
-    detail: string;
-    answer: string;
-    _key: string;
-  }> | null;
-  image: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  gallery: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-    _key: string;
-  }> | null;
-  price: number;
-  available: boolean;
-  featured: Array<{
-    _id: string;
-    name: string;
-    image: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+// Query: *[_id == $id][0]{    _id,    name,    description,    category,    details,    image,    gallery,    'price': price * 100,    available,    defined(featured) => {        featured[]->{        _id,        name,        image,        'price': price * 100,        available        }    },    !defined(featured) => {        'featured': *[_type == "product" && _id != ^._id && available == true][0..3]{        _id,        name,        image,        'price': price * 100,        available        }    }}
+export type PRODUCTResult =
+  | {
+      _id: string;
+      name: null;
+      description: null;
+      category: null;
+      details: null;
+      image: null;
+      gallery: null;
+      price: null;
+      available: null;
+      featured: Array<never>;
+    }
+  | {
+      _id: string;
+      name: null;
+      description: string;
+      category: null;
+      details: null;
+      image: null;
+      gallery: null;
+      price: null;
+      available: null;
+      featured: Array<never>;
+    }
+  | {
+      _id: string;
+      name: null;
+      description: string | null;
+      category: null;
+      details: null;
+      image: null;
+      gallery: null;
+      price: null;
+      available: null;
+      featured: Array<never>;
+    }
+  | {
+      _id: string;
+      name: string;
+      description: string;
+      category: string;
+      details: Array<{
+        detail: string;
+        answer: string;
+        _key: string;
+      }> | null;
+      image: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
       };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    };
-    price: number;
-    available: boolean;
-  }>;
-} | {
-  _id: string;
-  name: string;
-  description: string;
-  details: Array<{
-    detail: string;
-    answer: string;
-    _key: string;
-  }> | null;
-  image: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  gallery: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-    _key: string;
-  }> | null;
-  price: number;
-  available: boolean;
-  featured: Array<{
-    _id: string;
-    name: string;
-    image: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      gallery: Array<{
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+        _key: string;
+      }> | null;
+      price: number;
+      available: null;
+      featured: Array<never>;
+    }
+  | {
+      _id: string;
+      name: string;
+      description: string;
+      category: string;
+      details: Array<{
+        detail: string;
+        answer: string;
+        _key: string;
+      }> | null;
+      image: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
       };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    };
-    price: number;
-    available: boolean;
-  }> | null;
-} | {
-  _id: string;
-  name: string;
-  description: string;
-  details: Array<{
-    detail: string;
-    answer: string;
-    _key: string;
-  }> | null;
-  image: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  gallery: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-    _key: string;
-  }> | null;
-  price: number;
-  available: boolean;
-} | {
-  _id: string;
-  name: null;
-  description: null;
-  details: null;
-  image: null;
-  gallery: null;
-  price: null;
-  available: null;
-  featured: Array<{
-    _id: string;
-    name: string;
-    image: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      gallery: Array<{
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+        _key: string;
+      }> | null;
+      price: number;
+      available: null;
+      featured: Array<{
+        _id: string;
+        name: string;
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
+        price: number;
+        available: null;
+      }> | null;
+    }
+  | {
+      _id: string;
+      name: string;
+      description: string;
+      category: string;
+      details: Array<{
+        detail: string;
+        answer: string;
+        _key: string;
+      }> | null;
+      image: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
       };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    };
-    price: number;
-    available: boolean;
-  }>;
-} | {
-  _id: string;
-  name: null;
-  description: string;
-  details: null;
-  image: null;
-  gallery: null;
-  price: null;
-  available: null;
-  featured: Array<{
-    _id: string;
-    name: string;
-    image: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    };
-    price: number;
-    available: boolean;
-  }>;
-} | {
-  _id: string;
-  name: null;
-  description: string | null;
-  details: null;
-  image: null;
-  gallery: null;
-  price: null;
-  available: null;
-  featured: Array<{
-    _id: string;
-    name: string;
-    image: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    };
-    price: number;
-    available: boolean;
-  }>;
-} | null;
+      gallery: Array<{
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+        _key: string;
+      }> | null;
+      price: number;
+      available: null;
+    }
+  | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"settings\"][0]{\ntitle,\ncurrency,\ndescription\n}": SETTINGSResult;
+    '*[_type == "settings"][0]{\ntitle,\ncurrency,\ndescription\n}': SETTINGSResult;
     "*[_type == \"shipping\"][0]{\nshippings[] {\nname,\ntime,\n'price': price * 100\n},\nworldwideShipping\n}\n": SHIPPINGSResult;
-    "*[_type == \"socialMedia\"][0]{\ninstagram,\nfacebook,\npinterest,\ntiktok,\nyoutube\n}": SOCIALMEDIAResult;
-    "*[_type == \"faq\"][0]{\nentries[] {\n    answer,\n    question\n}\n}": FAQResult;
-    "*[_type == \"aboutMe\"][0]{\nheadline,\ndescription,\navatar,\ninformation,\ncontact\n}": ABOUTMEResult;
-    "*[_type == \"product\"]{\n    _id,\n    name,\n    image,\n    'price': price * 100,\n    available\n}": PRODUCTSResult;
-    "*[_id == $id][0]{\n    _id,\n    name,\n    description,\n    details,\n    image,\n    gallery,\n    'price': price * 100,\n    available,\n    defined(featured) => {\n        featured[]->{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    },\n    !defined(featured) => {\n        'featured': *[_type == \"product\" && _id != ^._id && available == true][0..3]{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    }\n}": PRODUCTResult;
+    '*[_type == "socialMedia"][0]{\ninstagram,\nfacebook,\npinterest,\ntiktok,\nyoutube\n}': SOCIALMEDIAResult;
+    '*[_type == "faq"][0]{\nentries[] {\n    answer,\n    question\n}\n}': FAQResult;
+    '*[_type == "aboutMe"][0]{\nheadline,\ndescription,\navatar,\ninformation,\ncontact\n}': ABOUTMEResult;
+    "*[_type == \"product\" && available == true]{\n    _id,\n    name,\n    image,\n    category,\n    'price': price * 100,\n}": PRODUCTSResult;
+    "\n*[_type == \"product\" && category == $category && available == true]{\n    _id,\n    name,\n    image,\n    category,\n    'price': price * 100,\n}\n": PRODUCTS_CATEGORYResult;
+    '*[_type == "product" && available == false]{\n    _id,\n    name,\n    image,\n    category,\n}\n': PORTFOLIOResult;
+    "*[_id == $id][0]{\n    _id,\n    name,\n    description,\n    category,\n    details,\n    image,\n    gallery,\n    'price': price * 100,\n    available,\n    defined(featured) => {\n        featured[]->{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    },\n    !defined(featured) => {\n        'featured': *[_type == \"product\" && _id != ^._id && available == true][0..3]{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    }\n}": PRODUCTResult;
   }
 }

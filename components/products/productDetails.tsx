@@ -156,7 +156,7 @@ const ProductDetails = ({ id }: { id: string }) => {
 					<Carousel className="className='w-full h-full'">
 						<CarouselContent className='m-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2'>
 							{product.featured.map((product) => (
-								<Product product={product} key={product._id} forSale />
+								<Product product={product} key={product._id} />
 							))}
 						</CarouselContent>
 					</Carousel>
