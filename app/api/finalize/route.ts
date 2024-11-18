@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import stripe from "@/lib/stripe";
+import { client } from "@/sanity/lib/client";
 
 export async function POST(req: NextRequest) {
     try {
@@ -8,7 +9,7 @@ export async function POST(req: NextRequest) {
             case 'checkout.session.completed':
                 const session = event.data.object;
                 const { data: lineItems } = await stripe.checkout.sessions.listLineItems(session.id)
-                console.log(lineItems)
+                lineItems.forEach(async (item) => await client.patch(item.id).dec({ stock: 1 }).commit())
                 break;
             default:
                 console.log(`Unhandled event type ${event.type}`);
