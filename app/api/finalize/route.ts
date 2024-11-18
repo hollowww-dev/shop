@@ -9,14 +9,14 @@ export async function POST(req: NextRequest) {
             case 'checkout.session.completed':
                 const session = event.data.object;
                 const { data: lineItems } = await stripe.checkout.sessions.listLineItems(session.id)
-                lineItems.forEach(async (item) => await client.patch(item.id).dec({ stock: 1 }).commit())
+                lineItems.forEach(async (item) => await client.patch(item.id).dec({ stock: 1 }).commit({ visibility: 'async' }))
                 break;
             default:
                 console.log(`Unhandled event type ${event.type}`);
         }
         return NextResponse.json({
             status: 200,
-            received: true
+            received: true,
         });
     } catch (error: unknown) {
         console.error(error);
