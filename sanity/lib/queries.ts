@@ -84,7 +84,7 @@ export const PRODUCT = groq`*[_id == $id][0]{
         }
     },
     !defined(featured) => {
-        'featured': *[_type == "product" && _id != ^._id && available == true][0..3]{
+        'featured': *[_type == "product" && _id != ^._id && stock > 0][0..3]{
         _id,
         name,
         image,
