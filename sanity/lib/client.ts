@@ -6,5 +6,6 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: process.env.NODE_ENV === "development" ? true : false
+  useCdn: process.env.NODE_ENV === "development" ? true : false,
+  token: process.env.NEXT_PUBLIC_SANITY_TOKEN
 })

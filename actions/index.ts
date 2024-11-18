@@ -27,6 +27,11 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
 			success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/success/{CHECKOUT_SESSION_ID}`,
 			cancel_url: `${(await headers()).get("referer")}`,
 			line_items,
+			metadata: {
+				sanityIds: JSON.stringify(Object.values(cartDetails).map((item) => {
+					return { id: item.id, quantity: item.quantity }
+				})),
+			},
 			shipping_options: shippingsPreval.shippings.map((shipping) => {
 				return {
 					shipping_rate_data: {
@@ -44,7 +49,7 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
 				allowed_countries:
 					shippingsPreval.worldwideShipping ?
 						[]
-					:	[
+						: [
 							"AT",
 							"BE",
 							"BG",
