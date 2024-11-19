@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
 		if (!isValidSignature) {
 			return new Response("Invalid Signature", { status: 401 });
 		}
-
 		revalidatePath("/");
 		return NextResponse.json({
 			status: 200,

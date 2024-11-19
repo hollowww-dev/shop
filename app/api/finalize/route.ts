@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
                 const session = event.data.object;
                 const { sanityIds } = session.metadata
                 const parsedIds = JSON.parse(sanityIds)
-                parsedIds.forEach(async (item: { id: string, quantity: number }) => await client.patch(item.id).dec({ stock: item.quantity }).commit({ visibility: 'async' }))
+                parsedIds.forEach(async (item: { id: string, quantity: number }) => await client.patch(item.id).dec({ stock: item.quantity }).commit())
                 revalidatePath("/");
                 break;
             default:
