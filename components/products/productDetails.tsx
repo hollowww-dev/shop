@@ -93,6 +93,7 @@ const ProductDetails = ({ id }: { id: string }) => {
 																.height(24)
 																.blur(10)
 																.url()}
+															unoptimized
 															fill
 														/>
 													</AspectRatio>
@@ -113,11 +114,7 @@ const ProductDetails = ({ id }: { id: string }) => {
 							})}
 						</span>
 						<div className='flex flex-1 flex-col lg:flex-row gap-2'>
-							<Button
-								size={"lg"}
-								variant={"outline"}
-								onClick={() => handleAddItem()}
-							>
+							<Button size={"lg"} variant={"outline"} onClick={() => handleAddItem()}>
 								Add to cart
 							</Button>
 							<Button size={"lg"} onClick={async () => handleBuyNow()}>

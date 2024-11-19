@@ -22,6 +22,7 @@ const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 							alt={product.name}
 							className='aspect-square object-cover rounded-md'
 							loading='lazy'
+							unoptimized
 							fill
 						/>
 					</AspectRatio>
