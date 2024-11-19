@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/sanity/lib/client";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: NextRequest) {
     try {
@@ -10,6 +11,7 @@ export async function POST(req: NextRequest) {
                 const { sanityIds } = session.metadata
                 const parsedIds = JSON.parse(sanityIds)
                 parsedIds.forEach(async (item: { id: string, quantity: number }) => await client.patch(item.id).dec({ stock: item.quantity }).commit({ visibility: 'async' }))
+                revalidatePath("/");
                 break;
             default:
                 console.log(`Unhandled event type ${event.type}`);

@@ -20,7 +20,7 @@ export default async function Page() {
 	});
 	queryClient.prefetchQuery({
 		queryKey: ["categories"],
-		queryFn: () => client.fetch(groq`array::unique(*[_type == "product" && available == true].category)`),
+		queryFn: () => client.fetch(groq`array::unique(*[_type == "product" && stock > 0].category)`),
 	});
 
 	return (

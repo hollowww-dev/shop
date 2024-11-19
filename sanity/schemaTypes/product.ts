@@ -90,7 +90,7 @@ const Product = {
 			name: "stock",
 			title: "Stock",
 			type: "number",
-			validation: (rule: Rule) => rule.required()
+			validation: (rule: Rule) => rule.required().min(0)
 		},
 		{
 			name: "featured",
