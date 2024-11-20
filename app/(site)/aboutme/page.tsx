@@ -30,14 +30,12 @@ export default async function Page() {
 					<Table>
 						<TableBody>
 							{aboutMePreval.information?.map((entry) => (
-								<>
-									<TableRow key={entry._key}>
-										<TableCell className='font-medium w-1/3'>{entry.key}</TableCell>
-										<TableCell className='w-2/3'>
-											{entry.value?.map((line, index) => <p key={index}>{line}</p>)}
-										</TableCell>
-									</TableRow>
-								</>
+								<TableRow key={entry._key}>
+									<TableCell className='font-medium w-1/3'>{entry.key}</TableCell>
+									<TableCell className='w-2/3'>
+										{entry.value?.map((line, index) => <p key={index}>{line}</p>)}
+									</TableCell>
+								</TableRow>
 							))}
 						</TableBody>
 					</Table>

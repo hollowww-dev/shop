@@ -39,31 +39,13 @@ information,
 contact
 }`;
 
-export const PRODUCTS = groq`*[_type == "product" && stock > 0]{
-    _id,
-    name,
-    image,
-    category,
-    'price': price * 100,
-}`;
-
-export const PRODUCTS_CATEGORY = groq`
-*[_type == "product" && category == $category && stock > 0]{
-    _id,
-    name,
-    image,
-    category,
-    'price': price * 100,
-}
-`;
-
 export const PORTFOLIO = groq`*[_type == "product" && stock == 0]{
     _id,
     name,
     image,
     category,
 }
-`
+`;
 
 export const PRODUCT = groq`*[_id == $id][0]{
     _id,

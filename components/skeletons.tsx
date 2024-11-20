@@ -1,3 +1,4 @@
+import { VscListFilter, VscSettings } from "react-icons/vsc";
 import { AspectRatio } from "./ui/aspect-ratio";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader } from "./ui/card";
@@ -20,11 +21,21 @@ export const ProductSkeleton = async () => {
 
 export const ProductsSkeleton = async () => {
 	return (
-		<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 py-3'>
-			{Array.from({ length: 3 }).map((_, i) => (
-				<ProductSkeleton key={i} />
-			))}
-		</div>
+		<section className='flex flex-col gap-2'>
+			<div className='flex gap-2 self-end'>
+				<Button variant={"outline"} size='icon' disabled>
+					<VscSettings />
+				</Button>
+				<Button variant={"outline"} size='icon' disabled>
+					<VscListFilter />
+				</Button>
+			</div>
+			<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 py-3'>
+				{Array.from({ length: 3 }).map((_, i) => (
+					<ProductSkeleton key={i} />
+				))}
+			</div>
+		</section>
 	);
 };
 

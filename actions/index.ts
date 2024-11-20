@@ -4,19 +4,25 @@ import stripe from "@/lib/stripe";
 import { type CartDetails } from "use-shopping-cart/core";
 import { validateCartItems } from "use-shopping-cart/utilities";
 import { client } from "@/sanity/lib/client";
-import { PRODUCTS } from "@/sanity/lib/queries";
 import { parseCartItem } from "@/lib/utils";
 import { ProductType } from "@/types";
 import shippingsPreval from "@/lib/shippings.preval";
 import configPreval from "@/lib/config.preval";
 import { headers } from "next/headers";
+import { groq } from "next-sanity";
 
 export async function createCheckoutSession(cartDetails: CartDetails): Promise<{ sessionId: string }> {
 	if (!process.env.NEXT_PUBLIC_SITE_URL) {
 		throw new Error("NEXT_PUBLIC_SITE_URL is not defined.");
 	}
 	try {
-		const products: ProductType[] = await client.fetch(PRODUCTS);
+		const products: ProductType[] = await client.fetch(groq`*[_type == "product" && stock > 0]{
+    					_id,
+    					name,
+    					image,
+    					category,
+    					'price': price * 100,
+					}`);
 		const line_items = validateCartItems(
 			products.map((item) => parseCartItem(item)),
 			cartDetails
@@ -28,9 +34,11 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
 			cancel_url: `${(await headers()).get("referer")}`,
 			line_items,
 			metadata: {
-				sanityIds: JSON.stringify(Object.values(cartDetails).map((item) => {
-					return { id: item.id, quantity: item.quantity }
-				})),
+				sanityIds: JSON.stringify(
+					Object.values(cartDetails).map((item) => {
+						return { id: item.id, quantity: item.quantity };
+					})
+				),
 			},
 			shipping_options: shippingsPreval.shippings.map((shipping) => {
 				return {
@@ -49,7 +57,7 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
 				allowed_countries:
 					shippingsPreval.worldwideShipping ?
 						[]
-						: [
+					:	[
 							"AT",
 							"BE",
 							"BG",

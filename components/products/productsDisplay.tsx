@@ -2,15 +2,13 @@
 
 import { Button } from "../ui/button";
 import { VscSettings, VscListFilter } from "react-icons/vsc";
-import { Suspense, useEffect, useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { client } from "@/sanity/lib/client";
-import { PRODUCTS, PRODUCTS_CATEGORY } from "@/sanity/lib/queries";
 import { ProductType } from "@/types";
 import Product from "./product";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Select, SelectContent, SelectItem, SelectValue, SelectTrigger } from "../ui/select";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { ProductsSkeleton } from "../skeletons";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { groq } from "next-sanity";
 
 const Products = ({
@@ -39,13 +37,16 @@ const Products = ({
 		queryKey: ["products"],
 		queryFn: () =>
 			client.fetch<ProductType[]>(
-				category === "all" ? PRODUCTS : PRODUCTS_CATEGORY,
-				{ category },
+				groq`*[_type == "product" && stock > 0${category !== "all" ? ` && category == "${category}"` : ""}]{
+    					_id,
+    					name,
+    					image,
+    					category,
+    					'price': price * 100,
+					}`,
+				{},
 				{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
 			),
-		refetchOnMount: false,
-		refetchOnWindowFocus: false,
-		refetchOnReconnect: false,
 	});
 	useEffect(() => {
 		startTransition(() => {
@@ -70,7 +71,34 @@ const ProductsDisplay = () => {
 	const [categoryFilter, setCategoryFilter] = useState<string>("all");
 	const { data: categories } = useSuspenseQuery({
 		queryKey: ["categories"],
-		queryFn: () => client.fetch(groq`array::unique(*[_type == "product"].category)`),
+		queryFn: () =>
+			client.fetch(
+				groq`array::unique(*[_type == "product" && stock > 0].category)`,
+				{},
+				{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
+			),
+	});
+	const { data: filters, isLoading: filtersFetching } = useQuery({
+		queryKey: ["filters", categoryFilter],
+		queryFn: () =>
+			client
+				.fetch(
+					groq`*[_type == "product"${categoryFilter !== "all" ? ` && category == "${categoryFilter}"` : ""}].details[]{
+    						"detail": detail,
+							"answers": array::unique(*[_type == "product"${categoryFilter !== "all" ? ` && category == "${categoryFilter}"` : ""}].details[detail == ^.detail].answer)
+  						}`,
+					{},
+					{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
+				)
+				.then((results: { detail: string; answers: string[] }[]) =>
+					Array.from(new Set(results.map((d) => d.detail))).map((detail) => ({
+						detail,
+						answers: Array.from(
+							new Set(results.filter((d) => d.detail === detail).flatMap((d) => d.answers))
+						),
+					}))
+				),
+		enabled: categoryFilter !== "all",
 	});
 	return (
 		<section className='flex flex-col gap-2'>
@@ -81,21 +109,44 @@ const ProductsDisplay = () => {
 							<VscSettings />
 						</Button>
 					</PopoverTrigger>
-					<PopoverContent align='end'>
-						<Select value={categoryFilter} onValueChange={(value: string) => setCategoryFilter(value)}>
-							<SelectTrigger className='w-full'>
+					<PopoverContent align='end' className='flex flex-col gap-3'>
+						<Select
+							value={categoryFilter}
+							onValueChange={(value: string) => setCategoryFilter(value)}
+							disabled={filtersFetching}
+						>
+							<SelectTrigger className='w-full gap-2'>
+								<span className='muted'>Category:</span>
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
 								<SelectItem value={"all"}>All</SelectItem>
-								{categories &&
-									categories.map((category: string, i: number) => (
-										<SelectItem value={category} key={i}>
-											{category}
-										</SelectItem>
-									))}
+								{categories.map((category: string, i: number) => (
+									<SelectItem value={category} key={i}>
+										{category}
+									</SelectItem>
+								))}
 							</SelectContent>
 						</Select>
+						{!filters ?
+							<p className='muted text-center py-2'>Pick a category to see more filters</p>
+						:	filters.map((filter) => (
+								<Select key={filter.detail} defaultValue='all'>
+									<SelectTrigger className='w-full gap-2'>
+										<span className='muted'>{filter.detail}:</span>
+										<SelectValue />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value={"all"}>All</SelectItem>
+										{filter.answers.map((answer) => (
+											<SelectItem value={answer} key={answer}>
+												{answer}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							))
+						}
 					</PopoverContent>
 				</Popover>
 				<Popover>
@@ -106,7 +157,8 @@ const ProductsDisplay = () => {
 					</PopoverTrigger>
 					<PopoverContent align='end' className='flex flex-col gap-3'>
 						<Select value={orderBy} onValueChange={(value: "price") => setOrderBy(value)}>
-							<SelectTrigger className='w-full'>
+							<SelectTrigger className='w-full gap-2'>
+								<span className='muted'>Sort by:</span>
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
@@ -125,9 +177,7 @@ const ProductsDisplay = () => {
 					</PopoverContent>
 				</Popover>
 			</div>
-			<Suspense fallback={<ProductsSkeleton />}>
-				<Products order={order} orderBy={orderBy} category={categoryFilter} />
-			</Suspense>
+			<Products order={order} orderBy={orderBy} category={categoryFilter} />
 		</section>
 	);
 };
