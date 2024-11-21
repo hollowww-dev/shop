@@ -29,6 +29,7 @@ const CartItem = ({ entry }: { entry: CartEntry }) => {
 					width={60}
 					height={60}
 					className='self-start rounded-full p-1 border border-border'
+					unoptimized
 				/>
 				<div className='py-0 flex flex-col self-center'>
 					<CardTitle className='text-lg'>
