@@ -15,10 +15,12 @@ const Products = ({
 	orderBy,
 	order,
 	category,
+	filters,
 }: {
 	orderBy: "price";
 	order: "ascending" | "descending";
 	category: string;
+	filters: Map<string, string>;
 }) => {
 	const [_isPending, startTransition] = useTransition();
 	const orderProducts = (products: ProductType[]) => {
@@ -37,7 +39,7 @@ const Products = ({
 		queryKey: ["products"],
 		queryFn: () =>
 			client.fetch<ProductType[]>(
-				groq`*[_type == "product" && stock > 0${category !== "all" ? ` && category == "${category}"` : ""}]{
+				groq`*[_type == "product" && stock > 0${category !== "all" ? ` && category == "${category}"` : ""}${Array.from([...filters]).map((filter) => ` && "${filter[1]}" in details[detail == "${filter[0]}"].answer`)}]{
     					_id,
     					name,
     					image,
@@ -52,7 +54,7 @@ const Products = ({
 		startTransition(() => {
 			refetch();
 		});
-	}, [category]);
+	}, [category, filters]);
 
 	const orderedProducts = orderProducts(products);
 
@@ -69,6 +71,7 @@ const ProductsDisplay = () => {
 	const [orderBy, setOrderBy] = useState<"price">("price");
 	const [order, setOrder] = useState<"ascending" | "descending">("descending");
 	const [categoryFilter, setCategoryFilter] = useState<string>("all");
+	const [activeFilters, setActiveFilters] = useState<Map<string, string>>(new Map());
 	const { data: categories } = useSuspenseQuery({
 		queryKey: ["categories"],
 		queryFn: () =>
@@ -100,6 +103,7 @@ const ProductsDisplay = () => {
 				),
 		enabled: categoryFilter !== "all",
 	});
+
 	return (
 		<section className='flex flex-col gap-2'>
 			<div className='flex gap-2 self-end'>
@@ -112,7 +116,10 @@ const ProductsDisplay = () => {
 					<PopoverContent align='end' className='flex flex-col gap-3'>
 						<Select
 							value={categoryFilter}
-							onValueChange={(value: string) => setCategoryFilter(value)}
+							onValueChange={(value: string) => {
+								setCategoryFilter(value);
+								setActiveFilters(new Map());
+							}}
 							disabled={filtersFetching}
 						>
 							<SelectTrigger className='w-full gap-2'>
@@ -131,15 +138,25 @@ const ProductsDisplay = () => {
 						{!filters ?
 							<p className='muted text-center py-2'>Pick a category to see more filters</p>
 						:	filters.map((filter) => (
-								<Select key={filter.detail} defaultValue='all'>
+								<Select
+									key={filter.detail}
+									value={activeFilters.get(filter.detail) || "all"}
+									onValueChange={(value: string) =>
+										value !== "all" ?
+											setActiveFilters((prev) => new Map([...prev, [filter.detail, value]]))
+										:	setActiveFilters(
+												(prev) => new Map([...prev].filter(([k, v]) => k !== filter.detail))
+											)
+									}
+								>
 									<SelectTrigger className='w-full gap-2'>
 										<span className='muted'>{filter.detail}:</span>
 										<SelectValue />
 									</SelectTrigger>
 									<SelectContent>
 										<SelectItem value={"all"}>All</SelectItem>
-										{filter.answers.map((answer) => (
-											<SelectItem value={answer} key={answer}>
+										{filter.answers.map((answer, i) => (
+											<SelectItem value={answer} key={i}>
 												{answer}
 											</SelectItem>
 										))}
@@ -177,7 +194,7 @@ const ProductsDisplay = () => {
 					</PopoverContent>
 				</Popover>
 			</div>
-			<Products order={order} orderBy={orderBy} category={categoryFilter} />
+			<Products order={order} orderBy={orderBy} category={categoryFilter} filters={activeFilters} />
 		</section>
 	);
 };
