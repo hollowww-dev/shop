@@ -145,7 +145,7 @@ const ProductsDisplay = () => {
 										value !== "all" ?
 											setActiveFilters((prev) => new Map([...prev, [filter.detail, value]]))
 										:	setActiveFilters(
-												(prev) => new Map([...prev].filter(([k, v]) => k !== filter.detail))
+												(prev) => new Map([...prev].filter(([k, _v]) => k !== filter.detail))
 											)
 									}
 								>
