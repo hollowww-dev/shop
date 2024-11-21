@@ -49,6 +49,9 @@ const Products = ({
 				{},
 				{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
 			),
+		refetchOnMount: false,
+		refetchOnReconnect: false,
+		refetchOnWindowFocus: false,
 	});
 	useEffect(() => {
 		startTransition(() => {
