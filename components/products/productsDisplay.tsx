@@ -39,7 +39,11 @@ const Products = ({
 		queryKey: ["products"],
 		queryFn: () =>
 			client.fetch<ProductType[]>(
-				groq`*[_type == "product" && stock > 0${category !== "all" ? ` && category == "${category}"` : ""}${Array.from([...filters]).map((filter) => ` && "${filter[1]}" in details[detail == "${filter[0]}"].answer`)}]{
+				groq`*[_type == "product" && stock > 0${category !== "all" ? ` && category == "${category}"` : ""}${Array.from(
+					[...filters]
+				)
+					.map((filter) => ` && "${filter[1]}" in details[detail == "${filter[0]}"].answer`)
+					.join("")}]{
     					_id,
     					name,
     					image,
@@ -58,7 +62,9 @@ const Products = ({
 			refetch();
 		});
 	}, [category, filters]);
-
+	console.log(
+		`${Array.from([...filters]).map((filter) => ` && "${filter[1]}" in details[detail == "${filter[0]}"].answer`)}`
+	);
 	const orderedProducts = orderProducts(products);
 
 	return (
