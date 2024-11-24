@@ -23,6 +23,7 @@ const Products = ({
 	filters: Map<string, string>;
 }) => {
 	const [_isPending, startTransition] = useTransition();
+
 	const orderProducts = (products: ProductType[]) => {
 		switch (orderBy) {
 			case "price":

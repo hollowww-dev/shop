@@ -11,8 +11,8 @@ import Link from "next/link";
 
 const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 	return (
-		<Link href={`${config.siteUrl}/product/${product._id}`} prefetch={true} className='no-underline'>
-			<Card key={product._id} className='relative active:shadow-none transition-shadow cursor-pointer'>
+		<Link href={`${config.siteUrl}/shop/${product._id}`} className='no-underline'>
+			<Card className='relative active:shadow-none transition-shadow cursor-pointer'>
 				<CardHeader>
 					<AspectRatio ratio={1} className='relative'>
 						<Image

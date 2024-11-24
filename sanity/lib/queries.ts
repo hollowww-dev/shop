@@ -40,6 +40,7 @@ contact
 }`;
 
 export const PORTFOLIOS = groq`*[_type == "portfolioAlbum"]{
+    _id,
     title,
     description,
     'count': count(products),
@@ -47,7 +48,14 @@ export const PORTFOLIOS = groq`*[_type == "portfolioAlbum"]{
 }
 `;
 
-export const PRODUCT = groq`*[_id == $id][0]{
+export const PORTFOLIO = groq`*[_type == "portfolioAlbum" && _id == $id][0]{
+    title,
+    description,
+    cover,
+    products[]->{name, description, image, gallery}
+}`;
+
+export const PRODUCT = groq`*[_type == "product" && _id == $id][0]{
     _id,
     name,
     description,
