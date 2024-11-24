@@ -5,7 +5,8 @@ import SocialMedia from "./socialMedia";
 import FAQ from "./FAQ";
 import aboutMe from "./aboutMe";
 import Shippings from "./shippings";
+import PortfolioAlbum from "./portfolio";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-	types: [Product, Settings, Shippings, SocialMedia, aboutMe, FAQ],
+	types: [Product, PortfolioAlbum, Settings, Shippings, SocialMedia, aboutMe, FAQ],
 };

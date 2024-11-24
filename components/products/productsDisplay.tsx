@@ -62,9 +62,7 @@ const Products = ({
 			refetch();
 		});
 	}, [category, filters]);
-	console.log(
-		`${Array.from([...filters]).map((filter) => ` && "${filter[1]}" in details[detail == "${filter[0]}"].answer`)}`
-	);
+
 	const orderedProducts = orderProducts(products);
 
 	return (
@@ -89,6 +87,9 @@ const ProductsDisplay = () => {
 				{},
 				{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
 			),
+		refetchOnMount: false,
+		refetchOnReconnect: false,
+		refetchOnWindowFocus: false,
 	});
 	const { data: filters, isLoading: filtersFetching } = useQuery({
 		queryKey: ["filters", categoryFilter],
@@ -111,6 +112,9 @@ const ProductsDisplay = () => {
 					}))
 				),
 		enabled: categoryFilter !== "all",
+		refetchOnMount: false,
+		refetchOnReconnect: false,
+		refetchOnWindowFocus: false,
 	});
 
 	return (

@@ -1,25 +1,11 @@
-import { getQueryClient } from "@/lib/queryClient";
-import { client } from "@/sanity/lib/client";
-import { PORTFOLIO } from "@/sanity/lib/queries";
-import { ProductType } from "@/types";
-import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
+import PortfolioDisplay from "@/components/portfolio/portfolioDisplay";
+import { PortfoliosSkeleton } from "@/components/skeletons";
+import { Suspense } from "react";
 
 export default async function Page() {
-	const queryClient = getQueryClient();
-
-	queryClient.prefetchQuery({
-		queryKey: ["portfolio"],
-		queryFn: () =>
-			client.fetch<ProductType[]>(
-				PORTFOLIO,
-				{},
-				{ cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache" }
-			),
-	});
-
 	return (
-		<HydrationBoundary state={dehydrate(queryClient)}>
-
-		</HydrationBoundary>
+		<Suspense fallback={<PortfoliosSkeleton />}>
+			<PortfolioDisplay />
+		</Suspense>
 	);
 }

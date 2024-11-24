@@ -39,11 +39,11 @@ information,
 contact
 }`;
 
-export const PORTFOLIO = groq`*[_type == "product" && stock == 0]{
-    _id,
-    name,
-    image,
-    category,
+export const PORTFOLIOS = groq`*[_type == "portfolioAlbum"]{
+    title,
+    description,
+    'count': count(products),
+    cover
 }
 `;
 

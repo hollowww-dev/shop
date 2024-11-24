@@ -4,9 +4,36 @@ import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
 
-export const ProductSkeleton = async () => {
+export const PortfolioSkeleton = () => {
 	return (
 		<Card>
+			<AspectRatio ratio={1} className='relative'>
+				<Skeleton className='w-full h-full' />
+			</AspectRatio>
+		</Card>
+	);
+};
+
+export const PortfoliosSkeleton = () => {
+	return (
+		<section className='flex flex-col gap-2'>
+			<div className='flex gap-2 self-end'>
+				<Button variant={"outline"} size='icon' disabled>
+					<VscListFilter />
+				</Button>
+			</div>
+			<div className='grid md:grid-cols-2 gap-6 py-3'>
+				{Array.from({ length: 2 }).map((_, i) => (
+					<PortfolioSkeleton key={i} />
+				))}
+			</div>
+		</section>
+	);
+};
+
+export const ProductSkeleton = () => {
+	return (
+		<Card className='p-3'>
 			<CardHeader>
 				<AspectRatio ratio={1} className='relative'>
 					<Skeleton className='w-full h-full' />
@@ -19,7 +46,7 @@ export const ProductSkeleton = async () => {
 	);
 };
 
-export const ProductsSkeleton = async () => {
+export const ProductsSkeleton = () => {
 	return (
 		<section className='flex flex-col gap-2'>
 			<div className='flex gap-2 self-end'>
@@ -39,7 +66,7 @@ export const ProductsSkeleton = async () => {
 	);
 };
 
-export const ProductDetailsSkeleton = async () => {
+export const ProductDetailsSkeleton = () => {
 	return (
 		<>
 			<section className='flex flex-col gap-2'>
