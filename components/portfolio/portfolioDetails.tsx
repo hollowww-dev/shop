@@ -18,7 +18,7 @@ const PortfolioDetails = ({ id }: { id: string }) => {
 		refetchOnWindowFocus: false,
 		refetchOnReconnect: false,
 	});
-
+	console.log(portfolio);
 	return <></>;
 };
 
