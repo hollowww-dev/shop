@@ -4,6 +4,16 @@ import { client } from "@/sanity/lib/client";
 import { PORTFOLIO } from "@/sanity/lib/queries";
 import { PortfolioType } from "@/types";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { Card } from "../ui/card";
+import Image from "next/image";
+import { urlFor } from "@/sanity/lib/image";
+import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from "react-share";
+import { IoLogoFacebook, IoLogoPinterest } from "react-icons/io5";
+import { FaSquareXTwitter } from "react-icons/fa6";
+import config from "@/lib/config.preval";
+import { Product } from "@/sanity.types";
+import PortfolioCarousel from "./portfolioCarousel";
+
 
 const PortfolioDetails = ({ id }: { id: string }) => {
 	const { data: portfolio } = useSuspenseQuery({
@@ -18,8 +28,37 @@ const PortfolioDetails = ({ id }: { id: string }) => {
 		refetchOnWindowFocus: false,
 		refetchOnReconnect: false,
 	});
-	console.log(portfolio);
-	return <></>;
+	return (
+		<>
+			<section className="flex flex-col gap-3">
+				<div className="flex flex-row gap-3 self-center w-full max-w-screen-md">
+					<Card className="p-2 flex self-start shrink-0">
+						<Image src={urlFor(portfolio.cover).width(150).height(150).url()} alt={portfolio.title} width={150} height={150} className="rounded-md" />
+					</Card>
+					<div className="w-full flex flex-col gap-3 py-3">
+						<h3>{portfolio.title} ({portfolio.count})</h3>
+						<p className="lead">{portfolio.description}</p>
+						<div className='flex flex-row gap-2 mt-auto'>
+							<FacebookShareButton url={`${config.siteUrl}/portfolio/${portfolio._id}`}>
+								<IoLogoFacebook className='text-2xl text-facebook' />
+							</FacebookShareButton>
+							<PinterestShareButton
+								url={`${config.siteUrl}/portfolio/${portfolio._id}`}
+								media={urlFor(portfolio.cover).url()}
+								openShareDialogOnClick
+							>
+								<IoLogoPinterest className='text-2xl text-pinterest' />
+							</PinterestShareButton>
+							<TwitterShareButton url={`${config.siteUrl}/product/${portfolio._id}`} openShareDialogOnClick>
+								<FaSquareXTwitter className='text-2xl text-black' />
+							</TwitterShareButton>
+						</div>
+					</div>
+				</div>
+			</section>
+			{portfolio.products?.map((product: Product) => <PortfolioCarousel product={product} key={product._id} />)}
+		</>
+	);
 };
 
 export default PortfolioDetails;

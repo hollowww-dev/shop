@@ -11,8 +11,8 @@ import config from "@/lib/config.preval";
 
 const Portfolio = ({ album }: { album: PortfolioType }) => {
 	return (
-		<Link href={`${config.siteUrl}/portfolio/${album._id}`} className='no-underline'>
-			<Card className='p-3'>
+		<Link href={`${config.siteUrl}/portfolio/${album._id}`} prefetch={true} className='no-underline'>
+			<Card className='p-2'>
 				<AspectRatio
 					ratio={1}
 					className='relative overflow-hidden rounded-md active:shadow-none transition-shadow cursor-pointer'

@@ -151,14 +151,14 @@ const ProductsDisplay = () => {
 						</Select>
 						{!filters ?
 							<p className='muted text-center py-2'>Pick a category to see more filters</p>
-						:	filters.map((filter) => (
+							: filters.map((filter) => (
 								<Select
 									key={filter.detail}
 									value={activeFilters.get(filter.detail) || "all"}
 									onValueChange={(value: string) =>
 										value !== "all" ?
 											setActiveFilters((prev) => new Map([...prev, [filter.detail, value]]))
-										:	setActiveFilters(
+											: setActiveFilters(
 												(prev) => new Map([...prev].filter(([k, _v]) => k !== filter.detail))
 											)
 									}

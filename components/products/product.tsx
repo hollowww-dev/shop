@@ -11,9 +11,9 @@ import Link from "next/link";
 
 const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 	return (
-		<Link href={`${config.siteUrl}/shop/${product._id}`} className='no-underline'>
+		<Link href={`${config.siteUrl}/shop/${product._id}`} prefetch={true} className='no-underline'>
 			<Card className='relative active:shadow-none transition-shadow cursor-pointer'>
-				<CardHeader>
+				<CardHeader className="p-2 pb-0">
 					<AspectRatio ratio={1} className='relative'>
 						<Image
 							src={urlFor(product.image).width(300).height(300).url()}
@@ -27,7 +27,7 @@ const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 						/>
 					</AspectRatio>
 				</CardHeader>
-				<CardContent className='flex flex-col md:flex-row justify-between md:items-center gap-1 lg:gap-2'>
+				<CardContent className='flex flex-col md:flex-row justify-between md:items-center gap-1 lg:gap-2 py-2'>
 					<h4 className='line-clamp-1'>{product.name}</h4>
 					<Badge variant='outline' className='self-center lg:self-start'>
 						{formatCurrencyString({ value: product.price, currency: config.currency })}

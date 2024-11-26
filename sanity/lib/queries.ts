@@ -51,8 +51,9 @@ export const PORTFOLIOS = groq`*[_type == "portfolioAlbum"]{
 export const PORTFOLIO = groq`*[_type == "portfolioAlbum" && _id == $id][0]{
     title,
     description,
+    'count': count(products),
     cover,
-    products[]->{name, description, image, gallery}
+    products[]->{_id, name, description, image, gallery}
 }`;
 
 export const PRODUCT = groq`*[_type == "product" && _id == $id][0]{

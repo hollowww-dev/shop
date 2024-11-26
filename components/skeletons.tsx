@@ -6,7 +6,7 @@ import { Skeleton } from "./ui/skeleton";
 
 export const PortfolioSkeleton = () => {
 	return (
-		<Card>
+		<Card className="p-3">
 			<AspectRatio ratio={1} className='relative'>
 				<Skeleton className='w-full h-full' />
 			</AspectRatio>
@@ -33,7 +33,7 @@ export const PortfoliosSkeleton = () => {
 
 export const ProductSkeleton = () => {
 	return (
-		<Card className='p-3'>
+		<Card>
 			<CardHeader>
 				<AspectRatio ratio={1} className='relative'>
 					<Skeleton className='w-full h-full' />

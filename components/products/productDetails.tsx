@@ -74,8 +74,8 @@ const ProductDetails = ({ id }: { id: string }) => {
 					</div>
 				</div>
 				<div className='flex flex-col lg:flex-row gap-6 lg:gap-12'>
-					<Carousel className='w-full h-full'>
-						<Card className='overflow-hidden'>
+					<Card className='w-full p-2'>
+						<Carousel className='rounded-md overflow-hidden'>
 							<CardContent className='p-0'>
 								<CarouselContent>
 									{[product.image, ...(product.gallery || [])].map(
@@ -102,10 +102,10 @@ const ProductDetails = ({ id }: { id: string }) => {
 									)}
 								</CarouselContent>
 							</CardContent>
-						</Card>
-						<CarouselPrevious />
-						<CarouselNext />
-					</Carousel>
+							<CarouselPrevious />
+							<CarouselNext />
+						</Carousel>
+					</Card>
 					<div className='flex flex-1 flex-col lg:items-center lg:self-center gap-6 lg:gap-12'>
 						<span className='text-4xl self-center'>
 							{formatCurrencyString({
