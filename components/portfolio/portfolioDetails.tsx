@@ -31,8 +31,8 @@ const PortfolioDetails = ({ id }: { id: string }) => {
 	return (
 		<>
 			<section className="flex flex-col gap-3">
-				<div className="flex flex-row gap-3 self-center w-full max-w-screen-md">
-					<Card className="p-2 flex self-start shrink-0">
+				<div className="flex flex-col sm:flex-row gap-3 self-center w-full max-w-screen-md">
+					<Card className="p-2 flex self-center sm:self-start shrink-0">
 						<Image src={urlFor(portfolio.cover).width(150).height(150).url()} alt={portfolio.title} width={150} height={150} className="rounded-md" />
 					</Card>
 					<div className="w-full flex flex-col gap-3 py-3">

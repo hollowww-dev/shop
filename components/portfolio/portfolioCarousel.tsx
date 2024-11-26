@@ -9,6 +9,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { AspectRatio } from "../ui/aspect-ratio"
 import { Card } from "../ui/card"
 import { useCallback, useEffect, useState } from "react"
+import {
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 
 const PortfolioCarousel = ({ product }: { product: Product }) => {
     const [api, setApi] = useState<CarouselApi>()
@@ -49,28 +55,54 @@ const PortfolioCarousel = ({ product }: { product: Product }) => {
                     <p><span className="font-medium">Description:</span> {product.description}</p>
                 </PopoverContent>
             </Popover>
-            <Card className="w-full p-2">
+            <Card className="w-full p-2 cursor-pointer">
                 <Carousel className="rounded-md overflow-hidden" setApi={setApi}>
                     <CarouselContent>
                         {[product.image, ...(product.gallery || [])].map(
                             (item, index) =>
                                 item && (
                                     <CarouselItem key={index}>
-                                        <AspectRatio ratio={16 / 9}>
-                                            <Image
-                                                src={urlFor(item).width(696).height(390).url()}
-                                                alt={product.name}
-                                                loading='lazy'
-                                                placeholder='blur'
-                                                blurDataURL={urlFor(item)
-                                                    .width(24)
-                                                    .height(24)
-                                                    .blur(10)
-                                                    .url()}
-                                                unoptimized
-                                                fill
-                                            />
-                                        </AspectRatio>
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <AspectRatio ratio={16 / 9}>
+                                                    <Image
+                                                        src={urlFor(item).width(984).url()}
+                                                        alt={product.name}
+                                                        loading='lazy'
+                                                        placeholder='blur'
+                                                        objectFit="cover"
+                                                        blurDataURL={urlFor(item)
+                                                            .width(24)
+                                                            .height(24)
+                                                            .blur(10)
+                                                            .url()}
+                                                        unoptimized
+                                                        fill
+                                                    />
+                                                </AspectRatio>
+                                            </DialogTrigger>
+                                            <DialogContent className="max-w-screen-md" aria-describedby={product.description}>
+                                                <DialogTitle>
+                                                    {product.name}
+                                                </DialogTitle>
+                                                <Image
+                                                    src={urlFor(item).width(984).url()}
+                                                    alt={product.name}
+                                                    className="rounded-md"
+                                                    loading='lazy'
+                                                    layout='responsive'
+                                                    placeholder='blur'
+                                                    width={4}
+                                                    height={3}
+                                                    blurDataURL={urlFor(item)
+                                                        .width(24)
+                                                        .height(24)
+                                                        .blur(10)
+                                                        .url()}
+                                                    unoptimized
+                                                />
+                                            </DialogContent>
+                                        </Dialog>
                                     </CarouselItem>
                                 )
                         )}
