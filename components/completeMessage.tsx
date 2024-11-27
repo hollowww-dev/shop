@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+
 import Stripe from "stripe";
 import { useShoppingCart } from "use-shopping-cart";
 

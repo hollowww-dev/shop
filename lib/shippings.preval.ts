@@ -1,7 +1,9 @@
-import { Shipping } from "../sanity.types";
-import { client } from "../sanity/lib/client";
 import preval from "next-plugin-preval";
+
+import { client } from "../sanity/lib/client";
 import { SHIPPINGS } from "../sanity/lib/queries";
+
+import { Shipping } from "../sanity.types";
 
 async function getShippings() {
 	const shippings: Shipping = await client.fetch(

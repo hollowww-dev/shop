@@ -1,15 +1,19 @@
 "use client";
 
-import { client } from "@/sanity/lib/client";
-import { PORTFOLIOS } from "@/sanity/lib/queries";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import Portfolio from "./portfolio";
-import { PortfolioType } from "@/types";
 import { useState } from "react";
-import { VscListFilter } from "react-icons/vsc";
+
+import { useSuspenseQuery } from "@tanstack/react-query";
+
+import Portfolio from "./portfolio";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
+
+import { client } from "@/sanity/lib/client";
+import { PORTFOLIOS } from "@/sanity/lib/queries";
+
+import { PortfolioType } from "@/types";
+import { VscListFilter } from "react-icons/vsc";
 
 const PortfolioDisplay = () => {
 	const [orderBy, setOrderBy] = useState<"count">("count");

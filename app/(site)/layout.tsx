@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
-import Providers from "./providers";
+import { groq } from "next-sanity";
+
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import config from "@/lib/config.preval";
+import Providers from "./providers";
+
 import { client } from "@/sanity/lib/client";
-import { ProductType } from "@/types";
-import { groq } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
+import config from "@/lib/config.preval";
+
+import { ProductType } from "@/types";
+
+import "./globals.css";
 
 const geistSans = localFont({
 	src: "../fonts/GeistVF.woff",

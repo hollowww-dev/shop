@@ -1,8 +1,9 @@
-import { VscListFilter, VscSettings } from "react-icons/vsc";
 import { AspectRatio } from "./ui/aspect-ratio";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
+
+import { VscListFilter, VscSettings } from "react-icons/vsc";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 
 export const PortfolioSkeleton = () => {

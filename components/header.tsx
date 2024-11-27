@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+
 import config from "@/lib/config.preval";
+
+import { Button } from "@/components/ui/button";
 import Cart from "@/components/cart";
 import Hamburger from "./hamburger";
 

@@ -1,25 +1,30 @@
 "use client";
 
-import { urlFor } from "@/sanity/lib/image";
+import Image from "next/image";
+
+import { useShoppingCart } from "use-shopping-cart";
+import { formatCurrencyString } from "use-shopping-cart/core";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
+import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from "react-share";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
-import Image from "next/image";
-import config from "@/lib/config.preval";
-import { formatCurrencyString } from "use-shopping-cart/core";
-import { useShoppingCart } from "use-shopping-cart";
-import { parseCartItem } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
-import { ProductType } from "@/types";
-import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from "react-share";
-import { IoLogoFacebook, IoLogoPinterest } from "react-icons/io5";
-import { FaSquareXTwitter } from "react-icons/fa6";
 import { Table, TableBody, TableRow, TableCell } from "../ui/table";
 import Product from "./product";
+
+import { urlFor } from "@/sanity/lib/image";
+import config from "@/lib/config.preval";
+import { parseCartItem } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 import { client } from "@/sanity/lib/client";
 import { PRODUCT } from "@/sanity/lib/queries";
-import { useSuspenseQuery } from "@tanstack/react-query";
+
+import { ProductType } from "@/types";
+
+import { IoLogoFacebook, IoLogoPinterest } from "react-icons/io5";
+import { FaSquareXTwitter } from "react-icons/fa6";
 
 const ProductDetails = ({ id }: { id: string }) => {
 	const { data: product } = useSuspenseQuery({

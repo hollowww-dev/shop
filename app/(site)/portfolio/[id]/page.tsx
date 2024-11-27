@@ -1,12 +1,15 @@
+import { Suspense } from "react";
+import type { Metadata } from "next";
+
 import PortfolioDetails from "@/components/portfolio/portfolioDetails";
 import { PortfolioDetailsSkeleton } from "@/components/skeletons";
+
 import configPreval from "@/lib/config.preval";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { PORTFOLIO } from "@/sanity/lib/queries";
+
 import { PortfolioType } from "@/types";
-import type { Metadata } from "next";
-import { Suspense } from "react";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
 	const { id } = await props.params;

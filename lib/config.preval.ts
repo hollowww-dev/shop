@@ -1,7 +1,9 @@
-import { Settings } from "../sanity.types";
+import preval from "next-plugin-preval";
+
 import { client } from "../sanity/lib/client";
 import { SETTINGS } from "../sanity/lib/queries";
-import preval from "next-plugin-preval";
+
+import { Settings } from "../sanity.types";
 
 async function getConfig() {
 	if (!process.env.NEXT_PUBLIC_SITE_URL) {

@@ -1,9 +1,11 @@
-import { urlFor } from "@/sanity/lib/image";
-import { ProductType } from "@/types";
 import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
 import { Product } from "use-shopping-cart/core";
+import { twMerge } from "tailwind-merge";
+
 import configPreval from "./config.preval";
+import { urlFor } from "@/sanity/lib/image";
+
+import { ProductType } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));

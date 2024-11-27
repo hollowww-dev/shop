@@ -1,17 +1,21 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
+
 import { useShoppingCart } from "use-shopping-cart";
+import { type CartEntry } from "use-shopping-cart/core";
+
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
-import { type CartEntry } from "use-shopping-cart/core";
 import { ScrollArea } from "@/components/ui/scroll-area";
+
+import { createCheckoutSession } from "@/actions";
+import { useToast } from "@/hooks/use-toast";
+
 import { IoCloseOutline } from "react-icons/io5";
 import { AiOutlineShopping } from "react-icons/ai";
-import { createCheckoutSession } from "@/actions";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
 
 const CartItem = ({ entry }: { entry: CartEntry }) => {
 	const { decrementItem } = useShoppingCart();

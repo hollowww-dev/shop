@@ -1,15 +1,18 @@
 "use server";
 
-import stripe from "@/lib/stripe";
+import { headers } from "next/headers";
+
+import { groq } from "next-sanity";
 import { type CartDetails } from "use-shopping-cart/core";
 import { validateCartItems } from "use-shopping-cart/utilities";
+
+import stripe from "@/lib/stripe";
 import { client } from "@/sanity/lib/client";
 import { parseCartItem } from "@/lib/utils";
-import { ProductType } from "@/types";
 import shippingsPreval from "@/lib/shippings.preval";
 import configPreval from "@/lib/config.preval";
-import { headers } from "next/headers";
-import { groq } from "next-sanity";
+
+import { ProductType } from "@/types";
 
 export async function createCheckoutSession(cartDetails: CartDetails): Promise<{ sessionId: string }> {
 	if (!process.env.NEXT_PUBLIC_SITE_URL) {

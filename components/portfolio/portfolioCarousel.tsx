@@ -1,19 +1,23 @@
 "use client";
 
-import { Product } from "@/sanity.types";
-import { urlFor } from "@/sanity/lib/image";
-import { IoIosInformationCircleOutline } from "react-icons/io";
-import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "../ui/carousel";
+import Link from "next/link";
 import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+
+import { urlFor } from "@/sanity/lib/image";
+import config from "@/lib/config.preval";
+
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "../ui/carousel";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Card } from "../ui/card";
-import { useCallback, useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
-import Link from "next/link";
-import config from "@/lib/config.preval";
 import { Separator } from "../ui/separator";
+
+import { Product } from "@/sanity.types";
+
+import { IoIosInformationCircleOutline } from "react-icons/io";
 
 const PortfolioCarousel = ({ product }: { product: Product }) => {
 	const [api, setApi] = useState<CarouselApi>();
@@ -47,7 +51,7 @@ const PortfolioCarousel = ({ product }: { product: Product }) => {
 		<section className='flex flex-col gap-2 self-center max-w-screen-md w-full'>
 			<Popover>
 				<PopoverTrigger asChild>
-					<IoIosInformationCircleOutline className='text-2xl self-end cursor-pointer active:scale-90 transition' />
+					<IoIosInformationCircleOutline className='text-2xl self-end cursor-pointer' />
 				</PopoverTrigger>
 				<PopoverContent side='bottom' align='end' className='w-full max-w-screen-sm flex flex-col gap-2'>
 					<p>

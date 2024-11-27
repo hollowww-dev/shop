@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { Autocomplete } from "@sanity/ui";
 import { groq } from "next-sanity";
-import { useEffect, useState } from "react";
 import { set, StringInputProps, unset, useClient } from "sanity";
 
 export const DetailInput = (props: StringInputProps) => {

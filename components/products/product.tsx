@@ -1,19 +1,23 @@
-import { urlFor } from "@/sanity/lib/image";
+import Image from "next/image";
+import Link from "next/link";
+
 import { formatCurrencyString } from "use-shopping-cart/core";
+
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+
+import { urlFor } from "@/sanity/lib/image";
 import config from "@/lib/config.preval";
+
 import { ProductType } from "@/types";
 import { Product as ProductSanity } from "@/sanity.types";
-import Link from "next/link";
 
 const Product = ({ product }: { product: ProductType | ProductSanity }) => {
 	return (
 		<Link href={`${config.siteUrl}/shop/${product._id}`} prefetch={true} className='no-underline'>
 			<Card className='relative active:shadow-none transition-shadow cursor-pointer'>
-				<CardHeader className="p-2 pb-0">
+				<CardHeader className='p-2 pb-0'>
 					<AspectRatio ratio={1} className='relative'>
 						<Image
 							src={urlFor(product.image).width(300).height(300).url()}

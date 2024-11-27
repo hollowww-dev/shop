@@ -2,6 +2,7 @@ import ContactTable from "@/components/contactTable";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+
 import aboutMePreval from "@/lib/aboutMe.preval";
 import { urlFor } from "@/sanity/lib/image";
 

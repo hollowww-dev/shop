@@ -1,5 +1,7 @@
-import stripe from "@/lib/stripe";
 import Link from "next/link";
+
+import stripe from "@/lib/stripe";
+
 import CompleteMessage from "./completeMessage";
 
 export default async function ReturnMessage({ sessionId }: { sessionId: string }) {

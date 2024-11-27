@@ -1,12 +1,15 @@
+import { Suspense } from "react";
+import type { Metadata } from "next";
+
 import ProductDetails from "@/components/products/productDetails";
 import { ProductDetailsSkeleton } from "@/components/skeletons";
+
 import configPreval from "@/lib/config.preval";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { PRODUCT } from "@/sanity/lib/queries";
+
 import { ProductType } from "@/types";
-import type { Metadata } from "next";
-import { Suspense } from "react";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
 	const { id } = await props.params;

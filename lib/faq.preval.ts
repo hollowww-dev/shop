@@ -1,7 +1,9 @@
-import { Faq as FAQType } from "@/sanity.types";
+import preval from "next-plugin-preval";
+
 import { client } from "../sanity/lib/client";
 import { FAQ as FAQQuery } from "../sanity/lib/queries";
-import preval from "next-plugin-preval";
+
+import { Faq as FAQType } from "@/sanity.types";
 
 async function getFAQ() {
 	const { entries }: FAQType = await client.fetch(

@@ -1,13 +1,16 @@
 "use client";
 
-import { Card } from "../ui/card";
-import { urlFor } from "@/sanity/lib/image";
-import { AspectRatio } from "@radix-ui/react-aspect-ratio";
-import product from "../products/product";
 import Image from "next/image";
-import { PortfolioType } from "@/types";
 import Link from "next/link";
+
 import config from "@/lib/config.preval";
+import { urlFor } from "@/sanity/lib/image";
+
+import { AspectRatio } from "@radix-ui/react-aspect-ratio";
+import { Card } from "../ui/card";
+import product from "../products/product";
+
+import { PortfolioType } from "@/types";
 
 const Portfolio = ({ album }: { album: PortfolioType }) => {
 	return (

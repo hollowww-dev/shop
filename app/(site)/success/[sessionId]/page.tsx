@@ -1,5 +1,6 @@
-import ReturnMessage from "@/components/returnMessage";
 import { Suspense } from "react";
+
+import ReturnMessage from "@/components/returnMessage";
 
 export default async function Page({ params }: { params: Promise<{ sessionId: string }> }) {
 	const { sessionId } = await params;

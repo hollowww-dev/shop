@@ -1,6 +1,8 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import FAQ from "@/lib/faq.preval";
 import Link from "next/link";
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+
+import FAQ from "@/lib/faq.preval";
 
 export default async function Page() {
 	return (

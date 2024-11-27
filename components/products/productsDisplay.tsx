@@ -1,15 +1,20 @@
 "use client";
 
-import { Button } from "../ui/button";
-import { VscSettings, VscListFilter } from "react-icons/vsc";
 import { useEffect, useState, useTransition } from "react";
-import { client } from "@/sanity/lib/client";
-import { ProductType } from "@/types";
-import Product from "./product";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Select, SelectContent, SelectItem, SelectValue, SelectTrigger } from "../ui/select";
+
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { groq } from "next-sanity";
+
+import { Button } from "../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Select, SelectContent, SelectItem, SelectValue, SelectTrigger } from "../ui/select";
+import Product from "./product";
+
+import { client } from "@/sanity/lib/client";
+
+import { ProductType } from "@/types";
+
+import { VscSettings, VscListFilter } from "react-icons/vsc";
 
 const Products = ({
 	orderBy,
@@ -151,14 +156,14 @@ const ProductsDisplay = () => {
 						</Select>
 						{!filters ?
 							<p className='muted text-center py-2'>Pick a category to see more filters</p>
-							: filters.map((filter) => (
+						:	filters.map((filter) => (
 								<Select
 									key={filter.detail}
 									value={activeFilters.get(filter.detail) || "all"}
 									onValueChange={(value: string) =>
 										value !== "all" ?
 											setActiveFilters((prev) => new Map([...prev, [filter.detail, value]]))
-											: setActiveFilters(
+										:	setActiveFilters(
 												(prev) => new Map([...prev].filter(([k, _v]) => k !== filter.detail))
 											)
 									}

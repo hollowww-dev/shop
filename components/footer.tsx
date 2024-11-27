@@ -1,7 +1,9 @@
-import { IoLogoFacebook, IoLogoInstagram, IoLogoPinterest, IoLogoTiktok, IoLogoYoutube } from "react-icons/io5";
-import config from "@/lib/config.preval";
 import Link from "next/link";
+
+import config from "@/lib/config.preval";
 import socialMediaPreval from "@/lib/socialMedia.preval";
+
+import { IoLogoFacebook, IoLogoInstagram, IoLogoPinterest, IoLogoTiktok, IoLogoYoutube } from "react-icons/io5";
 
 const Footer = async () => {
 	return (

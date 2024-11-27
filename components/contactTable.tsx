@@ -1,9 +1,11 @@
 "use client";
 
-import { AboutMe } from "@/sanity.types";
-import { Table, TableBody, TableCell, TableRow } from "./ui/table";
 import { useState } from "react";
+
+import { Table, TableBody, TableCell, TableRow } from "./ui/table";
 import { Button } from "./ui/button";
+
+import { AboutMe } from "@/sanity.types";
 
 const ContactTableRow = ({ line, hidden }: { line?: string; hidden: boolean }) => {
 	const [show, setShow] = useState(false);

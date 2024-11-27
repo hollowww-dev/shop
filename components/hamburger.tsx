@@ -1,7 +1,9 @@
-import { AiOutlineMenu } from "react-icons/ai";
+import Link from "next/link";
+
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetClose } from "./ui/sheet";
-import Link from "next/link";
+
+import { AiOutlineMenu } from "react-icons/ai";
 
 const Hamburger = () => {
 	return (

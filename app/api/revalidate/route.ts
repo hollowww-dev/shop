@@ -1,5 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
+
 import { parseBody } from "next-sanity/webhook";
 
 if (!process.env.NEXT_PUBLIC_SANITY_REVALIDATE_SECRET) {

@@ -1,18 +1,23 @@
 "use client";
 
+import Image from "next/image";
+
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from "react-share";
+
 import { client } from "@/sanity/lib/client";
 import { PORTFOLIO } from "@/sanity/lib/queries";
-import { PortfolioType } from "@/types";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { Card } from "../ui/card";
-import Image from "next/image";
+import config from "@/lib/config.preval";
 import { urlFor } from "@/sanity/lib/image";
-import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from "react-share";
+
+import { Card } from "../ui/card";
+import PortfolioCarousel from "./portfolioCarousel";
+
+import { Product } from "@/sanity.types";
+import { PortfolioType } from "@/types";
+
 import { IoLogoFacebook, IoLogoPinterest } from "react-icons/io5";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import config from "@/lib/config.preval";
-import { Product } from "@/sanity.types";
-import PortfolioCarousel from "./portfolioCarousel";
 
 const PortfolioDetails = ({ id }: { id: string }) => {
 	const { data: portfolio } = useSuspenseQuery({

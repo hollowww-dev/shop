@@ -1,7 +1,9 @@
-import { AboutMe } from "../sanity.types";
-import { client } from "../sanity/lib/client";
 import preval from "next-plugin-preval";
+
+import { client } from "../sanity/lib/client";
 import { ABOUTME } from "../sanity/lib/queries";
+
+import { AboutMe } from "../sanity.types";
 
 async function getAboutMe() {
 	const { headline, description, avatar, contact, information }: AboutMe = await client.fetch(
