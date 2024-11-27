@@ -14,7 +14,6 @@ import config from "@/lib/config.preval";
 import { Product } from "@/sanity.types";
 import PortfolioCarousel from "./portfolioCarousel";
 
-
 const PortfolioDetails = ({ id }: { id: string }) => {
 	const { data: portfolio } = useSuspenseQuery({
 		queryKey: ["portfolio", id],
@@ -30,14 +29,22 @@ const PortfolioDetails = ({ id }: { id: string }) => {
 	});
 	return (
 		<>
-			<section className="flex flex-col gap-3">
-				<div className="flex flex-col sm:flex-row gap-3 self-center w-full max-w-screen-md">
-					<Card className="p-2 flex self-center sm:self-start shrink-0">
-						<Image src={urlFor(portfolio.cover).width(150).height(150).url()} alt={portfolio.title} width={150} height={150} className="rounded-md" />
+			<section className='flex flex-col gap-3'>
+				<div className='flex flex-col sm:flex-row gap-3 self-center w-full max-w-screen-md'>
+					<Card className='p-2 flex self-center sm:self-start shrink-0'>
+						<Image
+							src={urlFor(portfolio.cover).width(150).height(150).url()}
+							alt={portfolio.title}
+							width={150}
+							height={150}
+							className='rounded-md'
+						/>
 					</Card>
-					<div className="w-full flex flex-col gap-3 py-3">
-						<h3>{portfolio.title} ({portfolio.count})</h3>
-						<p className="lead">{portfolio.description}</p>
+					<div className='w-full flex flex-col gap-3 py-3'>
+						<h3>
+							{portfolio.title} ({portfolio.count})
+						</h3>
+						<p className='lead'>{portfolio.description}</p>
 						<div className='flex flex-row gap-2 mt-auto'>
 							<FacebookShareButton url={`${config.siteUrl}/portfolio/${portfolio._id}`}>
 								<IoLogoFacebook className='text-2xl text-facebook' />
@@ -49,7 +56,10 @@ const PortfolioDetails = ({ id }: { id: string }) => {
 							>
 								<IoLogoPinterest className='text-2xl text-pinterest' />
 							</PinterestShareButton>
-							<TwitterShareButton url={`${config.siteUrl}/product/${portfolio._id}`} openShareDialogOnClick>
+							<TwitterShareButton
+								url={`${config.siteUrl}/product/${portfolio._id}`}
+								openShareDialogOnClick
+							>
 								<FaSquareXTwitter className='text-2xl text-black' />
 							</TwitterShareButton>
 						</div>

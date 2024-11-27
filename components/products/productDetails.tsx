@@ -74,7 +74,7 @@ const ProductDetails = ({ id }: { id: string }) => {
 					</div>
 				</div>
 				<div className='flex flex-col lg:flex-row gap-6 lg:gap-12'>
-					<Card className='w-full p-2'>
+					<Card className='w-full max-w-screen-md p-2'>
 						<Carousel className='rounded-md overflow-hidden'>
 							<CardContent className='p-0'>
 								<CarouselContent>

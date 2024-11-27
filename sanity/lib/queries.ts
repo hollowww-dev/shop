@@ -53,7 +53,7 @@ export const PORTFOLIO = groq`*[_type == "portfolioAlbum" && _id == $id][0]{
     description,
     'count': count(products),
     cover,
-    products[]->{_id, name, description, image, gallery}
+    products[]->{_id, name, description, image, gallery, stock, }
 }`;
 
 export const PRODUCT = groq`*[_type == "product" && _id == $id][0]{
@@ -71,7 +71,7 @@ export const PRODUCT = groq`*[_type == "product" && _id == $id][0]{
         name,
         image,
         'price': price * 100,
-        available
+        stock
         }
     },
     !defined(featured) => {
@@ -80,7 +80,7 @@ export const PRODUCT = groq`*[_type == "product" && _id == $id][0]{
         name,
         image,
         'price': price * 100,
-        available
+        stock
         }
     }
 }`;

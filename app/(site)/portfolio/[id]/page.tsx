@@ -1,4 +1,5 @@
 import PortfolioDetails from "@/components/portfolio/portfolioDetails";
+import { PortfolioDetailsSkeleton } from "@/components/skeletons";
 import configPreval from "@/lib/config.preval";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
@@ -11,7 +12,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 	const { id } = await props.params;
 
 	return (
-		<Suspense fallback={<p>Loading</p>}>
+		<Suspense fallback={<PortfolioDetailsSkeleton />}>
 			<PortfolioDetails id={id} />
 		</Suspense>
 	);
