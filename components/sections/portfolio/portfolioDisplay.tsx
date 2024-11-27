@@ -5,9 +5,9 @@ import { useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import Portfolio from "./portfolio";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/shadcn/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/popover";
+import { Button } from "@/components/shadcn/button";
 
 import { client } from "@/sanity/lib/client";
 import { PORTFOLIOS } from "@/sanity/lib/queries";

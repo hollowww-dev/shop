@@ -2,9 +2,9 @@ import Link from "next/link";
 
 import config from "@/lib/config.preval";
 
-import { Button } from "@/components/ui/button";
-import Cart from "@/components/cart";
-import Hamburger from "./hamburger";
+import { Button } from "@/components/shadcn/button";
+import Cart from "@/components/layout/cart";
+import Hamburger from "@/components/layout/hamburger";
 
 const Header = () => {
 	return (

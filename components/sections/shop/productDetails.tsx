@@ -8,10 +8,10 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from "react-share";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
-import { Table, TableBody, TableRow, TableCell } from "../ui/table";
+import { Button } from "@/components/shadcn/button";
+import { Card, CardContent } from "@/components/shadcn/card";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/shadcn/carousel";
+import { Table, TableBody, TableRow, TableCell } from "@/components/shadcn/table";
 import Product from "./product";
 
 import { urlFor } from "@/sanity/lib/image";

@@ -6,10 +6,10 @@ import Image from "next/image";
 import { useShoppingCart } from "use-shopping-cart";
 import { type CartEntry } from "use-shopping-cart/core";
 
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/shadcn/sheet";
+import { Button } from "@/components/shadcn/button";
+import { Card, CardContent, CardTitle } from "@/components/shadcn/card";
+import { ScrollArea } from "@/components/shadcn/scroll-area";
 
 import { createCheckoutSession } from "@/actions";
 import { useToast } from "@/hooks/use-toast";

@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 
-import ProductDetails from "@/components/products/productDetails";
-import { ProductDetailsSkeleton } from "@/components/skeletons";
+import ProductDetails from "@/components/sections/shop/productDetails";
+import { ProductDetailsSkeleton } from "@/components/layout/skeletons";
 
 import configPreval from "@/lib/config.preval";
 import { client } from "@/sanity/lib/client";

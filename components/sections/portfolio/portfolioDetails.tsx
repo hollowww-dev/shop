@@ -10,7 +10,7 @@ import { PORTFOLIO } from "@/sanity/lib/queries";
 import config from "@/lib/config.preval";
 import { urlFor } from "@/sanity/lib/image";
 
-import { Card } from "../ui/card";
+import { Card } from "@/components/shadcn/card";
 import PortfolioCarousel from "./portfolioCarousel";
 
 import { Product } from "@/sanity.types";

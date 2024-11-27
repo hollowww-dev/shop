@@ -1,4 +1,4 @@
-import { CategoryInput, DetailInput } from "@/components/customInputs";
+import { CategoryInput, DetailInput } from "@/components/sections/sanity/customInputs";
 import { type Rule } from "sanity";
 
 const Product = {
@@ -90,7 +90,7 @@ const Product = {
 			name: "stock",
 			title: "Stock",
 			type: "number",
-			validation: (rule: Rule) => rule.required().min(0)
+			validation: (rule: Rule) => rule.required().min(0),
 		},
 		{
 			name: "featured",

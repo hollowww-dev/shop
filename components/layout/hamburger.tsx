@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { Button } from "./ui/button";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetClose } from "./ui/sheet";
+import { Button } from "@/components/shadcn/button";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetClose } from "@/components/shadcn/sheet";
 
 import { AiOutlineMenu } from "react-icons/ai";
 

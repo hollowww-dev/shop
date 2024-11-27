@@ -3,9 +3,9 @@ import Link from "next/link";
 
 import { formatCurrencyString } from "use-shopping-cart/core";
 
-import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Badge } from "@/components/shadcn/badge";
+import { Card, CardHeader, CardContent } from "@/components/shadcn/card";
+import { AspectRatio } from "@/components/shadcn/aspect-ratio";
 
 import { urlFor } from "@/sanity/lib/image";
 import config from "@/lib/config.preval";

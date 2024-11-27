@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-import { Table, TableBody, TableCell, TableRow } from "./ui/table";
-import { Button } from "./ui/button";
+import { Table, TableBody, TableCell, TableRow } from "@/components/shadcn/table";
+import { Button } from "@/components/shadcn/button";
 
 import { AboutMe } from "@/sanity.types";
 

@@ -5,9 +5,9 @@ import { useEffect, useState, useTransition } from "react";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { groq } from "next-sanity";
 
-import { Button } from "../ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Select, SelectContent, SelectItem, SelectValue, SelectTrigger } from "../ui/select";
+import { Button } from "@/components/shadcn/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/popover";
+import { Select, SelectContent, SelectItem, SelectValue, SelectTrigger } from "@/components/shadcn/select";
 import Product from "./product";
 
 import { client } from "@/sanity/lib/client";

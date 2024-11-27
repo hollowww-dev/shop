@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcn/button";
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
 	useEffect(() => {
@@ -11,7 +11,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
 	}, [error]);
 
 	return (
-		<>
+		<div className='flex flex-col gap-2 items-center'>
 			<div className='flex flex-col items-center gap-3 lg:gap-6 text-center'>
 				<h2>Something went wrong</h2>
 				<p>{error.message}</p>
@@ -24,6 +24,6 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
 					</Link>
 				</Button>
 			</div>
-		</>
+		</div>
 	);
 }

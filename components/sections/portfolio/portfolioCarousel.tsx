@@ -7,13 +7,13 @@ import { useCallback, useEffect, useState } from "react";
 import { urlFor } from "@/sanity/lib/image";
 import config from "@/lib/config.preval";
 
-import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "../ui/carousel";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { AspectRatio } from "../ui/aspect-ratio";
-import { Card } from "../ui/card";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/shadcn/carousel";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/popover";
+import { AspectRatio } from "@/components/shadcn/aspect-ratio";
+import { Card } from "@/components/shadcn/card";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/shadcn/dialog";
+import { Button } from "@/components/shadcn/button";
+import { Separator } from "@/components/shadcn/separator";
 
 import { Product } from "@/sanity.types";
 

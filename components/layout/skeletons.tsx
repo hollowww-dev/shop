@@ -1,7 +1,7 @@
-import { AspectRatio } from "./ui/aspect-ratio";
-import { Button } from "./ui/button";
-import { Card, CardContent, CardHeader } from "./ui/card";
-import { Skeleton } from "./ui/skeleton";
+import { AspectRatio } from "@/components/shadcn/aspect-ratio";
+import { Button } from "@/components/shadcn/button";
+import { Card, CardContent, CardHeader } from "@/components/shadcn/card";
+import { Skeleton } from "@/components/shadcn/skeleton";
 
 import { VscListFilter, VscSettings } from "react-icons/vsc";
 import { IoIosInformationCircleOutline } from "react-icons/io";

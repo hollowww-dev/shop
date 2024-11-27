@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
-import ProductsDisplay from "@/components/products/productsDisplay";
-import { ProductsSkeleton } from "@/components/skeletons";
+import ProductsDisplay from "@/components/sections/shop/productsDisplay";
+import { ProductsSkeleton } from "@/components/layout/skeletons";
 
 export default function Page() {
 	return (

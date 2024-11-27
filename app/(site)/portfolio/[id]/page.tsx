@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 
-import PortfolioDetails from "@/components/portfolio/portfolioDetails";
-import { PortfolioDetailsSkeleton } from "@/components/skeletons";
+import PortfolioDetails from "@/components/sections/portfolio/portfolioDetails";
+import { PortfolioDetailsSkeleton } from "@/components/layout/skeletons";
 
 import configPreval from "@/lib/config.preval";
 import { client } from "@/sanity/lib/client";

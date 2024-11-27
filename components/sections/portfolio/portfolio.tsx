@@ -7,8 +7,8 @@ import config from "@/lib/config.preval";
 import { urlFor } from "@/sanity/lib/image";
 
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
-import { Card } from "../ui/card";
-import product from "../products/product";
+import { Card } from "@/components/shadcn/card";
+import product from "@/components/sections/shop/product";
 
 import { PortfolioType } from "@/types";
 
