@@ -14,16 +14,16 @@ import configPreval from '@/lib/config.preval'
 
 import { ProductType } from '@/types'
 
-export async function createCheckoutSession(cartDetails: CartDetails): Promise<{ sessionId: string } | { error: string }> {
+export async function createCheckoutSession(cartDetails: CartDetails): Promise<{ sessionId: string }> {
     if (!process.env.NEXT_PUBLIC_SITE_URL) {
-        return { error: 'Server configuration error: NEXT_PUBLIC_SITE_URL is not defined.' }
-    }
-
-    if (!cartDetails || Object.keys(cartDetails).length === 0) {
-        return { error: 'Cart is empty or invalid. Please add items to your cart before proceeding.' }
+        throw new Error('Server configuration error: NEXT_PUBLIC_SITE_URL is not defined.')
     }
 
     try {
+        if (!cartDetails || Object.keys(cartDetails).length === 0) {
+            throw new Error('Cart is empty or invalid. Please add items to your cart before proceeding.')
+        }
+
         const products: ProductType[] = await client.fetch(groq`*[_type == "product" && stock > 0]{
             _id,
             name,
@@ -120,11 +120,11 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
 
         if (error instanceof Error) {
             if (error.message.includes('Invalid')) {
-                return { error: 'An error occurred while processing your cart. Please try again.' }
+                throw new Error('An error occurred while processing your cart. Please try again.')
             }
-            return { error: `Checkout session creation failed: ${error.message}` }
+            throw new Error(`Checkout session creation failed: ${error.message}`)
         }
 
-        return { error: 'An unexpected error occurred. Please try again later.' }
+        throw new Error('An unexpected error occurred. Please try again later.')
     }
 }

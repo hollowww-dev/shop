@@ -67,7 +67,7 @@ const Products = ({
         startTransition(() => {
             refetch()
         })
-    }, [category, filters])
+    }, [category, filters, refetch])
 
     const orderedProducts = orderProducts(products)
 
