@@ -33,6 +33,24 @@ export const PortfoliosSkeleton = () => {
     )
 }
 
+export const PortfolioCarouselSkeleton = () => {
+    return (
+        <section className="flex flex-col gap-2 self-center max-w-screen-lg w-full">
+            <IoIosInformationCircleOutline className="text-2xl self-end opacity-25" />
+            <Card className="w-full p-2">
+                <AspectRatio ratio={16 / 9}>
+                    <Skeleton className="w-full h-full" />
+                </AspectRatio>
+            </Card>
+            <div className="flex space-x-2 m-0">
+                <Skeleton className="w-[64px] h-[64px] rounded-md" />
+                <Skeleton className="w-[64px] h-[64px] rounded-md" />
+                <Skeleton className="w-[64px] h-[64px] rounded-md" />
+            </div>
+        </section>
+    )
+}
+
 export const PortfolioDetailsSkeleton = () => {
     return (
         <>

@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useState, useRef, useEffect } from 'react'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from 'react-share'
@@ -12,6 +13,7 @@ import { urlFor } from '@/sanity/lib/image'
 
 import { Card } from '@/components/shadcn/card'
 import PortfolioCarousel from './portfolioCarousel'
+import { PortfolioCarouselSkeleton } from '@/components/layout/skeletons'
 
 import { Product } from '@/sanity.types'
 import { PortfolioType } from '@/types'
@@ -20,6 +22,35 @@ import { IoLogoFacebook, IoLogoPinterest } from 'react-icons/io5'
 import { FaSquareXTwitter } from 'react-icons/fa6'
 
 const PortfolioDetails = ({ id }: { id: string }) => {
+    const [renderedIndices, setRenderedIndices] = useState<number[]>([0, 1])
+    const loadersRef = useRef<(HTMLDivElement | null)[]>([])
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const index = parseInt((entry.target as HTMLElement).dataset.index || '0', 10)
+                        setRenderedIndices((prev) => [...new Set([...prev, index])])
+                    }
+                })
+            },
+            { threshold: 1 }
+        )
+
+        const currentLoadersRef = loadersRef.current
+
+        loadersRef.current.forEach((loader) => {
+            if (loader) observer.observe(loader)
+        })
+
+        return () => {
+            currentLoadersRef.forEach((loader) => {
+                if (loader) observer.unobserve(loader)
+            })
+        }
+    }, [])
+
     const { data: portfolio } = useSuspenseQuery({
         queryKey: ['portfolio', id],
         queryFn: () =>
@@ -70,7 +101,17 @@ const PortfolioDetails = ({ id }: { id: string }) => {
                     </div>
                 </div>
             </section>
-            {portfolio.products?.map((product: Product) => <PortfolioCarousel product={product} key={product._id} />)}
+            {portfolio.products?.map((product: Product, index: number) => (
+                <div
+                    key={product._id}
+                    ref={(el) => {
+                        loadersRef.current[index] = el
+                    }}
+                    data-index={index}
+                >
+                    {renderedIndices.includes(index) ? <PortfolioCarousel product={product} /> : <PortfolioCarouselSkeleton />}
+                </div>
+            ))}
         </>
     )
 }

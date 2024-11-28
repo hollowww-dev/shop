@@ -14,22 +14,39 @@ import configPreval from '@/lib/config.preval'
 
 import { ProductType } from '@/types'
 
-export async function createCheckoutSession(cartDetails: CartDetails): Promise<{ sessionId: string }> {
+export async function createCheckoutSession(cartDetails: CartDetails): Promise<{ sessionId: string } | { error: string }> {
     if (!process.env.NEXT_PUBLIC_SITE_URL) {
-        throw new Error('NEXT_PUBLIC_SITE_URL is not defined.')
+        return { error: 'Server configuration error: NEXT_PUBLIC_SITE_URL is not defined.' }
     }
+
+    if (!cartDetails || Object.keys(cartDetails).length === 0) {
+        return { error: 'Cart is empty or invalid. Please add items to your cart before proceeding.' }
+    }
+
     try {
         const products: ProductType[] = await client.fetch(groq`*[_type == "product" && stock > 0]{
-    					_id,
-    					name,
-    					image,
-    					category,
-    					'price': price * 100,
-					}`)
-        const line_items = validateCartItems(
-            products.map((item) => parseCartItem(item)),
-            cartDetails
-        )
+            _id,
+            name,
+            image,
+            category,
+            'price': price * 100,
+        }`)
+
+        if (!products || products.length === 0) {
+            throw new Error('There was an error while connecting with our database. Please try again later.')
+        }
+
+        let line_items
+        try {
+            line_items = validateCartItems(
+                products.map((item) => parseCartItem(item)),
+                cartDetails
+            )
+        } catch (validationError) {
+            console.error('Cart validation error:', validationError)
+            throw new Error('There was an error validating your cart. Please check if all items are available.')
+        }
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
@@ -96,13 +113,18 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
                       ],
             },
         })
+
         return { sessionId: session.id }
     } catch (error) {
-        console.error(error)
+        console.error('Stripe checkout session error:', error)
+
         if (error instanceof Error) {
-            throw new Error(`Failed to create checkout session: ${error.message}`)
-        } else {
-            throw new Error('An unknown error occurred while creating the checkout session')
+            if (error.message.includes('Invalid')) {
+                return { error: 'An error occurred while processing your cart. Please try again.' }
+            }
+            return { error: `Checkout session creation failed: ${error.message}` }
         }
+
+        return { error: 'An unexpected error occurred. Please try again later.' }
     }
 }
