@@ -17,7 +17,12 @@ const CompleteMessage = ({ payment_status }: { payment_status: Stripe.Checkout.S
         case 'unpaid':
             return <p>Your payment is being processed.</p>
         case 'paid':
-            return <p>Thank you for your purchase!</p>
+            return (
+                <>
+                    <p>Thank you for your purchase!</p>
+                    <p>Confirmation will be sent to your email.</p>
+                </>
+            )
     }
 }
 

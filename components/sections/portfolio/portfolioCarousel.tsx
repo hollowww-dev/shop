@@ -48,7 +48,7 @@ const PortfolioCarousel = ({ product }: { product: Product }) => {
     }, [api])
 
     return (
-        <section className="flex flex-col gap-2 self-center max-w-screen-md w-full">
+        <section className="flex flex-col gap-2 self-center max-w-screen-lg w-full">
             <Popover>
                 <PopoverTrigger asChild>
                     <IoIosInformationCircleOutline className="text-2xl self-end cursor-pointer" />
@@ -95,10 +95,10 @@ const PortfolioCarousel = ({ product }: { product: Product }) => {
                                                     />
                                                 </AspectRatio>
                                             </DialogTrigger>
-                                            <DialogContent className="max-w-screen-lg" aria-describedby={product.description}>
+                                            <DialogContent className="max-w-[1200px]" aria-describedby={product.description}>
                                                 <DialogTitle>{product.name}</DialogTitle>
                                                 <Image
-                                                    src={urlFor(item).width(984).url()}
+                                                    src={urlFor(item).width(1200).url()}
                                                     alt={product.name}
                                                     className="rounded-md"
                                                     loading="lazy"

@@ -56,7 +56,8 @@ export const PORTFOLIO = groq`*[_type == "portfolioAlbum" && _id == $id][0]{
     products[]->{_id, name, description, image, gallery, stock, }
 }`
 
-export const PRODUCT = groq`*[_type == "product" && _id == $id][0]{
+export const PRODUCT = groq`
+*[_type == "product" && _id == $id][0]{
     _id,
     name,
     description,
@@ -65,22 +66,21 @@ export const PRODUCT = groq`*[_type == "product" && _id == $id][0]{
     image,
     gallery,
     'price': price * 100,
-    defined(featured) => {
-        featured[]->{
-        _id,
-        name,
-        image,
-        'price': price * 100,
-        stock
-        }
-    },
-    !defined(featured) => {
-        'featured': *[_type == "product" && _id != ^._id && stock > 0][0..3]{
-        _id,
-        name,
-        image,
-        'price': price * 100,
-        stock
-        }
-    }
+    "featured": select(
+        defined(featured) => featured[]->{
+            _id,
+            name,
+            image,
+            'price': price * 100,
+            stock
+        },
+        count(*[_type == "product" && _id != ^._id && stock > 0]) > 0 => *[_type == "product" && _id != ^._id && stock > 0][0..3]{
+            _id,
+            name,
+            image,
+            'price': price * 100,
+            stock
+        },
+        null
+    )
 }`

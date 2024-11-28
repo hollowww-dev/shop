@@ -32,10 +32,10 @@ export default async function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-svh`}>
                 <Providers>
                     <Header />
-                    <main className="container mx-auto flex flex-col gap-6 lg:gap-12">{children}</main>
+                    <main className="container mx-auto flex flex-col flex-grow gap-6 lg:gap-12">{children}</main>
                     <Footer />
                 </Providers>
             </body>

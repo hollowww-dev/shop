@@ -37,20 +37,20 @@ const PortfolioDetails = ({ id }: { id: string }) => {
     return (
         <>
             <section className="flex flex-col gap-3">
-                <div className="flex flex-col sm:flex-row gap-3 self-center w-full max-w-screen-md">
+                <div className="flex flex-col sm:flex-row gap-3 self-center w-full max-w-screen-lg">
                     <Card className="p-2 flex self-center sm:self-start shrink-0">
                         <Image
                             src={urlFor(portfolio.cover).width(150).height(150).url()}
                             alt={portfolio.title}
-                            width={150}
-                            height={150}
+                            width={200}
+                            height={200}
                             className="rounded-md"
                         />
                     </Card>
                     <div className="w-full flex flex-col gap-3 py-3">
-                        <h3>
+                        <h2>
                             {portfolio.title} ({portfolio.count})
-                        </h3>
+                        </h2>
                         <p className="lead">{portfolio.description}</p>
                         <div className="flex flex-row gap-2 mt-auto">
                             <FacebookShareButton url={`${config.siteUrl}/portfolio/${portfolio._id}`}>

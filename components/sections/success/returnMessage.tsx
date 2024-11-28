@@ -3,6 +3,7 @@ import Link from 'next/link'
 import stripe from '@/lib/stripe'
 
 import CompleteMessage from './completeMessage'
+import { Button } from '@/components/shadcn/button'
 
 export default async function ReturnMessage({ sessionId }: { sessionId: string }) {
     try {
@@ -14,14 +15,19 @@ export default async function ReturnMessage({ sessionId }: { sessionId: string }
                 return (
                     <>
                         <p>Your session is still open.</p>
-                        {url && <Link href={url}>Return to payment.</Link>}
+                        {url && (
+                            <Button asChild>
+                                <Link href={url} className="no-underline">
+                                    Return to payment.
+                                </Link>
+                            </Button>
+                        )}
                     </>
                 )
             case 'expired':
                 return <p>Your session has expired.</p>
         }
     } catch (error) {
-        console.error(error)
         return <p>Something went wrong. Try again, please.</p>
     }
 }

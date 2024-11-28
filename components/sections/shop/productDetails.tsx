@@ -92,6 +92,7 @@ const ProductDetails = ({ id }: { id: string }) => {
                                                             loading="lazy"
                                                             placeholder="blur"
                                                             blurDataURL={urlFor(item).width(24).height(24).blur(10).url()}
+                                                            className="rounded-md"
                                                             unoptimized
                                                             fill
                                                         />
