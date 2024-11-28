@@ -1,10 +1,10 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity'
 
 export const SETTINGS = groq`*[_type == "settings"][0]{
 title,
 currency,
 description
-}`;
+}`
 
 export const SHIPPINGS = groq`*[_type == "shipping"][0]{
 shippings[] {
@@ -14,7 +14,7 @@ time,
 },
 worldwideShipping
 }
-`;
+`
 
 export const SOCIALMEDIA = groq`*[_type == "socialMedia"][0]{
 instagram,
@@ -22,14 +22,14 @@ facebook,
 pinterest,
 tiktok,
 youtube
-}`;
+}`
 
 export const FAQ = groq`*[_type == "faq"][0]{
 entries[] {
     answer,
     question
 }
-}`;
+}`
 
 export const ABOUTME = groq`*[_type == "aboutMe"][0]{
 headline,
@@ -37,7 +37,7 @@ description,
 avatar,
 information,
 contact
-}`;
+}`
 
 export const PORTFOLIOS = groq`*[_type == "portfolioAlbum"]{
     _id,
@@ -46,7 +46,7 @@ export const PORTFOLIOS = groq`*[_type == "portfolioAlbum"]{
     'count': count(products),
     cover
 }
-`;
+`
 
 export const PORTFOLIO = groq`*[_type == "portfolioAlbum" && _id == $id][0]{
     title,
@@ -54,7 +54,7 @@ export const PORTFOLIO = groq`*[_type == "portfolioAlbum" && _id == $id][0]{
     'count': count(products),
     cover,
     products[]->{_id, name, description, image, gallery, stock, }
-}`;
+}`
 
 export const PRODUCT = groq`*[_type == "product" && _id == $id][0]{
     _id,
@@ -83,4 +83,4 @@ export const PRODUCT = groq`*[_type == "product" && _id == $id][0]{
         stock
         }
     }
-}`;
+}`
