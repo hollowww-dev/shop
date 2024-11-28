@@ -16,7 +16,7 @@ const nextConfig: NextConfig = withNextPluginPreval({
 		turbo: {
 			resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
 		},
-		optimizePackageImports: ["react-icons/*"],
+		optimizePackageImports: ["next-sanity"],
 	},
 });
 
