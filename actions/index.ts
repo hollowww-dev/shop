@@ -60,6 +60,9 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
                     })
                 ),
             },
+            automatic_tax: {
+                enabled: true,
+            },
             shipping_options: shippingsPreval.shippings.map((shipping) => {
                 return {
                     shipping_rate_data: {

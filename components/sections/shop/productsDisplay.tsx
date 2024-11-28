@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState, useTransition } from 'react'
+import { useSuspenseInfiniteQuery, useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { startTransition, useEffect, useRef, useState } from 'react'
 
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { groq } from 'next-sanity'
 
 import { Button } from '@/components/shadcn/button'
@@ -27,56 +27,101 @@ const Products = ({
     category: string
     filters: Map<string, string>
 }) => {
-    const [_isPending, startTransition] = useTransition()
+    const observerRef = useRef<HTMLDivElement | null>(null)
 
-    const orderProducts = (products: ProductType[]) => {
-        switch (orderBy) {
-            case 'price':
-                switch (order) {
-                    case 'ascending':
-                        return products.sort((a, b) => a.price - b.price)
-                    case 'descending':
-                        return products.sort((a, b) => b.price - a.price)
-                }
+    const fetchProducts = async ({ pageParam = 0 }: { pageParam?: number }) => {
+        const pageSize = 10
+        const products = await client.fetch<ProductType[]>(
+            groq`*[_type == "product" && stock > 0${category !== 'all' ? ` && category == "${category}"` : ''}${Array.from([...filters])
+                .map((filter) => ` && "${filter[1]}" in details[detail == "${filter[0]}"].answer`)
+                .join('')}][${pageParam}...${pageParam + pageSize}]{
+                    _id,
+    				name,
+    				image,
+    				category,
+    				'price': price * 100,
+                }`,
+            {},
+            {
+                cache: process.env.NODE_ENV === 'development' ? 'no-store' : 'force-cache',
+            }
+        )
+        return {
+            products,
+            nextPage: products.length === pageSize ? pageParam + pageSize : null,
         }
     }
 
-    const { data: products, refetch } = useSuspenseQuery({
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useSuspenseInfiniteQuery({
         queryKey: ['products'],
-        queryFn: () =>
-            client.fetch<ProductType[]>(
-                groq`*[_type == "product" && stock > 0${category !== 'all' ? ` && category == "${category}"` : ''}${Array.from([...filters])
-                    .map((filter) => ` && "${filter[1]}" in details[detail == "${filter[0]}"].answer`)
-                    .join('')}]{
-    					_id,
-    					name,
-    					image,
-    					category,
-    					'price': price * 100,
-					}`,
-                {},
-                {
-                    cache: process.env.NODE_ENV === 'development' ? 'no-store' : 'force-cache',
-                }
-            ),
+        queryFn: fetchProducts,
+        initialPageParam: 0,
+        getNextPageParam: (lastPage) => lastPage.nextPage,
         refetchOnMount: false,
         refetchOnReconnect: false,
         refetchOnWindowFocus: false,
     })
+
+    const allProducts = data?.pages.flatMap((page) => page.products) || []
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+                    fetchNextPage()
+                }
+            },
+            { threshold: 1.0 }
+        )
+        const observerCurrent = observerRef.current
+        if (observerCurrent) observer.observe(observerCurrent)
+        return () => {
+            if (observerCurrent) observer.unobserve(observerCurrent)
+        }
+    }, [fetchNextPage, hasNextPage, isFetchingNextPage])
+
     useEffect(() => {
         startTransition(() => {
             refetch()
         })
     }, [category, filters, refetch])
 
-    const orderedProducts = orderProducts(products)
+    const orderProducts = (products: ProductType[]) => {
+        switch (orderBy) {
+            case 'price':
+                return products.sort((a, b) => (order === 'ascending' ? a.price - b.price : b.price - a.price))
+            default:
+                return products
+        }
+    }
+
+    const orderedProducts = orderProducts(allProducts)
 
     return (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 py-3">
-            {orderedProducts.map((product) => (
-                <Product key={product._id} product={product} />
-            ))}
-        </div>
+        <>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 py-3">
+                {orderedProducts.map((product) => (
+                    <Product key={product._id} product={product} />
+                ))}
+                <div ref={observerRef} className="w-full h-4"></div>
+            </div>
+            {isFetchingNextPage && (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="animate-spin self-center mt-32"
+                >
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                </svg>
+            )}
+        </>
     )
 }
 

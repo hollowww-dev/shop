@@ -35,7 +35,7 @@ const PortfolioDetails = ({ id }: { id: string }) => {
                     }
                 })
             },
-            { threshold: 1 }
+            { threshold: 0.5 }
         )
 
         const currentLoadersRef = loadersRef.current
