@@ -45,7 +45,7 @@ const PortfolioCarousel = ({ product }: { product: Product }) => {
         }
         api.on('select', onSelect)
         onSelect()
-    }, [api])
+    }, [api, onSelect])
 
     return (
         <section className="flex flex-col gap-2 self-center max-w-screen-lg w-full">
@@ -53,7 +53,7 @@ const PortfolioCarousel = ({ product }: { product: Product }) => {
                 <PopoverTrigger asChild>
                     <IoIosInformationCircleOutline className="text-2xl self-end cursor-pointer" />
                 </PopoverTrigger>
-                <PopoverContent side="bottom" align="end" className="w-full max-w-screen-sm flex flex-col gap-2">
+                <PopoverContent side="bottom" align="end" className="w-full max-w-screen-sm flex flex-col gap-2 text-wrap">
                     <p>
                         <span className="font-medium">Name:</span> {product.name}
                     </p>

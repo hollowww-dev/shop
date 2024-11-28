@@ -37,9 +37,9 @@ export const PortfolioDetailsSkeleton = () => {
     return (
         <>
             <section className="flex flex-col gap-3">
-                <div className="flex flex-col sm:flex-row gap-3 self-center w-full max-w-screen-md">
+                <div className="flex flex-col sm:flex-row gap-3 self-center w-full max-w-screen-lg">
                     <Card className="p-2 flex self-center sm:self-start shrink-0">
-                        <Skeleton className="w-[150px] h-[150px]" />
+                        <Skeleton className="w-[200px] h-[200px]" />
                     </Card>
                     <div className="w-full flex flex-col gap-3 py-3">
                         <Skeleton className="w-full h-[2rem]" />
@@ -48,7 +48,7 @@ export const PortfolioDetailsSkeleton = () => {
                     </div>
                 </div>
             </section>
-            <section className="flex flex-col gap-2 self-center max-w-screen-md w-full">
+            <section className="flex flex-col gap-2 self-center max-w-screen-lg w-full">
                 <IoIosInformationCircleOutline className="text-2xl self-end opacity-25" />
                 <Card className="w-full p-2">
                     <AspectRatio ratio={16 / 9}>
