@@ -28,6 +28,7 @@ export default async function ReturnMessage({ sessionId }: { sessionId: string }
                 return <p>Your session has expired.</p>
         }
     } catch (error) {
+        console.error(error)
         return <p>Something went wrong. Try again, please.</p>
     }
 }
