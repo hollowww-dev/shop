@@ -66,14 +66,7 @@ export const PortfolioDetailsSkeleton = () => {
                     </div>
                 </div>
             </section>
-            <section className="flex flex-col gap-2 self-center max-w-screen-lg w-full">
-                <IoIosInformationCircleOutline className="text-2xl self-end opacity-25" />
-                <Card className="w-full p-2">
-                    <AspectRatio ratio={16 / 9}>
-                        <Skeleton className="w-full h-full" />
-                    </AspectRatio>
-                </Card>
-            </section>
+            <PortfolioCarouselSkeleton />
         </>
     )
 }

@@ -30,7 +30,7 @@ const Products = ({
     const observerRef = useRef<HTMLDivElement | null>(null)
 
     const fetchProducts = async ({ pageParam = 0 }: { pageParam?: number }) => {
-        const pageSize = 10
+        const pageSize = 9
         const products = await client.fetch<ProductType[]>(
             groq`*[_type == "product" && stock > 0${category !== 'all' ? ` && category == "${category}"` : ''}${Array.from([...filters])
                 .map((filter) => ` && "${filter[1]}" in details[detail == "${filter[0]}"].answer`)

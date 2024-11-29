@@ -1,5 +1,7 @@
 'use client'
 
+import { Button } from '@/components/shadcn/button'
+import Link from 'next/link'
 import { useEffect } from 'react'
 
 import Stripe from 'stripe'
@@ -21,6 +23,11 @@ const CompleteMessage = ({ payment_status }: { payment_status: Stripe.Checkout.S
                 <>
                     <p>Thank you for your purchase!</p>
                     <p>Confirmation will be sent to your email.</p>
+                    <Button asChild>
+                        <Link href="/shop" className="no-underline">
+                            Continue shopping
+                        </Link>
+                    </Button>
                 </>
             )
     }
