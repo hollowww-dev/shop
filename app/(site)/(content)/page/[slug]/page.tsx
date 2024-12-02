@@ -1,7 +1,7 @@
 import footerPreval from '@/lib/footer.preval'
 import { PortableText } from 'next-sanity'
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params
     const page = footerPreval.footerPages?.find((page) => page.slug.current === slug)
     if (!page) {
