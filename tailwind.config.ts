@@ -8,6 +8,7 @@ const config: Config = {
             facebook: '#3b5999',
             pinterest: '#bd081c',
             black: '#000000',
+            white: '#ffffff',
         },
         screens: {
             sm: '600px',
@@ -90,6 +91,7 @@ const config: Config = {
             },
         },
     },
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     plugins: [require('tailwindcss-animate')],
 }
 export default config

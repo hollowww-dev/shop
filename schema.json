@@ -1038,10 +1038,215 @@
         },
         "optional": false
       },
-      "worldwideShipping": {
+      "shippingCountries": {
         "type": "objectAttribute",
         "value": {
-          "type": "boolean"
+          "type": "array",
+          "of": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "AU"
+              },
+              {
+                "type": "string",
+                "value": "AT"
+              },
+              {
+                "type": "string",
+                "value": "BE"
+              },
+              {
+                "type": "string",
+                "value": "BR"
+              },
+              {
+                "type": "string",
+                "value": "BG"
+              },
+              {
+                "type": "string",
+                "value": "CA"
+              },
+              {
+                "type": "string",
+                "value": "HR"
+              },
+              {
+                "type": "string",
+                "value": "CY"
+              },
+              {
+                "type": "string",
+                "value": "CZ"
+              },
+              {
+                "type": "string",
+                "value": "DK"
+              },
+              {
+                "type": "string",
+                "value": "EE"
+              },
+              {
+                "type": "string",
+                "value": "FI"
+              },
+              {
+                "type": "string",
+                "value": "FR"
+              },
+              {
+                "type": "string",
+                "value": "DE"
+              },
+              {
+                "type": "string",
+                "value": "GH"
+              },
+              {
+                "type": "string",
+                "value": "GI"
+              },
+              {
+                "type": "string",
+                "value": "GR"
+              },
+              {
+                "type": "string",
+                "value": "HK"
+              },
+              {
+                "type": "string",
+                "value": "HU"
+              },
+              {
+                "type": "string",
+                "value": "IN"
+              },
+              {
+                "type": "string",
+                "value": "ID"
+              },
+              {
+                "type": "string",
+                "value": "IE"
+              },
+              {
+                "type": "string",
+                "value": "IT"
+              },
+              {
+                "type": "string",
+                "value": "JP"
+              },
+              {
+                "type": "string",
+                "value": "KE"
+              },
+              {
+                "type": "string",
+                "value": "LV"
+              },
+              {
+                "type": "string",
+                "value": "LI"
+              },
+              {
+                "type": "string",
+                "value": "LT"
+              },
+              {
+                "type": "string",
+                "value": "LU"
+              },
+              {
+                "type": "string",
+                "value": "MY"
+              },
+              {
+                "type": "string",
+                "value": "MT"
+              },
+              {
+                "type": "string",
+                "value": "MX"
+              },
+              {
+                "type": "string",
+                "value": "NL"
+              },
+              {
+                "type": "string",
+                "value": "NZ"
+              },
+              {
+                "type": "string",
+                "value": "NG"
+              },
+              {
+                "type": "string",
+                "value": "NO"
+              },
+              {
+                "type": "string",
+                "value": "PL"
+              },
+              {
+                "type": "string",
+                "value": "PT"
+              },
+              {
+                "type": "string",
+                "value": "RO"
+              },
+              {
+                "type": "string",
+                "value": "SG"
+              },
+              {
+                "type": "string",
+                "value": "SK"
+              },
+              {
+                "type": "string",
+                "value": "SI"
+              },
+              {
+                "type": "string",
+                "value": "ZA"
+              },
+              {
+                "type": "string",
+                "value": "ES"
+              },
+              {
+                "type": "string",
+                "value": "SE"
+              },
+              {
+                "type": "string",
+                "value": "CH"
+              },
+              {
+                "type": "string",
+                "value": "TH"
+              },
+              {
+                "type": "string",
+                "value": "AE"
+              },
+              {
+                "type": "string",
+                "value": "GB"
+              },
+              {
+                "type": "string",
+                "value": "US"
+              }
+            ]
+          }
         },
         "optional": true
       }

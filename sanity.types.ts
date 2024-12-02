@@ -174,7 +174,58 @@ export type Shipping = {
         _type: 'entry'
         _key: string
     }>
-    worldwideShipping?: boolean
+    shippingCountries?: Array<
+        | 'AU'
+        | 'AT'
+        | 'BE'
+        | 'BR'
+        | 'BG'
+        | 'CA'
+        | 'HR'
+        | 'CY'
+        | 'CZ'
+        | 'DK'
+        | 'EE'
+        | 'FI'
+        | 'FR'
+        | 'DE'
+        | 'GH'
+        | 'GI'
+        | 'GR'
+        | 'HK'
+        | 'HU'
+        | 'IN'
+        | 'ID'
+        | 'IE'
+        | 'IT'
+        | 'JP'
+        | 'KE'
+        | 'LV'
+        | 'LI'
+        | 'LT'
+        | 'LU'
+        | 'MY'
+        | 'MT'
+        | 'MX'
+        | 'NL'
+        | 'NZ'
+        | 'NG'
+        | 'NO'
+        | 'PL'
+        | 'PT'
+        | 'RO'
+        | 'SG'
+        | 'SK'
+        | 'SI'
+        | 'ZA'
+        | 'ES'
+        | 'SE'
+        | 'CH'
+        | 'TH'
+        | 'AE'
+        | 'GB'
+        | 'US'
+    >
 }
 
 export type Settings = {
@@ -378,14 +429,65 @@ export type SETTINGSResult = {
     }
 } | null
 // Variable: SHIPPINGS
-// Query: *[_type == "shipping"][0]{    shippings[] {        name,        time,        'price': price * 100    },    worldwideShipping}
+// Query: *[_type == "shipping"][0]{    shippings[] {        name,        time,        'price': price * 100    },    shippingCountries}
 export type SHIPPINGSResult = {
     shippings: Array<{
         name: string
         time: number
         price: number
     }>
-    worldwideShipping: boolean | null
+    shippingCountries: Array<
+        | 'AE'
+        | 'AT'
+        | 'AU'
+        | 'BE'
+        | 'BG'
+        | 'BR'
+        | 'CA'
+        | 'CH'
+        | 'CY'
+        | 'CZ'
+        | 'DE'
+        | 'DK'
+        | 'EE'
+        | 'ES'
+        | 'FI'
+        | 'FR'
+        | 'GB'
+        | 'GH'
+        | 'GI'
+        | 'GR'
+        | 'HK'
+        | 'HR'
+        | 'HU'
+        | 'ID'
+        | 'IE'
+        | 'IN'
+        | 'IT'
+        | 'JP'
+        | 'KE'
+        | 'LI'
+        | 'LT'
+        | 'LU'
+        | 'LV'
+        | 'MT'
+        | 'MX'
+        | 'MY'
+        | 'NG'
+        | 'NL'
+        | 'NO'
+        | 'NZ'
+        | 'PL'
+        | 'PT'
+        | 'RO'
+        | 'SE'
+        | 'SG'
+        | 'SI'
+        | 'SK'
+        | 'TH'
+        | 'US'
+        | 'ZA'
+    > | null
 } | null
 // Variable: FOOTER
 // Query: *[_type == "footer"][0]{    socialMedia,    footerPages}
@@ -586,7 +688,7 @@ import '@sanity/client'
 declare module '@sanity/client' {
     interface SanityQueries {
         '*[_type == "settings"][0]{\n    title,\n    currency,\n    description,\n    landingImage\n}': SETTINGSResult
-        '*[_type == "shipping"][0]{\n    shippings[] {\n        name,\n        time,\n        \'price\': price * 100\n    },\n    worldwideShipping\n}\n': SHIPPINGSResult
+        '*[_type == "shipping"][0]{\n    shippings[] {\n        name,\n        time,\n        \'price\': price * 100\n    },\n    shippingCountries\n}\n': SHIPPINGSResult
         '*[_type == "footer"][0]{\n    socialMedia,\n    footerPages\n}': FOOTERResult
         '*[_type == "faq"][0]{\n    entries[] {\n        answer,\n        question\n    }\n}': FAQResult
         '*[_type == "aboutMe"][0]{\n    headline,\n    description,\n    avatar,\n    information,\n    contact\n}': ABOUTMEResult

@@ -18,17 +18,17 @@ export default async function Page() {
                             className="w-full h-full absolute bg-foreground"
                             style={{ backgroundColor: `rgba(0, 0, 0, ${configPreval.landingImage.overlay / 100})` }}
                         />
-                        <div className="grid grid-cols-1 md:grid-cols-2 w-full h-full place-items-center absolute text-background tracking-wide">
-                            <Button variant="ghost" size="lg" className="text-xl border font-thin no-underline py-6" asChild>
+                        <div className="grid grid-cols-1 md:grid-cols-2 w-full h-full place-items-center absolute text-white tracking-wide">
+                            <Button variant="ghost" size="lg" className="text-xl border border-white hover:bg-white font-thin no-underline py-6" asChild>
                                 <Link href="/shop">Shop</Link>
                             </Button>
-                            <Button variant="ghost" size="lg" className="text-xl border font-thin no-underline py-6" asChild>
+                            <Button variant="ghost" size="lg" className="text-xl border border-white hover:bg-white font-thin no-underline py-6" asChild>
                                 <Link href="/portfolio">Portfolio</Link>
                             </Button>
-                            <Button variant="ghost" size="lg" className="text-xl border font-thin no-underline py-6" asChild>
+                            <Button variant="ghost" size="lg" className="text-xl border border-white hover:bg-white font-thin no-underline py-6" asChild>
                                 <Link href="/aboutme">About me</Link>
                             </Button>
-                            <Button variant="ghost" size="lg" className="text-xl border font-thin no-underline py-6" asChild>
+                            <Button variant="ghost" size="lg" className="text-xl border border-white hover:bg-white font-thin no-underline py-6" asChild>
                                 <Link href="/faq">FAQ</Link>
                             </Button>
                         </div>

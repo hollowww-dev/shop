@@ -54,6 +54,8 @@ export async function generateMetadata(): Promise<Metadata> {
         title: `${config.title}`,
         description: `${config.description}`,
         openGraph: {
+            title: `${config.title}`,
+            description: `${config.description}`,
             images: [urlFor(product.image).width(1200).height(630).url()],
             url: `${config.siteUrl}`,
             type: 'website',

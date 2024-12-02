@@ -13,7 +13,7 @@ export const SHIPPINGS = groq`*[_type == "shipping"][0]{
         time,
         'price': price * 100
     },
-    worldwideShipping
+    shippingCountries
 }
 `
 
