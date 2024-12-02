@@ -1,42 +1,40 @@
 import { groq } from 'next-sanity'
 
 export const SETTINGS = groq`*[_type == "settings"][0]{
-title,
-currency,
-description
+    title,
+    currency,
+    description,
+    landingImage
 }`
 
 export const SHIPPINGS = groq`*[_type == "shipping"][0]{
-shippings[] {
-name,
-time,
-'price': price * 100
-},
-worldwideShipping
+    shippings[] {
+        name,
+        time,
+        'price': price * 100
+    },
+    worldwideShipping
 }
 `
 
-export const SOCIALMEDIA = groq`*[_type == "socialMedia"][0]{
-instagram,
-facebook,
-pinterest,
-tiktok,
-youtube
+export const FOOTER = groq`*[_type == "footer"][0]{
+    socialMedia,
+    footerPages
 }`
 
 export const FAQ = groq`*[_type == "faq"][0]{
-entries[] {
-    answer,
-    question
-}
+    entries[] {
+        answer,
+        question
+    }
 }`
 
 export const ABOUTME = groq`*[_type == "aboutMe"][0]{
-headline,
-description,
-avatar,
-information,
-contact
+    headline,
+    description,
+    avatar,
+    information,
+    contact
 }`
 
 export const PORTFOLIOS = groq`*[_type == "portfolioAlbum"]{

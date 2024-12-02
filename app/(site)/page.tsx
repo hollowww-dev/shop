@@ -1,9 +1,40 @@
-import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
-
-import { getQueryClient } from '@/lib/queryClient'
+import Header from '@/components/layout/header'
+import { Button } from '@/components/shadcn/button'
+import { Card, CardContent } from '@/components/shadcn/card'
+import configPreval from '@/lib/config.preval'
+import { urlFor } from '@/sanity/lib/image'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default async function Page() {
-    const queryClient = getQueryClient()
-
-    return <HydrationBoundary state={dehydrate(queryClient)}></HydrationBoundary>
+    return (
+        <>
+            <Header />
+            <main className="container mx-auto flex flex-col flex-grow gap-6 lg:gap-12">
+                <Card className="w-full aspect-[9/16] md:aspect-[16/9] p-2">
+                    <CardContent className="w-full h-full rounded-md overflow-hidden relative p-0">
+                        <Image src={urlFor(configPreval.landingImage.image).url()} alt="Landing page image" className="object-cover" fill />
+                        <div
+                            className="w-full h-full absolute bg-foreground"
+                            style={{ backgroundColor: `rgba(0, 0, 0, ${configPreval.landingImage.overlay / 100})` }}
+                        />
+                        <div className="grid grid-cols-1 md:grid-cols-2 w-full h-full place-items-center absolute text-background tracking-wide">
+                            <Button variant="ghost" size="lg" className="text-xl border font-thin no-underline py-6" asChild>
+                                <Link href="/shop">Shop</Link>
+                            </Button>
+                            <Button variant="ghost" size="lg" className="text-xl border font-thin no-underline py-6" asChild>
+                                <Link href="/portfolio">Portfolio</Link>
+                            </Button>
+                            <Button variant="ghost" size="lg" className="text-xl border font-thin no-underline py-6" asChild>
+                                <Link href="/aboutme">About me</Link>
+                            </Button>
+                            <Button variant="ghost" size="lg" className="text-xl border font-thin no-underline py-6" asChild>
+                                <Link href="/faq">FAQ</Link>
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
+            </main>
+        </>
+    )
 }

@@ -1,5 +1,5 @@
 import type { NextConfig } from 'next'
-const createNextPluginPreval = require('next-plugin-preval/config')
+import createNextPluginPreval from 'next-plugin-preval/config'
 const withNextPluginPreval = createNextPluginPreval()
 
 const nextConfig: NextConfig = withNextPluginPreval({
@@ -10,12 +10,6 @@ const nextConfig: NextConfig = withNextPluginPreval({
                 hostname: 'cdn.sanity.io',
             },
         ],
-    },
-    experimental: {
-        reactCompiler: true,
-        turbo: {
-            resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json'],
-        },
     },
 })
 

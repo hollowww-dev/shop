@@ -26,6 +26,7 @@ export default function Providers({ children }: { children: ReactNode }) {
                     stripe={process.env.NEXT_PUBLIC_STRIPE_TEST_PUBLISHABLE}
                     currency={config.currency}
                     shouldPersist={true}
+                    persistKey="shop"
                 >
                     {children}
                     <Toaster />

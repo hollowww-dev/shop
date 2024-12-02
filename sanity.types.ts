@@ -68,12 +68,6 @@ export type Geopoint = {
     alt?: number
 }
 
-export type Slug = {
-    _type: 'slug'
-    current: string
-    source?: string
-}
-
 export type Faq = {
     _id: string
     _type: 'faq'
@@ -122,17 +116,49 @@ export type AboutMe = {
     }>
 }
 
-export type SocialMedia = {
+export type Footer = {
     _id: string
-    _type: 'socialMedia'
+    _type: 'footer'
     _createdAt: string
     _updatedAt: string
     _rev: string
-    instagram?: string
-    facebook?: string
-    pinterest?: string
-    tiktok?: string
-    youtube?: string
+    footerPages?: Array<{
+        title: string
+        slug: Slug
+        content: Array<{
+            children?: Array<{
+                marks?: Array<string>
+                text?: string
+                _type: 'span'
+                _key: string
+            }>
+            style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+            listItem?: 'bullet' | 'number'
+            markDefs?: Array<{
+                href?: string
+                _type: 'link'
+                _key: string
+            }>
+            level?: number
+            _type: 'block'
+            _key: string
+        }>
+        _type: 'page'
+        _key: string
+    }>
+    socialMedia: {
+        instagram?: string
+        facebook?: string
+        pinterest?: string
+        tiktok?: string
+        youtube?: string
+    }
+}
+
+export type Slug = {
+    _type: 'slug'
+    current: string
+    source?: string
 }
 
 export type Shipping = {
@@ -160,6 +186,20 @@ export type Settings = {
     title: string
     description: string
     currency: string
+    landingImage: {
+        image: {
+            asset?: {
+                _ref: string
+                _type: 'reference'
+                _weak?: boolean
+                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            _type: 'image'
+        }
+        overlay: number
+    }
 }
 
 export type PortfolioAlbum = {
@@ -301,10 +341,10 @@ export type AllSanitySchemaTypes =
     | SanityImageDimensions
     | SanityFileAsset
     | Geopoint
-    | Slug
     | Faq
     | AboutMe
-    | SocialMedia
+    | Footer
+    | Slug
     | Shipping
     | Settings
     | PortfolioAlbum
@@ -317,14 +357,28 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/lib/queries.ts
 // Variable: SETTINGS
-// Query: *[_type == "settings"][0]{title,currency,description}
+// Query: *[_type == "settings"][0]{    title,    currency,    description,    landingImage}
 export type SETTINGSResult = {
     title: string
     currency: string
     description: string
+    landingImage: {
+        image: {
+            asset?: {
+                _ref: string
+                _type: 'reference'
+                _weak?: boolean
+                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            _type: 'image'
+        }
+        overlay: number
+    }
 } | null
 // Variable: SHIPPINGS
-// Query: *[_type == "shipping"][0]{shippings[] {name,time,'price': price * 100},worldwideShipping}
+// Query: *[_type == "shipping"][0]{    shippings[] {        name,        time,        'price': price * 100    },    worldwideShipping}
 export type SHIPPINGSResult = {
     shippings: Array<{
         name: string
@@ -333,17 +387,43 @@ export type SHIPPINGSResult = {
     }>
     worldwideShipping: boolean | null
 } | null
-// Variable: SOCIALMEDIA
-// Query: *[_type == "socialMedia"][0]{instagram,facebook,pinterest,tiktok,youtube}
-export type SOCIALMEDIAResult = {
-    instagram: string | null
-    facebook: string | null
-    pinterest: string | null
-    tiktok: string | null
-    youtube: string | null
+// Variable: FOOTER
+// Query: *[_type == "footer"][0]{    socialMedia,    footerPages}
+export type FOOTERResult = {
+    socialMedia: {
+        instagram?: string
+        facebook?: string
+        pinterest?: string
+        tiktok?: string
+        youtube?: string
+    }
+    footerPages: Array<{
+        title: string
+        slug: Slug
+        content: Array<{
+            children?: Array<{
+                marks?: Array<string>
+                text?: string
+                _type: 'span'
+                _key: string
+            }>
+            style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+            listItem?: 'bullet' | 'number'
+            markDefs?: Array<{
+                href?: string
+                _type: 'link'
+                _key: string
+            }>
+            level?: number
+            _type: 'block'
+            _key: string
+        }>
+        _type: 'page'
+        _key: string
+    }> | null
 } | null
 // Variable: FAQ
-// Query: *[_type == "faq"][0]{entries[] {    answer,    question}}
+// Query: *[_type == "faq"][0]{    entries[] {        answer,        question    }}
 export type FAQResult = {
     entries: Array<{
         answer: string
@@ -351,7 +431,7 @@ export type FAQResult = {
     }> | null
 } | null
 // Variable: ABOUTME
-// Query: *[_type == "aboutMe"][0]{headline,description,avatar,information,contact}
+// Query: *[_type == "aboutMe"][0]{    headline,    description,    avatar,    information,    contact}
 export type ABOUTMEResult = {
     headline: string
     description: string
@@ -381,311 +461,137 @@ export type ABOUTMEResult = {
     }> | null
 } | null
 // Variable: PORTFOLIOS
-// Query: *[_type == "portfolioAlbum"]{    title,    description,    'count': count(products),    image}
+// Query: *[_type == "portfolioAlbum"]{    _id,    title,    description,    'count': count(products),    cover}
 export type PORTFOLIOSResult = Array<{
+    _id: string
     title: string
     description: string
     count: number | null
-    image: null
+    cover: {
+        asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        _type: 'image'
+    }
 }>
+// Variable: PORTFOLIO
+// Query: *[_type == "portfolioAlbum" && _id == $id][0]{    title,    description,    'count': count(products),    cover,    products[]->{_id, name, description, image, gallery, stock, }}
+export type PORTFOLIOResult = {
+    title: string
+    description: string
+    count: number | null
+    cover: {
+        asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        _type: 'image'
+    }
+    products: Array<{
+        _id: string
+        name: string
+        description: string
+        image: {
+            asset?: {
+                _ref: string
+                _type: 'reference'
+                _weak?: boolean
+                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            _type: 'image'
+        }
+        gallery: Array<{
+            asset?: {
+                _ref: string
+                _type: 'reference'
+                _weak?: boolean
+                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            _type: 'image'
+            _key: string
+        }> | null
+        stock: number
+    }> | null
+} | null
 // Variable: PRODUCT
-// Query: *[_id == $id][0]{    _id,    name,    description,    category,    details,    image,    gallery,    'price': price * 100,    defined(featured) => {        featured[]->{        _id,        name,        image,        'price': price * 100,        available        }    },    !defined(featured) => {        'featured': *[_type == "product" && _id != ^._id && stock > 0][0..3]{        _id,        name,        image,        'price': price * 100,        available        }    }}
-export type PRODUCTResult =
-    | {
-          _id: string
-          name: null
-          description: null
-          category: null
-          details: null
-          image: null
-          gallery: null
-          price: null
-          featured: Array<{
-              _id: string
-              name: string
-              image: {
-                  asset?: {
-                      _ref: string
-                      _type: 'reference'
-                      _weak?: boolean
-                      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-                  }
-                  hotspot?: SanityImageHotspot
-                  crop?: SanityImageCrop
-                  _type: 'image'
-              }
-              price: number
-              available: null
-          }>
-      }
-    | {
-          _id: string
-          name: null
-          description: null
-          category: null
-          details: null
-          image: null
-          gallery: null
-          price: null
-          featured: null
-      }
-    | {
-          _id: string
-          name: null
-          description: null
-          category: null
-          details: null
-          image: null
-          gallery: null
-          price: null
-      }
-    | {
-          _id: string
-          name: null
-          description: string
-          category: null
-          details: null
-          image: null
-          gallery: null
-          price: null
-          featured: Array<{
-              _id: string
-              name: string
-              image: {
-                  asset?: {
-                      _ref: string
-                      _type: 'reference'
-                      _weak?: boolean
-                      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-                  }
-                  hotspot?: SanityImageHotspot
-                  crop?: SanityImageCrop
-                  _type: 'image'
-              }
-              price: number
-              available: null
-          }>
-      }
-    | {
-          _id: string
-          name: null
-          description: string
-          category: null
-          details: null
-          image: null
-          gallery: null
-          price: null
-          featured: null
-      }
-    | {
-          _id: string
-          name: null
-          description: string
-          category: null
-          details: null
-          image: null
-          gallery: null
-          price: null
-      }
-    | {
-          _id: string
-          name: null
-          description: string | null
-          category: null
-          details: null
-          image: null
-          gallery: null
-          price: null
-          featured: Array<{
-              _id: string
-              name: string
-              image: {
-                  asset?: {
-                      _ref: string
-                      _type: 'reference'
-                      _weak?: boolean
-                      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-                  }
-                  hotspot?: SanityImageHotspot
-                  crop?: SanityImageCrop
-                  _type: 'image'
-              }
-              price: number
-              available: null
-          }>
-      }
-    | {
-          _id: string
-          name: null
-          description: string | null
-          category: null
-          details: null
-          image: null
-          gallery: null
-          price: null
-          featured: null
-      }
-    | {
-          _id: string
-          name: null
-          description: string | null
-          category: null
-          details: null
-          image: null
-          gallery: null
-          price: null
-      }
-    | {
-          _id: string
-          name: string
-          description: string
-          category: string
-          details: Array<{
-              detail: string
-              answer: string
-              _key: string
-          }> | null
-          image: {
-              asset?: {
-                  _ref: string
-                  _type: 'reference'
-                  _weak?: boolean
-                  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
-              hotspot?: SanityImageHotspot
-              crop?: SanityImageCrop
-              _type: 'image'
-          }
-          gallery: Array<{
-              asset?: {
-                  _ref: string
-                  _type: 'reference'
-                  _weak?: boolean
-                  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
-              hotspot?: SanityImageHotspot
-              crop?: SanityImageCrop
-              _type: 'image'
-              _key: string
-          }> | null
-          price: number
-          featured: Array<{
-              _id: string
-              name: string
-              image: {
-                  asset?: {
-                      _ref: string
-                      _type: 'reference'
-                      _weak?: boolean
-                      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-                  }
-                  hotspot?: SanityImageHotspot
-                  crop?: SanityImageCrop
-                  _type: 'image'
-              }
-              price: number
-              available: null
-          }>
-      }
-    | {
-          _id: string
-          name: string
-          description: string
-          category: string
-          details: Array<{
-              detail: string
-              answer: string
-              _key: string
-          }> | null
-          image: {
-              asset?: {
-                  _ref: string
-                  _type: 'reference'
-                  _weak?: boolean
-                  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
-              hotspot?: SanityImageHotspot
-              crop?: SanityImageCrop
-              _type: 'image'
-          }
-          gallery: Array<{
-              asset?: {
-                  _ref: string
-                  _type: 'reference'
-                  _weak?: boolean
-                  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
-              hotspot?: SanityImageHotspot
-              crop?: SanityImageCrop
-              _type: 'image'
-              _key: string
-          }> | null
-          price: number
-          featured: Array<{
-              _id: string
-              name: string
-              image: {
-                  asset?: {
-                      _ref: string
-                      _type: 'reference'
-                      _weak?: boolean
-                      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-                  }
-                  hotspot?: SanityImageHotspot
-                  crop?: SanityImageCrop
-                  _type: 'image'
-              }
-              price: number
-              available: null
-          }> | null
-      }
-    | {
-          _id: string
-          name: string
-          description: string
-          category: string
-          details: Array<{
-              detail: string
-              answer: string
-              _key: string
-          }> | null
-          image: {
-              asset?: {
-                  _ref: string
-                  _type: 'reference'
-                  _weak?: boolean
-                  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
-              hotspot?: SanityImageHotspot
-              crop?: SanityImageCrop
-              _type: 'image'
-          }
-          gallery: Array<{
-              asset?: {
-                  _ref: string
-                  _type: 'reference'
-                  _weak?: boolean
-                  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
-              hotspot?: SanityImageHotspot
-              crop?: SanityImageCrop
-              _type: 'image'
-              _key: string
-          }> | null
-          price: number
-      }
-    | null
+// Query: *[_type == "product" && _id == $id][0]{    _id,    name,    description,    category,    details,    image,    gallery,    'price': price * 100,    "featured": select(        defined(featured) => featured[]->{            _id,            name,            image,            'price': price * 100,            stock        },        count(*[_type == "product" && _id != ^._id && stock > 0]) > 0 => *[_type == "product" && _id != ^._id && stock > 0][0..3]{            _id,            name,            image,            'price': price * 100,            stock        },        null    )}
+export type PRODUCTResult = {
+    _id: string
+    name: string
+    description: string
+    category: string
+    details: Array<{
+        detail: string
+        answer: string
+        _key: string
+    }> | null
+    image: {
+        asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        _type: 'image'
+    }
+    gallery: Array<{
+        asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        _type: 'image'
+        _key: string
+    }> | null
+    price: number
+    featured: Array<{
+        _id: string
+        name: string
+        image: {
+            asset?: {
+                _ref: string
+                _type: 'reference'
+                _weak?: boolean
+                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            _type: 'image'
+        }
+        price: number
+        stock: number
+    }> | null
+} | null
 
 // Query TypeMap
 import '@sanity/client'
 declare module '@sanity/client' {
     interface SanityQueries {
-        '*[_type == "settings"][0]{\ntitle,\ncurrency,\ndescription\n}': SETTINGSResult
-        '*[_type == "shipping"][0]{\nshippings[] {\nname,\ntime,\n\'price\': price * 100\n},\nworldwideShipping\n}\n': SHIPPINGSResult
-        '*[_type == "socialMedia"][0]{\ninstagram,\nfacebook,\npinterest,\ntiktok,\nyoutube\n}': SOCIALMEDIAResult
-        '*[_type == "faq"][0]{\nentries[] {\n    answer,\n    question\n}\n}': FAQResult
-        '*[_type == "aboutMe"][0]{\nheadline,\ndescription,\navatar,\ninformation,\ncontact\n}': ABOUTMEResult
-        '*[_type == "portfolioAlbum"]{\n    title,\n    description,\n    \'count\': count(products),\n    image\n}\n': PORTFOLIOSResult
-        "*[_id == $id][0]{\n    _id,\n    name,\n    description,\n    category,\n    details,\n    image,\n    gallery,\n    'price': price * 100,\n    defined(featured) => {\n        featured[]->{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    },\n    !defined(featured) => {\n        'featured': *[_type == \"product\" && _id != ^._id && stock > 0][0..3]{\n        _id,\n        name,\n        image,\n        'price': price * 100,\n        available\n        }\n    }\n}": PRODUCTResult
+        '*[_type == "settings"][0]{\n    title,\n    currency,\n    description,\n    landingImage\n}': SETTINGSResult
+        '*[_type == "shipping"][0]{\n    shippings[] {\n        name,\n        time,\n        \'price\': price * 100\n    },\n    worldwideShipping\n}\n': SHIPPINGSResult
+        '*[_type == "footer"][0]{\n    socialMedia,\n    footerPages\n}': FOOTERResult
+        '*[_type == "faq"][0]{\n    entries[] {\n        answer,\n        question\n    }\n}': FAQResult
+        '*[_type == "aboutMe"][0]{\n    headline,\n    description,\n    avatar,\n    information,\n    contact\n}': ABOUTMEResult
+        '*[_type == "portfolioAlbum"]{\n    _id,\n    title,\n    description,\n    \'count\': count(products),\n    cover\n}\n': PORTFOLIOSResult
+        '*[_type == "portfolioAlbum" && _id == $id][0]{\n    title,\n    description,\n    \'count\': count(products),\n    cover,\n    products[]->{_id, name, description, image, gallery, stock, }\n}': PORTFOLIOResult
+        '\n*[_type == "product" && _id == $id][0]{\n    _id,\n    name,\n    description,\n    category,\n    details,\n    image,\n    gallery,\n    \'price\': price * 100,\n    "featured": select(\n        defined(featured) => featured[]->{\n            _id,\n            name,\n            image,\n            \'price\': price * 100,\n            stock\n        },\n        count(*[_type == "product" && _id != ^._id && stock > 0]) > 0 => *[_type == "product" && _id != ^._id && stock > 0][0..3]{\n            _id,\n            name,\n            image,\n            \'price\': price * 100,\n            stock\n        },\n        null\n    )\n}': PRODUCTResult
     }
 }

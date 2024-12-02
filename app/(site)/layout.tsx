@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { groq } from 'next-sanity'
 
-import Header from '@/components/layout/header'
 import Footer from '@/components/layout/footer'
 import Providers from './providers'
 
@@ -34,8 +33,7 @@ export default async function RootLayout({
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-svh`}>
                 <Providers>
-                    <Header />
-                    <main className="container mx-auto flex flex-col flex-grow gap-6 lg:gap-12">{children}</main>
+                    {children}
                     <Footer />
                 </Providers>
             </body>

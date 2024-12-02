@@ -27,6 +27,27 @@ const Settings = {
             description: "In three, uppercased letters' format - eg. EUR.",
             defaultValue: 'EUR',
         },
+        {
+            name: 'landingImage',
+            title: 'Landing page image',
+            type: 'object',
+            fields: [
+                {
+                    name: 'image',
+                    title: 'Image',
+                    type: 'image',
+                    validation: (rule: Rule) => rule.required(),
+                },
+                {
+                    name: 'overlay',
+                    title: 'Dark overlay opacity',
+                    type: 'number',
+                    description: 'Higher value, darker overlay, in range 0-100',
+                    validation: (rule: Rule) => rule.required().min(0).max(100),
+                },
+            ],
+            validation: (rule: Rule) => rule.required(),
+        },
     ],
     options: {
         singleton: true,
