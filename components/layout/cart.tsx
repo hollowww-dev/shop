@@ -16,6 +16,9 @@ import { useToast } from '@/hooks/use-toast'
 
 import { IoCloseOutline } from 'react-icons/io5'
 import { AiOutlineShopping } from 'react-icons/ai'
+import { client } from '@/sanity/lib/client'
+import { ProductType } from '@/types'
+import { groq } from 'next-sanity'
 
 const CartItem = ({ entry }: { entry: CartEntry }) => {
     const { decrementItem } = useShoppingCart()
@@ -41,7 +44,7 @@ const CartItem = ({ entry }: { entry: CartEntry }) => {
 
 const Cart = () => {
     const [loading, setLoading] = useState(false)
-    const { cartCount, cartDetails, formattedTotalPrice, handleCartClick, shouldDisplayCart, redirectToCheckout } = useShoppingCart()
+    const { cartCount, cartDetails, formattedTotalPrice, handleCartClick, setItemQuantity, shouldDisplayCart, redirectToCheckout } = useShoppingCart()
     const { toast, dismiss } = useToast()
     const handleCheckout = async () => {
         setLoading(true)
@@ -59,6 +62,20 @@ const Cart = () => {
                     description: error.message,
                     variant: 'destructive',
                 })
+                if (error.message.includes('Stock error')) {
+                    const products: ProductType[] = await client.fetch(groq`*[_type == "product"]{
+                        _id,
+                        stock,
+                    }`)
+                    if (products && cartDetails) {
+                        Object.values(cartDetails).forEach((item) => {
+                            const foundProduct = products.find((product) => product._id === item.id)
+                            if (foundProduct && foundProduct.stock < item.quantity) {
+                                setItemQuantity(item.id, foundProduct.stock)
+                            }
+                        })
+                    }
+                }
             }
         }
     }

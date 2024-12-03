@@ -3,7 +3,14 @@ import { groq } from 'next-sanity'
 export const SETTINGS = groq`*[_type == "settings"][0]{
     title,
     currency,
-    shipping,
+    shipping{
+        shippings[]{
+            name,
+            time,
+            'price': price * 100
+        },
+        shippingCountries[]
+    },
     description,
     landingImage
 }`
@@ -48,6 +55,7 @@ export const PORTFOLIO = groq`*[_type == "portfolioAlbum" && _id == $id][0]{
 export const PRODUCT = groq`
 *[_type == "product" && _id == $id][0]{
     _id,
+    stock,
     name,
     description,
     category,

@@ -622,9 +622,10 @@ export type PORTFOLIOResult = {
     }> | null
 } | null
 // Variable: PRODUCT
-// Query: *[_type == "product" && _id == $id][0]{    _id,    name,    description,    category,    details,    image,    gallery,    'price': price * 100,    "featured": select(        defined(featured) => featured[]->{            _id,            name,            image,            'price': price * 100,            stock        },        count(*[_type == "product" && _id != ^._id && stock > 0]) > 0 => *[_type == "product" && _id != ^._id && stock > 0][0..3]{            _id,            name,            image,            'price': price * 100,            stock        },        null    )}
+// Query: *[_type == "product" && _id == $id][0]{    _id,    stock,    name,    description,    category,    details,    image,    gallery,    'price': price * 100,    "featured": select(        defined(featured) => featured[]->{            _id,            name,            image,            'price': price * 100,            stock        },        count(*[_type == "product" && _id != ^._id && stock > 0]) > 0 => *[_type == "product" && _id != ^._id && stock > 0][0..3]{            _id,            name,            image,            'price': price * 100,            stock        },        null    )}
 export type PRODUCTResult = {
     _id: string
+    stock: number
     name: string
     description: string
     category: string
@@ -686,6 +687,6 @@ declare module '@sanity/client' {
         '*[_type == "aboutMe"][0]{\n    headline,\n    description,\n    avatar,\n    information,\n    contact\n}': ABOUTMEResult
         '*[_type == "portfolioAlbum"]{\n    _id,\n    title,\n    description,\n    \'count\': count(products),\n    cover\n}\n': PORTFOLIOSResult
         '*[_type == "portfolioAlbum" && _id == $id][0]{\n    title,\n    description,\n    \'count\': count(products),\n    cover,\n    products[]->{_id, name, description, image, gallery, stock, }\n}': PORTFOLIOResult
-        '\n*[_type == "product" && _id == $id][0]{\n    _id,\n    name,\n    description,\n    category,\n    details,\n    image,\n    gallery,\n    \'price\': price * 100,\n    "featured": select(\n        defined(featured) => featured[]->{\n            _id,\n            name,\n            image,\n            \'price\': price * 100,\n            stock\n        },\n        count(*[_type == "product" && _id != ^._id && stock > 0]) > 0 => *[_type == "product" && _id != ^._id && stock > 0][0..3]{\n            _id,\n            name,\n            image,\n            \'price\': price * 100,\n            stock\n        },\n        null\n    )\n}': PRODUCTResult
+        '\n*[_type == "product" && _id == $id][0]{\n    _id,\n    stock,\n    name,\n    description,\n    category,\n    details,\n    image,\n    gallery,\n    \'price\': price * 100,\n    "featured": select(\n        defined(featured) => featured[]->{\n            _id,\n            name,\n            image,\n            \'price\': price * 100,\n            stock\n        },\n        count(*[_type == "product" && _id != ^._id && stock > 0]) > 0 => *[_type == "product" && _id != ^._id && stock > 0][0..3]{\n            _id,\n            name,\n            image,\n            \'price\': price * 100,\n            stock\n        },\n        null\n    )\n}': PRODUCTResult
     }
 }

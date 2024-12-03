@@ -41,10 +41,20 @@ const ProductDetails = ({ id }: { id: string }) => {
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
     })
-    const { addItem, handleCartClick } = useShoppingCart()
+    const { addItem, handleCartClick, setItemQuantity, cartDetails } = useShoppingCart()
     const { toast } = useToast()
 
     const handleAddItem = () => {
+        const itemInCart = cartDetails ? Object.values(cartDetails).find((entry) => entry.id === product._id) : null
+
+        if (itemInCart && itemInCart.quantity >= product.stock) {
+            setItemQuantity(itemInCart.id, product.stock)
+            return toast({
+                title: `You've reached maximum available amount.`,
+                variant: 'destructive',
+            })
+        }
+
         const parsedCartItem = parseCartItem(product)
         addItem(parsedCartItem)
         toast({
@@ -54,6 +64,14 @@ const ProductDetails = ({ id }: { id: string }) => {
     }
 
     const handleBuyNow = () => {
+        const itemInCart = cartDetails ? Object.values(cartDetails).find((entry) => entry.id === product._id) : null
+        if (itemInCart && itemInCart.quantity >= product.stock) {
+            setItemQuantity(itemInCart.id, product.stock)
+            return toast({
+                title: `You've reached maximum available amount.`,
+                variant: 'destructive',
+            })
+        }
         const parsedCartItem = parseCartItem(product)
         addItem(parsedCartItem)
         handleCartClick()

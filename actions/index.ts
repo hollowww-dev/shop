@@ -25,6 +25,7 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
 
         const products: ProductType[] = await client.fetch(groq`*[_type == "product" && stock > 0]{
             _id,
+            stock,
             name,
             image,
             category,
@@ -34,6 +35,13 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
         if (!products || products.length === 0) {
             throw new Error('There was an error while connecting with our database. Please try again later.')
         }
+
+        Object.values(cartDetails).forEach((entry) => {
+            const foundProduct = products.find((product) => product._id === entry.id)
+            if (foundProduct && foundProduct?.stock < entry.quantity) {
+                throw new Error('Stock error: You are trying to order more products than we have in stock.')
+            }
+        })
 
         let line_items
         try {
