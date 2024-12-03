@@ -9,7 +9,6 @@ import { validateCartItems } from 'use-shopping-cart/utilities'
 import stripe from '@/lib/stripe'
 import { client } from '@/sanity/lib/client'
 import { parseCartItem } from '@/lib/utils'
-import shippingsPreval from '@/lib/shippings.preval'
 import configPreval from '@/lib/config.preval'
 
 import { ProductType } from '@/types'
@@ -63,7 +62,7 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
             automatic_tax: {
                 enabled: true,
             },
-            shipping_options: shippingsPreval.shippings.map((shipping) => {
+            shipping_options: configPreval.shipping.shippings.map((shipping) => {
                 return {
                     shipping_rate_data: {
                         display_name: shipping.name,
@@ -83,7 +82,7 @@ export async function createCheckoutSession(cartDetails: CartDetails): Promise<{
             }),
             billing_address_collection: 'required',
             shipping_address_collection: {
-                allowed_countries: shippingsPreval.shippingCountries || ['DE'],
+                allowed_countries: configPreval.shipping.shippingCountries || ['DE'],
             },
         })
 

@@ -9,7 +9,7 @@ async function getConfig() {
     if (!process.env.NEXT_PUBLIC_SITE_URL) {
         throw new Error('SITE_URL VARIABLE NOT PROVIDED.')
     }
-    const { title, currency, description, landingImage }: Settings = await client.fetch(
+    const { title, description, currency, shipping, landingImage }: Settings = await client.fetch(
         SETTINGS,
         {},
         {
@@ -19,6 +19,7 @@ async function getConfig() {
     return {
         title,
         currency,
+        shipping,
         description,
         landingImage,
         siteUrl: process.env.NEXT_PUBLIC_SITE_URL,

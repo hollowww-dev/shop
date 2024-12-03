@@ -3,19 +3,10 @@ import { groq } from 'next-sanity'
 export const SETTINGS = groq`*[_type == "settings"][0]{
     title,
     currency,
+    shipping,
     description,
     landingImage
 }`
-
-export const SHIPPINGS = groq`*[_type == "shipping"][0]{
-    shippings[] {
-        name,
-        time,
-        'price': price * 100
-    },
-    shippingCountries
-}
-`
 
 export const FOOTER = groq`*[_type == "footer"][0]{
     socialMedia,

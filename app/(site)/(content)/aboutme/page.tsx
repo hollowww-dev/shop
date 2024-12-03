@@ -9,14 +9,14 @@ import { Table, TableBody, TableCell, TableRow } from '@/components/shadcn/table
 export default async function Page() {
     return (
         <main className="container mx-auto flex flex-col gap-6 lg:gap-12">
-            <div className="flex flex-col lg:flex-row gap-3 lg:gap-12 p-3 justify-between items-center">
+            <div className="flex flex-col lg:flex-row gap-3 lg:gap-12 p-3 items-center">
                 <Avatar className="w-32 h-32 lg:w-48 lg:h-48 self-center lg:self-start">
                     <AvatarImage src={urlFor(aboutMePreval.avatar).width(400).height(400).url()} alt="Avatar Image" loading="lazy" />
                     <AvatarFallback>
                         <Skeleton className="w-32 h-32 lg:w-48 lg:h-48" />
                     </AvatarFallback>
                 </Avatar>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 flex-grow">
                     <h2>{aboutMePreval.headline}</h2>
                     <p className="lead">{aboutMePreval.description}</p>
                 </div>

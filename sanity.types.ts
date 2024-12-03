@@ -161,73 +161,6 @@ export type Slug = {
     source?: string
 }
 
-export type Shipping = {
-    _id: string
-    _type: 'shipping'
-    _createdAt: string
-    _updatedAt: string
-    _rev: string
-    shippings: Array<{
-        name: string
-        time: number
-        price: number
-        _type: 'entry'
-        _key: string
-    }>
-    shippingCountries?: Array<
-        | 'AU'
-        | 'AT'
-        | 'BE'
-        | 'BR'
-        | 'BG'
-        | 'CA'
-        | 'HR'
-        | 'CY'
-        | 'CZ'
-        | 'DK'
-        | 'EE'
-        | 'FI'
-        | 'FR'
-        | 'DE'
-        | 'GH'
-        | 'GI'
-        | 'GR'
-        | 'HK'
-        | 'HU'
-        | 'IN'
-        | 'ID'
-        | 'IE'
-        | 'IT'
-        | 'JP'
-        | 'KE'
-        | 'LV'
-        | 'LI'
-        | 'LT'
-        | 'LU'
-        | 'MY'
-        | 'MT'
-        | 'MX'
-        | 'NL'
-        | 'NZ'
-        | 'NG'
-        | 'NO'
-        | 'PL'
-        | 'PT'
-        | 'RO'
-        | 'SG'
-        | 'SK'
-        | 'SI'
-        | 'ZA'
-        | 'ES'
-        | 'SE'
-        | 'CH'
-        | 'TH'
-        | 'AE'
-        | 'GB'
-        | 'US'
-    >
-}
-
 export type Settings = {
     _id: string
     _type: 'settings'
@@ -237,6 +170,67 @@ export type Settings = {
     title: string
     description: string
     currency: string
+    shipping: {
+        shippings: Array<{
+            name: string
+            time: number
+            price: number
+            _type: 'entry'
+            _key: string
+        }>
+        shippingCountries?: Array<
+            | 'AU'
+            | 'AT'
+            | 'BE'
+            | 'BR'
+            | 'BG'
+            | 'CA'
+            | 'HR'
+            | 'CY'
+            | 'CZ'
+            | 'DK'
+            | 'EE'
+            | 'FI'
+            | 'FR'
+            | 'DE'
+            | 'GH'
+            | 'GI'
+            | 'GR'
+            | 'HK'
+            | 'HU'
+            | 'IN'
+            | 'ID'
+            | 'IE'
+            | 'IT'
+            | 'JP'
+            | 'KE'
+            | 'LV'
+            | 'LI'
+            | 'LT'
+            | 'LU'
+            | 'MY'
+            | 'MT'
+            | 'MX'
+            | 'NL'
+            | 'NZ'
+            | 'NG'
+            | 'NO'
+            | 'PL'
+            | 'PT'
+            | 'RO'
+            | 'SG'
+            | 'SK'
+            | 'SI'
+            | 'ZA'
+            | 'ES'
+            | 'SE'
+            | 'CH'
+            | 'TH'
+            | 'AE'
+            | 'GB'
+            | 'US'
+        >
+    }
     landingImage: {
         image: {
             asset?: {
@@ -396,7 +390,6 @@ export type AllSanitySchemaTypes =
     | AboutMe
     | Footer
     | Slug
-    | Shipping
     | Settings
     | PortfolioAlbum
     | Product
@@ -408,10 +401,71 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/lib/queries.ts
 // Variable: SETTINGS
-// Query: *[_type == "settings"][0]{    title,    currency,    description,    landingImage}
+// Query: *[_type == "settings"][0]{    title,    currency,    shipping,    description,    landingImage}
 export type SETTINGSResult = {
     title: string
     currency: string
+    shipping: {
+        shippings: Array<{
+            name: string
+            time: number
+            price: number
+            _type: 'entry'
+            _key: string
+        }>
+        shippingCountries?: Array<
+            | 'AE'
+            | 'AT'
+            | 'AU'
+            | 'BE'
+            | 'BG'
+            | 'BR'
+            | 'CA'
+            | 'CH'
+            | 'CY'
+            | 'CZ'
+            | 'DE'
+            | 'DK'
+            | 'EE'
+            | 'ES'
+            | 'FI'
+            | 'FR'
+            | 'GB'
+            | 'GH'
+            | 'GI'
+            | 'GR'
+            | 'HK'
+            | 'HR'
+            | 'HU'
+            | 'ID'
+            | 'IE'
+            | 'IN'
+            | 'IT'
+            | 'JP'
+            | 'KE'
+            | 'LI'
+            | 'LT'
+            | 'LU'
+            | 'LV'
+            | 'MT'
+            | 'MX'
+            | 'MY'
+            | 'NG'
+            | 'NL'
+            | 'NO'
+            | 'NZ'
+            | 'PL'
+            | 'PT'
+            | 'RO'
+            | 'SE'
+            | 'SG'
+            | 'SI'
+            | 'SK'
+            | 'TH'
+            | 'US'
+            | 'ZA'
+        >
+    }
     description: string
     landingImage: {
         image: {
@@ -427,67 +481,6 @@ export type SETTINGSResult = {
         }
         overlay: number
     }
-} | null
-// Variable: SHIPPINGS
-// Query: *[_type == "shipping"][0]{    shippings[] {        name,        time,        'price': price * 100    },    shippingCountries}
-export type SHIPPINGSResult = {
-    shippings: Array<{
-        name: string
-        time: number
-        price: number
-    }>
-    shippingCountries: Array<
-        | 'AE'
-        | 'AT'
-        | 'AU'
-        | 'BE'
-        | 'BG'
-        | 'BR'
-        | 'CA'
-        | 'CH'
-        | 'CY'
-        | 'CZ'
-        | 'DE'
-        | 'DK'
-        | 'EE'
-        | 'ES'
-        | 'FI'
-        | 'FR'
-        | 'GB'
-        | 'GH'
-        | 'GI'
-        | 'GR'
-        | 'HK'
-        | 'HR'
-        | 'HU'
-        | 'ID'
-        | 'IE'
-        | 'IN'
-        | 'IT'
-        | 'JP'
-        | 'KE'
-        | 'LI'
-        | 'LT'
-        | 'LU'
-        | 'LV'
-        | 'MT'
-        | 'MX'
-        | 'MY'
-        | 'NG'
-        | 'NL'
-        | 'NO'
-        | 'NZ'
-        | 'PL'
-        | 'PT'
-        | 'RO'
-        | 'SE'
-        | 'SG'
-        | 'SI'
-        | 'SK'
-        | 'TH'
-        | 'US'
-        | 'ZA'
-    > | null
 } | null
 // Variable: FOOTER
 // Query: *[_type == "footer"][0]{    socialMedia,    footerPages}
@@ -687,8 +680,7 @@ export type PRODUCTResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
     interface SanityQueries {
-        '*[_type == "settings"][0]{\n    title,\n    currency,\n    description,\n    landingImage\n}': SETTINGSResult
-        '*[_type == "shipping"][0]{\n    shippings[] {\n        name,\n        time,\n        \'price\': price * 100\n    },\n    shippingCountries\n}\n': SHIPPINGSResult
+        '*[_type == "settings"][0]{\n    title,\n    currency,\n    shipping,\n    description,\n    landingImage\n}': SETTINGSResult
         '*[_type == "footer"][0]{\n    socialMedia,\n    footerPages\n}': FOOTERResult
         '*[_type == "faq"][0]{\n    entries[] {\n        answer,\n        question\n    }\n}': FAQResult
         '*[_type == "aboutMe"][0]{\n    headline,\n    description,\n    avatar,\n    information,\n    contact\n}': ABOUTMEResult
