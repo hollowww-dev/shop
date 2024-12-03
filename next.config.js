@@ -1,8 +1,7 @@
-import type { NextConfig } from 'next'
-import createNextPluginPreval from 'next-plugin-preval/config'
+const createNextPluginPreval = require('next-plugin-preval/config')
 const withNextPluginPreval = createNextPluginPreval()
 
-const nextConfig: NextConfig = withNextPluginPreval({
+module.exports = withNextPluginPreval({
     images: {
         remotePatterns: [
             {
@@ -12,5 +11,3 @@ const nextConfig: NextConfig = withNextPluginPreval({
         ],
     },
 })
-
-export default nextConfig

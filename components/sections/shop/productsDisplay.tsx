@@ -47,7 +47,7 @@ const Products = ({
             }
         )
         return {
-            products,
+            products: products || [],
             nextPage: products.length === pageSize ? pageParam + pageSize : null,
         }
     }

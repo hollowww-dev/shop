@@ -46,7 +46,7 @@ const PortfolioDisplay = () => {
         }
     }
 
-    const orderedAlbums = orderAlbums(albums)
+    const orderedAlbums = orderAlbums(albums || [])
 
     return (
         <section className="flex flex-col gap-2">
