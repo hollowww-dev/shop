@@ -83,13 +83,13 @@ const ProductDetails = ({ id }: { id: string }) => {
                 <div className="flex flex-row gap-6 items-center">
                     <h2>{product.name}</h2>
                     <div className="flex flex-row gap-2">
-                        <FacebookShareButton url={`${config.siteUrl}/product/${product._id}`}>
+                        <FacebookShareButton url={`${config.siteUrl}/shop/${product._id}`}>
                             <IoLogoFacebook className="text-2xl text-facebook" />
                         </FacebookShareButton>
-                        <PinterestShareButton url={`${config.siteUrl}/product/${product._id}`} media={urlFor(product.image).url()} openShareDialogOnClick>
+                        <PinterestShareButton url={`${config.siteUrl}/shop/${product._id}`} media={urlFor(product.image).url()} openShareDialogOnClick>
                             <IoLogoPinterest className="text-2xl text-pinterest" />
                         </PinterestShareButton>
-                        <TwitterShareButton url={`${config.siteUrl}/product/${product._id}`} openShareDialogOnClick>
+                        <TwitterShareButton url={`${config.siteUrl}/shop/${product._id}`} openShareDialogOnClick>
                             <FaSquareXTwitter className="text-2xl text-black" />
                         </TwitterShareButton>
                     </div>

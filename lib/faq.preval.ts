@@ -13,6 +13,9 @@ async function getFAQ() {
             cache: process.env.NODE_ENV === 'development' ? 'no-store' : 'force-cache',
         }
     )
+    if (!entries) {
+        return { entries: [] }
+    }
     return entries
 }
 export default preval(getFAQ())
