@@ -13,7 +13,13 @@ export default async function Page() {
             <main className="container mx-auto flex flex-col flex-grow gap-6 lg:gap-12">
                 <Card className="w-full aspect-[9/16] md:aspect-[16/9] p-2">
                     <CardContent className="w-full h-full rounded-md overflow-hidden relative p-0">
-                        <Image src={urlFor(configPreval.landingImage.image).url()} alt="Landing page image" className="object-cover" fill loading="eager" />
+                        <Image
+                            src={urlFor(configPreval.landingImage.image).width(1000).url()}
+                            alt="Landing page image"
+                            className="object-cover"
+                            fill
+                            loading="eager"
+                        />
                         <div
                             className="w-full h-full absolute bg-foreground"
                             style={{ backgroundColor: `rgba(0, 0, 0, ${configPreval.landingImage.overlay / 100})` }}
