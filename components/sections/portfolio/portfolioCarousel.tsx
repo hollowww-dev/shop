@@ -50,8 +50,8 @@ const PortfolioCarousel = ({ product }: { product: Product }) => {
     return (
         <section className="flex flex-col gap-2 self-center max-w-screen-lg w-full">
             <Popover>
-                <PopoverTrigger asChild>
-                    <IoIosInformationCircleOutline className="text-2xl self-end cursor-pointer" />
+                <PopoverTrigger className="self-end">
+                    <IoIosInformationCircleOutline className="text-2xl cursor-pointer" />
                 </PopoverTrigger>
                 <PopoverContent side="bottom" align="end" className="w-svw max-w-96 flex flex-col gap-2 text-wrap">
                     <p>
